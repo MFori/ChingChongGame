@@ -1,0 +1,217 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cz.martinforejt.chingchong.GameFragment"
+    android:background="#2b2b2b">
+
+    <cz.martinforejt.chingchong.GameView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/gameView"
+        android:layout_margin="10dp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="0dp">
+
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/left_player_background">
+
+                    <TextView
+                        android:id="@+id/textleft"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="#fff"
+                        android:text="Máš 2 palce" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="40dp"
+                    android:gravity="right"
+                    android:layout_gravity="right"
+                    android:background="@drawable/right_player_background">
+
+                    <TextView
+                        android:id="@+id/textright"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textColor="#fff"
+                        android:text="Má 2 palce" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/countdown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textColor="#fff"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/animate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    android:textSize="35sp" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="2">
+
+                    <Button
+                        android:id="@+id/left"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:text="LEFT" />
+
+
+                    <Button
+                        android:id="@+id/right"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:text="RIGHT" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@drawable/numbers_background"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/click3"
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:layout_margin="6dp"
+                            android:textColor="#fff"
+                            android:textSize="25sp"
+                            android:background="@drawable/chong_button_active"
+                            android:text="3" />
+
+                        <Button
+                            android:id="@+id/click4"
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:layout_margin="6dp"
+                            android:textColor="#fff"
+                            android:textSize="25sp"
+                            android:background="@drawable/chong_button_active"
+                            android:text="4" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/click1"
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:layout_margin="6dp"
+                            android:textColor="#fff"
+                            android:textSize="25sp"
+                            android:background="@drawable/chong_button_active"
+                            android:text="1" />
+
+
+                        <Button
+                            android:id="@+id/click2"
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:layout_margin="6dp"
+                            android:textColor="#fff"
+                            android:textSize="25sp"
+                            android:background="@drawable/chong_button_active"
+                            android:text="2" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/click0"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_margin="6dp"
+                        android:textColor="#fff"
+                        android:textSize="25sp"
+                        android:background="@drawable/chong_button_active"
+                        android:text="0" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

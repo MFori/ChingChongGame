@@ -1,0 +1,65 @@
+<cz.martinforejt.chingchong.GameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cz.martinforejt.chingchong.MenuFragment">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:id="@+id/menu_logo"
+        android:src="@mipmap/ic_launcher"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:layout_margin="10dp"
+            android:onClick="playMultiPlayer"
+            android:text="MULTIPLAYER" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:layout_margin="10dp"
+            android:onClick="playSinglePlayer"
+            android:text="SINGLEPLAYER" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:id="@+id/menu_rate"/>
+
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:layout_gravity="right"
+        android:id="@+id/menu_exit"/>
+
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:layout_gravity="bottom"
+        android:id="@+id/menu_settings"/>
+
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:layout_gravity="bottom|right"
+        android:id="@+id/menu_about"/>
+
+</cz.martinforejt.chingchong.GameLayout>
