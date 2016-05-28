@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -77,7 +76,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         Canvas canvas = null;
         canvas = holder.lockCanvas();
         if (canvas != null) {
-            canvas.drawColor(Color.BLUE);
+            canvas.drawColor(getResources().getColor(R.color.backgroundblue));
             holder.unlockCanvasAndPost(canvas);
         }
     }
@@ -94,19 +93,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     for (int i = 5; i > 0; i--) {
                         width = (TimeWidth * 6) / 7;
                         alpha = 255;
-                        Time t = new Time(context, i);
+                        CountDown number = new CountDown(context, i);
                         long start = System.currentTimeMillis();
                         while ((System.currentTimeMillis() - start) < 1200) {
-                            Log.d("TIME", String.valueOf(System.currentTimeMillis() - start));
                             canvas = holder.lockCanvas();
                             if (canvas != null) {
-                                canvas.drawColor(Color.BLUE);
-                                t.setOpacity(alpha);
-                                t.setWidth(width);
-                                t.setHeight((int) (width * Timeratio));
-                                t.setX(gameWidth / 2 - width / 2);
-                                t.setY(TimeHeight / 2 - ((int) (width * Timeratio)) / 2);
-                                t.draw(canvas);
+                                canvas.drawColor(getResources().getColor(R.color.backgroundblue));
+                                int x = gameWidth / 2 - width / 2;
+                                int y = TimeHeight / 2 - ((int) (width * Timeratio) / 2);
+                                int height = (int) (width * Timeratio);
+                                drawCountDown(canvas, number, width, height, x, y, alpha);
                                 holder.unlockCanvasAndPost(canvas);
                                 width += 1;
                                 if (width > (TimeWidth * 6) / 8) alpha -= 1;
@@ -122,6 +118,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }).start();
     }
 
+    private void drawCountDown(Canvas canvas, CountDown number, int width, int height, int x, int y, int alpha) {
+        number.setOpacity(alpha);
+        number.setWidth(width);
+        number.setHeight((int) (width * Timeratio));
+        number.setX(gameWidth / 2 - width / 2);
+        number.setY(TimeHeight / 2 - ((int) (width * Timeratio)) / 2);
+        number.draw(canvas);
+    }
+
     public boolean isCountDownAnimating() {
         return countDownAnimating;
     }
@@ -134,60 +139,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private void clear() {
         Canvas canvas = holder.lockCanvas();
         if (canvas != null) {
-            canvas.drawColor(Color.BLUE);
+            canvas.drawColor(getResources().getColor(R.color.backgroundblue));
             holder.unlockCanvasAndPost(canvas);
         }
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
-    }
-
-    private class TimeThread extends Thread {
-        int width;
-        int alpha = 200;
-
-        public void stopThread() {
-            width = Integer.MAX_VALUE;
-            alpha = -width;
-        }
-
-        @Override
-        public void run() {
-            Canvas canvas = null;
-            try {
-                width = (TimeWidth * 5) / 6;
-                int number = 1;
-                Time t = new Time(context, 1);
-                while (width < TimeWidth) {
-                    canvas = holder.lockCanvas();
-                    if (canvas != null) {
-                        canvas.drawColor(Color.BLUE);
-                        t.setOpacity(alpha);
-                        t.setWidth(width);
-                        t.setHeight((int) (width * Timeratio));
-                        t.setX(gameWidth / 2 - width / 2);
-                        t.setY(TimeHeight / 2 - ((int) (width * Timeratio)) / 2);
-                        t.draw(canvas);
-                        //drawCountDown(canvas, width, alpha, number);
-                        holder.unlockCanvasAndPost(canvas);
-                        width += 2;
-                    }
-                }
-                while (alpha > 0) {
-                    canvas = holder.lockCanvas();
-                    if (canvas != null) {
-                        canvas.drawColor(Color.BLUE);
-                        //drawCountDown(canvas, width, alpha, number);
-                        holder.unlockCanvasAndPost(canvas);
-                        alpha -= 3;
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
 
     }
 

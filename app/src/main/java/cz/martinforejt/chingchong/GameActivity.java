@@ -6,14 +6,19 @@
  */
 package cz.martinforejt.chingchong;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.lang.reflect.Method;
@@ -94,7 +99,8 @@ public class GameActivity extends AppCompatActivity {
     public void onBackPressed() {
         switch (visibleFragment) {
             case MenuFragment.TAG:
-                super.onBackPressed();
+                //super.onBackPressed();
+                exitDialog();
                 break;
             case GameFragment.TAG:
                 FragmentManager manager = getFragmentManager();
@@ -102,6 +108,10 @@ public class GameActivity extends AppCompatActivity {
                 transaction.remove(GameFragment.newInstance(""));
                 transaction.commit();
                 changeFragment(MenuFragment.newInstance(), MenuFragment.TAG, true);
+                break;
+            case CreateGameFragment.TAG:
+            case JoinGameFragment.TAG:
+                changeFragment(MultiPlayerFragment.newInstance(), MultiPlayerFragment.TAG, SLIDE_LEFT, false);
                 break;
             case MultiPlayerFragment.TAG:
             case AboutFragment.TAG:
@@ -111,12 +121,49 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    public void exitDialog() {
+        LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
+        View view = layoutInflater.inflate(R.layout.exit_dialog, null);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+        builder.setView(view);
+
+        final Button btnYes = (Button) view.findViewById(R.id.dialogBtnYes);
+        final Button btnNo = (Button) view.findViewById(R.id.dialogBtnNo);
+
+        final AlertDialog dialog = builder.create();
+
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GameActivity.super.onBackPressed();
+            }
+        });
+
+        dialog.show();
+    }
+
     public void playMultiPlayer(View v) {
         changeFragment(MultiPlayerFragment.newInstance(), MultiPlayerFragment.TAG, SLIDE_RIGHT, false);
     }
 
     public void playSinglePlayer(View v) {
         changeFragment(GameFragment.newInstance(GameFragment.TYPE_SINGLE_PLAYER), GameFragment.TAG, true);
+    }
+
+    public void createGame(View v) {
+        changeFragment(CreateGameFragment.newInstance(), CreateGameFragment.TAG, SLIDE_RIGHT, false);
+    }
+
+    public void joinGame(View v) {
+        changeFragment(JoinGameFragment.newInstance(), JoinGameFragment.TAG, SLIDE_RIGHT, false);
     }
 
     public void backToMenu(View v) {
@@ -137,6 +184,10 @@ public class GameActivity extends AppCompatActivity {
         return GameActivity.visibleFragment;
     }
 
+    /**
+     *
+     * @param duration
+     */
     public void animateBlackScene(float duration) {
         if (!isAnimatingScene) {
             black_scene.setVisibility(View.VISIBLE);

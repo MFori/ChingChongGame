@@ -1,13 +1,15 @@
 package cz.martinforejt.chingchong;
 
 import android.app.Activity;
+import android.media.Image;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class GameFragment extends Fragment {
@@ -26,8 +28,11 @@ public class GameFragment extends Fragment {
     GameView gameView;
 
     /* Testovaci */
-    Button left, right, num0, num1, num2, num3, num4;
-    TextView lefttext, righttext, countdown, animate;
+    Button num0, num1, num2, num3, num4;
+    ImageButton left, right;
+    TextView animate;
+    TextView playerName, rivalName;
+    ImageView playerThumb1, playerThumb2, rivalThumb1, rivalThumb2;
     /* END */
 
     public static GameFragment newInstance(String type) {
@@ -39,7 +44,7 @@ public class GameFragment extends Fragment {
         return instance;
     }
 
-    public static GameFragment getInstance(){
+    public static GameFragment getInstance() {
         return instance;
     }
 
@@ -67,12 +72,15 @@ public class GameFragment extends Fragment {
 
         gameView = (GameView) view.findViewById(R.id.gameView);
 
+        String playerN = "pepa";
+        String rivalN = "rival";
+
         GameActivity.setVisibleFragment(TAG);
         game = new ChinChong(new OfflinePlayer("pepa", "rival"), (GameActivity) getActivity());
         game.start();
 
-        left = (Button) view.findViewById(R.id.left);
-        right = (Button) view.findViewById(R.id.right);
+        left = (ImageButton) view.findViewById(R.id.left);
+        right = (ImageButton) view.findViewById(R.id.right);
         num0 = (Button) view.findViewById(R.id.click0);
         num1 = (Button) view.findViewById(R.id.click1);
         num2 = (Button) view.findViewById(R.id.click2);
@@ -87,10 +95,17 @@ public class GameFragment extends Fragment {
         num3.setOnClickListener(onClickListener);
         num4.setOnClickListener(onClickListener);
 
-        lefttext = (TextView) view.findViewById(R.id.textleft);
-        righttext = (TextView) view.findViewById(R.id.textright);
-        countdown = (TextView) view.findViewById(R.id.countdown);
+        playerName = (TextView) view.findViewById(R.id.player_name);
+        rivalName = (TextView) view.findViewById(R.id.rival_name);
         animate = (TextView) view.findViewById(R.id.animate);
+
+        playerThumb1 = (ImageView) view.findViewById(R.id.player_thumb_1);
+        playerThumb2 = (ImageView) view.findViewById(R.id.player_thumb_2);
+        rivalThumb1 = (ImageView) view.findViewById(R.id.rival_thumb_1);
+        rivalThumb2 = (ImageView) view.findViewById(R.id.rival_thumb_2);
+
+        playerName.setText(playerN);
+        rivalName.setText(rivalN);
 
         return view;
     }
@@ -108,14 +123,14 @@ public class GameFragment extends Fragment {
                         // 0 - 1 => 1 , 1 - 1 => 0
                         leftThumb = Math.abs(leftThumb - 1);
                         game.thumbsChange(leftThumb + rightThumb);
-                        left.setText("LEFT " + String.valueOf(leftThumb));
+                        left.setImageResource(leftThumb == 1 ? R.drawable.thumb100 : R.drawable.fist);
                     }
                     break;
                 case R.id.right:
-                    if(rightActive) {
+                    if (rightActive) {
                         rightThumb = Math.abs(rightThumb - 1);
                         game.thumbsChange(rightThumb + leftThumb);
-                        right.setText("RIGHT " + String.valueOf(rightThumb));
+                        right.setImageResource(rightThumb == 1 ? R.drawable.thumb100 : R.drawable.fist);
                     }
                     break;
                 case R.id.click0:
@@ -138,11 +153,37 @@ public class GameFragment extends Fragment {
     };
 
     public void setPlayerThumbs(int thumbs) {
-        lefttext.setText("Máš " + String.valueOf(thumbs) + " palce");
+        switch (thumbs) {
+            case 2:
+                playerThumb1.setVisibility(View.VISIBLE);
+                playerThumb2.setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                playerThumb1.setVisibility(View.GONE);
+                playerThumb2.setVisibility(View.VISIBLE);
+                break;
+            case 0:
+                playerThumb1.setVisibility(View.GONE);
+                playerThumb2.setVisibility(View.GONE);
+                break;
+        }
     }
 
     public void setRivalThumbs(int thumbs) {
-        righttext.setText("Má " + String.valueOf(thumbs) + " palce");
+        switch (thumbs) {
+            case 2:
+                rivalThumb1.setVisibility(View.VISIBLE);
+                rivalThumb2.setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                rivalThumb1.setVisibility(View.GONE);
+                rivalThumb2.setVisibility(View.VISIBLE);
+                break;
+            case 0:
+                rivalThumb1.setVisibility(View.GONE);
+                rivalThumb2.setVisibility(View.GONE);
+                break;
+        }
     }
 
     public void animate(int chongs) {
@@ -150,28 +191,44 @@ public class GameFragment extends Fragment {
     }
 
     public void setActiveChongs(int chongs) {
-        num0.setText("0");
-        num1.setText("1");
-        num2.setText("2");
-        num3.setText("3");
-        num4.setText("4");
-        switch (chongs){
+        int background = R.drawable.chong_button_active;
+        int choosen = R.drawable.chong_button_active_choosen;
+        num0.setBackgroundResource(background);
+        num1.setBackgroundResource(background);
+        num2.setBackgroundResource(background);
+        num3.setBackgroundResource(background);
+        num4.setBackgroundResource(background);
+        switch (chongs) {
             case 0:
-                num0.setText("-0-");
+                num0.setBackgroundResource(choosen);
                 break;
             case 1:
-                num1.setText("-1-");
+                num1.setBackgroundResource(choosen);
                 break;
             case 2:
-                num2.setText("-2-");
+                num2.setBackgroundResource(choosen);
                 break;
             case 3:
-                num3.setText("-3-");
+                num3.setBackgroundResource(choosen);
                 break;
             case 4:
-                num4.setText("-4-");
+                num4.setBackgroundResource(choosen);
                 break;
         }
+    }
+
+    public void isHisTurn(boolean hisTurn) {
+        int background = 0;
+        if(hisTurn){
+            background = R.drawable.chong_button_active;
+        } else {
+            background = R.drawable.chong_button_unactive;
+        }
+        num0.setBackgroundResource(background);
+        num1.setBackgroundResource(background);
+        num2.setBackgroundResource(background);
+        num3.setBackgroundResource(background);
+        num4.setBackgroundResource(background);
     }
 
     @Override

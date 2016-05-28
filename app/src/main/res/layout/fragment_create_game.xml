@@ -1,0 +1,40 @@
+<cz.martinforejt.chingchong.GameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cz.martinforejt.chingchong.CreateGameFragment">
+
+    <ImageButton
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_margin="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back"
+        android:background="@null"
+        android:onClick="backToMenu"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="65dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ip_address"
+            android:gravity="center"
+            android:textSize="40sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Waiting for oponent..."
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_margin="20dp"
+            android:textSize="20sp"/>
+
+
+    </LinearLayout>
+
+</cz.martinforejt.chingchong.GameLayout>

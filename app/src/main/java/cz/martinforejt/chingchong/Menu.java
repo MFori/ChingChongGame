@@ -49,7 +49,7 @@ public class Menu implements View.OnClickListener {
                 showStore();
                 break;
             case R.id.menu_exit:
-                activity.finish();
+                activity.exitDialog();
                 break;
             case R.id.menu_settings:
                 fragment = SettingsFragment.newInstance();

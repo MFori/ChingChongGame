@@ -152,6 +152,7 @@ public class ChinChong {
                 });
                 Thread.sleep(1000);
                 endRoundTime = true;
+                animateTime = false;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -162,17 +163,31 @@ public class ChinChong {
          */
         private void endRoundTimePart() {
             gameTime = true;
+            endRoundTime = false;
             if (ChinChong.this.player.isHisTurn()) {
                 ChinChong.this.player.hisTurn(false);
                 ChinChong.this.player.getRival().hisTurn(true);
+                onUi(new Runnable() {
+                    @Override
+                    public void run() {
+                        GameFragment.getInstance().isHisTurn(false);
+                    }
+                });
             } else {
                 ChinChong.this.player.hisTurn(true);
                 ChinChong.this.player.getRival().hisTurn(false);
+                onUi(new Runnable() {
+                    @Override
+                    public void run() {
+                        GameFragment.getInstance().isHisTurn(true);
+                    }
+                });
             }
         }
 
         /**
          * Run on ui thread
+         *
          * @param runnable Runnable
          */
         public void onUi(Runnable runnable) {

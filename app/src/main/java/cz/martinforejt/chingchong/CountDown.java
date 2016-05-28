@@ -10,7 +10,7 @@ import android.graphics.Paint;
  * Created by Martin Forejt on 24.05.2016.
  * forejt.martin97@gmail.com
  */
-public class Time {
+public class CountDown {
 
     private static Bitmap original = null;
 
@@ -20,7 +20,7 @@ public class Time {
     protected int width, height, opacity;
     protected int x, y;
 
-    public Time(Context context, int number) {
+    public CountDown(Context context, int number) {
         initBitmap(context, number);
     }
 
