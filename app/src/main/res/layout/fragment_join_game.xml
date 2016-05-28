@@ -12,4 +12,26 @@
         android:background="@null"
         android:onClick="backToMenu"/>
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="IP ADDRESS"
+            android:id="@+id/ip_address_edit"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="JOIN"
+            android:id="@+id/joinBtn"/>
+
+    </LinearLayout>
+
 </cz.martinforejt.chingchong.GameLayout>

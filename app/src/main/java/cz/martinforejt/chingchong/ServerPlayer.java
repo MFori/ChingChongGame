@@ -29,6 +29,10 @@ public class ServerPlayer extends Player {
 
     ServerSocket serverSocket;
 
+    /**
+     * @param name String
+     * @param rivalName String
+     */
     public ServerPlayer(String name, String rivalName){
         super(name, rivalName);
         Thread socketServerThread = new Thread(new SocketServerThread());
@@ -43,6 +47,9 @@ public class ServerPlayer extends Player {
 
     }
 
+    /**
+     *
+     */
     private class SocketServerThread extends Thread {
 
         @Override
@@ -61,8 +68,7 @@ public class ServerPlayer extends Player {
                             + socket.getInetAddress() + ":"
                             + socket.getPort() + "\n";
 
-                    int messageType = 0;
-                    if(message.equals("connect")) messageType = MESSAGE_CONNECT;
+                    int messageType = getMessageType(message);
 
                     SocketServerReplyThread socketServerReplyThread = new SocketServerReplyThread(socket, messageType);
                     socketServerReplyThread.run();
@@ -73,13 +79,35 @@ public class ServerPlayer extends Player {
             }
         }
 
+        /**
+         * Read message type from message
+         * @param message String
+         * @return int
+         */
+        private int getMessageType(String message) {
+            if(message.equals("connect")) return MESSAGE_CONNECT;
+            else if(message.equals("end")) return MESSAGE_END;
+            else {
+                String[] data = message.split(";");
+                if(data[0].equals("data")) return MESSAGE_DATA;
+            }
+            return 0;
+        }
+
     }
 
+    /**
+     *
+     */
     private class SocketServerReplyThread extends Thread {
 
         private Socket hostThreadSocket;
         private int message;
 
+        /**
+         * @param socket Socket
+         * @param message int
+         */
         SocketServerReplyThread(Socket socket, int message) {
             hostThreadSocket = socket;
             this.message = message;
@@ -97,13 +125,16 @@ public class ServerPlayer extends Player {
                 switch (message){
                     case MESSAGE_CONNECT:
                         msgReply = "connect";
-                        Log.d("CONNECT", "YES");
                         break;
                     case MESSAGE_DATA:
+                        msgReply = "data";
                         break;
                     case MESSAGE_END:
+                        msgReply = "end";
                         break;
                 }
+
+                Log.d("MESSAGE", msgReply);
 
                 printStream.print(msgReply);
                 printStream.close();
@@ -118,13 +149,17 @@ public class ServerPlayer extends Player {
 
     }
 
+    /**
+     * Return server socket port (always 8080)
+     * @return int
+     */
     public int getPort() {
         return socketServerPORT;
     }
 
     /**
-     *
-     * @return
+     * Return server socket ip address
+     * @return String
      */
     public String getIpAddress() {
         String ip = "";
@@ -152,12 +187,14 @@ public class ServerPlayer extends Player {
         return ip;
     }
 
+    /**
+     * Close server socket waiting...
+     */
     public void onDestroy() {
         if (serverSocket != null) {
             try {
                 serverSocket.close();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

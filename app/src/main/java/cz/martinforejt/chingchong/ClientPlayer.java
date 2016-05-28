@@ -22,76 +22,98 @@ public class ClientPlayer extends Player {
     static final int MESSAGE_DATA = 2;
     static final int MESSAGE_END = 3;
 
-    public ClientPlayer(String name, String rivalName){
+    private String ipAddress = "";
+    private boolean isConnect = false;
+    private boolean asyncRunning = false;
+
+    public ClientPlayer(String name, String rivalName, String ipAddress) {
         super(name, rivalName);
+        this.ipAddress = ipAddress;
     }
 
     public void connect() {
-        mAsync a = new mAsync("192.168.0.100", 8080);
-        a.execute();
+        Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
+        mAsync.execute(MESSAGE_CONNECT);
+        isConnect = false;
     }
 
-    public class mAsync extends AsyncTask<Void, Void, Void> {
+    public void sendData() {
+        Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
+        mAsync.execute(MESSAGE_DATA);
+    }
+
+    public void haveData() {
+
+    }
+
+    public class Async extends AsyncTask<Integer, Void, Void> {
 
         String response = "";
         String dstAddress = "";
         int dstPort;
 
-        public mAsync(String dstAddress, int dstPort) {
+        public Async(String dstAddress, int dstPort) {
             this.dstAddress = dstAddress;
             this.dstPort = dstPort;
         }
 
         @Override
-        protected Void doInBackground(Void... arg0) {
+        protected Void doInBackground(Integer... type) {
 
-            Socket socket = null;
+            asyncRunning = true;
 
-            try {
-                socket = new Socket(dstAddress, dstPort);
+            for (int i = 0; i < type.length; i++) {
 
-                //Send the message to the server
-                OutputStream os = socket.getOutputStream();
-                OutputStreamWriter osw = new OutputStreamWriter(os);
-                BufferedWriter bw = new BufferedWriter(osw);
+                Socket socket = null;
 
+                try {
+                    socket = new Socket(dstAddress, dstPort);
 
-                String number = "connect";
+                    //Send the message to the server
+                    OutputStream os = socket.getOutputStream();
+                    OutputStreamWriter osw = new OutputStreamWriter(os);
+                    BufferedWriter bw = new BufferedWriter(osw);
 
-                String sendMessage = number + "\n";
-                bw.write(sendMessage);
-                bw.flush();
+                    String number = "";
+                    if (type[0] == MESSAGE_CONNECT) number = "connect";
+                    if (type[0] == MESSAGE_DATA) number = "data;123;4";
+                    if (type[0] == MESSAGE_END) number = "end";
 
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
-                        1024);
-                byte[] buffer = new byte[1024];
+                    String sendMessage = number + "\n";
+                    bw.write(sendMessage);
+                    bw.flush();
 
-                int bytesRead;
-                InputStream inputStream = socket.getInputStream();
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
+                            1024);
+                    byte[] buffer = new byte[1024];
+
+                    int bytesRead;
+                    InputStream inputStream = socket.getInputStream();
 
 			/*
-			 * notice: inputStream.read() will block if no data return
+             * notice: inputStream.read() will block if no data return
 			 */
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    byteArrayOutputStream.write(buffer, 0, bytesRead);
-                    response += byteArrayOutputStream.toString("UTF-8");
-                }
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        byteArrayOutputStream.write(buffer, 0, bytesRead);
+                        response += byteArrayOutputStream.toString("UTF-8");
+                    }
 
-            } catch (UnknownHostException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                response = "UnknownHostException: " + e.toString();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                response = "IOException: " + e.toString();
-            } finally {
-                if (socket != null) {
-                    try {
-                        socket.close();
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                } catch (UnknownHostException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    response = "UnknownHostException: " + e.toString();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    response = "IOException: " + e.toString();
+                } finally {
+                    if (socket != null) {
+                        try {
+                            socket.close();
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -101,17 +123,20 @@ public class ClientPlayer extends Player {
         @Override
         protected void onPostExecute(Void result) {
             // TODO HAVE DATA
-            Log.d("EXECUTE",response);
+            Log.d("EXECUTE", response);
+            if(response.equals("connect")) isConnect = true;
+
+            asyncRunning = false;
+
             super.onPostExecute(result);
         }
     }
 
-    public void sendData(){
-
+    public boolean isConnect() {
+        return  isConnect;
     }
 
-    public void haveData(){
-
+    public boolean isAsyncRunning() {
+        return asyncRunning;
     }
-
 }

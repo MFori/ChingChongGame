@@ -59,5 +59,10 @@ public class CreateGameFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        player.onDestroy();
+    }
 
 }

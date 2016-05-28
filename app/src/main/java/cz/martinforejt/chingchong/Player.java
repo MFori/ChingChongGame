@@ -1,10 +1,12 @@
 package cz.martinforejt.chingchong;
 
+import java.io.Serializable;
+
 /**
  * Created by Martin Forejt on 16.05.2016.
  * forejt.martin97@gmail.com
  */
-public abstract class Player implements PlayerInterface {
+public abstract class Player implements PlayerInterface, Serializable {
 
     protected String name;
 

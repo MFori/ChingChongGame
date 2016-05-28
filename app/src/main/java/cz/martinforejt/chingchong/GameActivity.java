@@ -105,7 +105,7 @@ public class GameActivity extends AppCompatActivity {
             case GameFragment.TAG:
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                transaction.remove(GameFragment.newInstance(""));
+                transaction.remove(GameFragment.newInstance(new OfflinePlayer("Martin", "Pepa")));
                 transaction.commit();
                 changeFragment(MenuFragment.newInstance(), MenuFragment.TAG, true);
                 break;
@@ -155,7 +155,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void playSinglePlayer(View v) {
-        changeFragment(GameFragment.newInstance(GameFragment.TYPE_SINGLE_PLAYER), GameFragment.TAG, true);
+        changeFragment(GameFragment.newInstance(new OfflinePlayer("Martin", "Pepa")), GameFragment.TAG, true);
     }
 
     public void createGame(View v) {

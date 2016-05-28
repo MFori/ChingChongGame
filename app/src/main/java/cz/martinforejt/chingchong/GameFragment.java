@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GameFragment extends Fragment {
 
@@ -21,6 +22,7 @@ public class GameFragment extends Fragment {
     private static GameFragment instance;
 
     private ChinChong game;
+    private Player player;
 
     private boolean leftActive = true, rightActive = true;
     private int leftThumb = 0, rightThumb = 0;
@@ -35,12 +37,11 @@ public class GameFragment extends Fragment {
     ImageView playerThumb1, playerThumb2, rivalThumb1, rivalThumb2;
     /* END */
 
-    public static GameFragment newInstance(String type) {
+    public static GameFragment newInstance(Player player) {
         instance = new GameFragment();
-        /*Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);*/
+        Bundle args = new Bundle();
+        args.putSerializable("player", player);
+        instance.setArguments(args);
         return instance;
     }
 
@@ -55,13 +56,9 @@ public class GameFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
-        /*GameActivity.setVisibleFragment(TAG);
-        game = new ChinChong(new OfflinePlayer("pepa", "rival"), (GameActivity) getActivity());
-        game.start();*/
+        if (getArguments() != null) {
+            player = (Player) getArguments().getSerializable("player");
+        }
     }
 
     @Override
@@ -72,11 +69,8 @@ public class GameFragment extends Fragment {
 
         gameView = (GameView) view.findViewById(R.id.gameView);
 
-        String playerN = "pepa";
-        String rivalN = "rival";
-
         GameActivity.setVisibleFragment(TAG);
-        game = new ChinChong(new OfflinePlayer("pepa", "rival"), (GameActivity) getActivity());
+        game = new ChinChong(player, (GameActivity) getActivity());
         game.start();
 
         left = (ImageButton) view.findViewById(R.id.left);
@@ -104,8 +98,8 @@ public class GameFragment extends Fragment {
         rivalThumb1 = (ImageView) view.findViewById(R.id.rival_thumb_1);
         rivalThumb2 = (ImageView) view.findViewById(R.id.rival_thumb_2);
 
-        playerName.setText(playerN);
-        rivalName.setText(rivalN);
+        playerName.setText(player.getName());
+        rivalName.setText(player.getRival().getName());
 
         return view;
     }
