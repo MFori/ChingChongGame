@@ -21,15 +21,21 @@ public class CreateGameFragment extends Fragment {
     private ServerPlayer player;
     private String playerName = "";
 
+    private static CreateGameFragment instance;
+
     private TextView ipAddress;
 
     public static CreateGameFragment newInstance() {
-        CreateGameFragment fragment = new CreateGameFragment();
+        instance = new CreateGameFragment();
         /*Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);*/
-        return fragment;
+        return instance;
+    }
+
+    public static CreateGameFragment getInstance() {
+        return instance;
     }
 
     public CreateGameFragment() {
@@ -57,6 +63,16 @@ public class CreateGameFragment extends Fragment {
         ipAddress.setText(player.getIpAddress());
 
         return view;
+    }
+
+    public void startGame() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                GameActivity activity = (GameActivity) getActivity();
+                activity.changeFragment(GameFragment.newInstance(player), GameFragment.TAG, true);
+            }
+        });
     }
 
     @Override

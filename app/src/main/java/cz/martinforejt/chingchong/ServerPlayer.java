@@ -27,6 +27,10 @@ public class ServerPlayer extends Player {
     static final int MESSAGE_DATA = 2;
     static final int MESSAGE_END = 3;
 
+    private boolean waitingForData = false;
+
+    Thread socketServerThread = null;
+
     ServerSocket serverSocket;
 
     /**
@@ -35,16 +39,35 @@ public class ServerPlayer extends Player {
      */
     public ServerPlayer(String name, String rivalName){
         super(name, rivalName);
-        Thread socketServerThread = new Thread(new SocketServerThread());
+        hisTurn(true);
+        restartServer();
+    }
+
+    public void restartServer() {
+        if(socketServerThread != null) {
+            socketServerThread.interrupt();
+            socketServerThread = null;
+        }
+
+        socketServerThread = new Thread(new SocketServerThread());
         socketServerThread.start();
     }
 
     public void sendData(){
-
+        waitingForData = true;
     }
 
     public void haveData(){
+        int visibleThumbs = rival.getShowsThumbs() + this.getShowsThumbs();
 
+        if (rival.isHisTurn()) {
+            if (visibleThumbs == rival.getChongs()) rival.setThumbs(rival.getThumbs() - 1);
+        } else if (this.isHisTurn) {
+            if (visibleThumbs == this.getChongs()) this.setThumbs(this.getThumbs() - 1);
+        }
+
+        rival.hasData(true);
+        waitingForData = false;
     }
 
     /**
@@ -69,6 +92,19 @@ public class ServerPlayer extends Player {
                             + socket.getPort() + "\n";
 
                     int messageType = getMessageType(message);
+
+                    switch (messageType){
+                        case MESSAGE_CONNECT:
+                            CreateGameFragment.getInstance().startGame();
+                            break;
+                        case MESSAGE_DATA:
+                            consumeData(message);
+                            break;
+                        case MESSAGE_END:
+                            break;
+                    }
+
+                    if(messageType == MESSAGE_DATA && !waitingForData) continue;
 
                     SocketServerReplyThread socketServerReplyThread = new SocketServerReplyThread(socket, messageType);
                     socketServerReplyThread.run();
@@ -124,10 +160,10 @@ public class ServerPlayer extends Player {
 
                 switch (message){
                     case MESSAGE_CONNECT:
-                        msgReply = "connect";
+                        msgReply = createConnectMessage();
                         break;
                     case MESSAGE_DATA:
-                        msgReply = "data";
+                        msgReply = createDataMessage();
                         break;
                     case MESSAGE_END:
                         msgReply = "end";
@@ -139,7 +175,7 @@ public class ServerPlayer extends Player {
                 printStream.print(msgReply);
                 printStream.close();
 
-                //String message = "replayed: " + msgReply + "\n";
+                haveData();
 
             } catch (IOException e) {
                 // TODO Auto-generated catch block
@@ -147,6 +183,37 @@ public class ServerPlayer extends Player {
             }
         }
 
+    }
+
+    private void consumeData(String message) {
+        String[] data = message.split(";");
+
+        ServerPlayer.this.rival.setShowsThumbs(Integer.valueOf(data[1]));
+        ServerPlayer.this.rival.setChongs(Integer.valueOf(data[2]));
+        ServerPlayer.this.rival.setThumbs(Integer.valueOf(data[3]));
+    }
+
+    /**
+     * @return String
+     */
+    private String createConnectMessage() {
+        return "connect";
+    }
+
+    /**
+     * @return String
+     */
+    private String createDataMessage() {
+
+        String message = "data";
+
+        message += ";" + String.valueOf(ServerPlayer.this.getShowsThumbs());
+        message += ";" + String.valueOf(ServerPlayer.this.getChongs());
+        message += ";" + String.valueOf(ServerPlayer.this.getThumbs());
+
+        Log.d("DATA", message);
+
+        return message;
     }
 
     /**

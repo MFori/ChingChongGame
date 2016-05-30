@@ -28,6 +28,7 @@ public class ClientPlayer extends Player {
 
     public ClientPlayer(String name, String rivalName, String ipAddress) {
         super(name, rivalName);
+        hisTurn(false);
         this.ipAddress = ipAddress;
     }
 
@@ -38,12 +39,22 @@ public class ClientPlayer extends Player {
     }
 
     public void sendData() {
+        //Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
+        //mAsync.execute(MESSAGE_CONNECT);
         Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
         mAsync.execute(MESSAGE_DATA);
     }
 
     public void haveData() {
+        int visibleThumbs = rival.getShowsThumbs() + this.getShowsThumbs();
 
+        if (rival.isHisTurn()) {
+            if (visibleThumbs == rival.getChongs()) rival.setThumbs(rival.getThumbs() - 1);
+        } else if (this.isHisTurn) {
+            if (visibleThumbs == this.getChongs()) this.setThumbs(this.getThumbs() - 1);
+        }
+
+        rival.hasData(true);
     }
 
     public class Async extends AsyncTask<Integer, Void, Void> {
@@ -62,7 +73,7 @@ public class ClientPlayer extends Player {
 
             asyncRunning = true;
 
-            for (int i = 0; i < type.length; i++) {
+            //for (int i = 0; i < type.length; i++) {
 
                 Socket socket = null;
 
@@ -74,12 +85,12 @@ public class ClientPlayer extends Player {
                     OutputStreamWriter osw = new OutputStreamWriter(os);
                     BufferedWriter bw = new BufferedWriter(osw);
 
-                    String number = "";
-                    if (type[0] == MESSAGE_CONNECT) number = "connect";
-                    if (type[0] == MESSAGE_DATA) number = "data;123;4";
-                    if (type[0] == MESSAGE_END) number = "end";
+                    String message = "";
+                    if (type[0] == MESSAGE_CONNECT) message = createConnectMessage();
+                    if (type[0] == MESSAGE_DATA) message = createDataMessage();
+                    if (type[0] == MESSAGE_END) message = createEndMessage();
 
-                    String sendMessage = number + "\n";
+                    String sendMessage = message + "\n";
                     bw.write(sendMessage);
                     bw.flush();
 
@@ -116,15 +127,27 @@ public class ClientPlayer extends Player {
                         }
                     }
                 }
-            }
+            //}
             return null;
         }
 
         @Override
         protected void onPostExecute(Void result) {
-            // TODO HAVE DATA
             Log.d("EXECUTE", response);
-            if(response.equals("connect")) isConnect = true;
+
+            int messageType = getMessageType(response);
+
+            switch (messageType){
+                case MESSAGE_CONNECT:
+                    isConnect = true;
+                    break;
+                case MESSAGE_DATA:
+                    consumeData(response);
+                    haveData();
+                    break;
+                case MESSAGE_END:
+                    break;
+            }
 
             asyncRunning = false;
 
@@ -132,10 +155,64 @@ public class ClientPlayer extends Player {
         }
     }
 
+    private int getMessageType(String message) {
+        if(message.equals("connect")) return MESSAGE_CONNECT;
+        else if(message.equals("end")) return MESSAGE_END;
+        else {
+            String[] data = message.split(";");
+            if(data[0].equals("data")) return MESSAGE_DATA;
+        }
+        return 0;
+    }
+
+    private void consumeData(String message) {
+        String[] data = message.split(";");
+
+        ClientPlayer.this.rival.setShowsThumbs(Integer.valueOf(data[1]));
+        ClientPlayer.this.rival.setChongs(Integer.valueOf(data[2]));
+        ClientPlayer.this.rival.setThumbs(Integer.valueOf(data[3]));
+    }
+
+    /**
+     * @return String
+     */
+    private String createConnectMessage() {
+        return "connect";
+    }
+
+    /**
+     * @return String
+     */
+    private String createEndMessage() {
+        return "end";
+    }
+
+    /**
+     * @return String
+     */
+    private String createDataMessage() {
+
+        String message = "data";
+
+        message += ";" + String.valueOf(ClientPlayer.this.getShowsThumbs());
+        message += ";" + String.valueOf(ClientPlayer.this.getChongs());
+        message += ";" + String.valueOf(ClientPlayer.this.getThumbs());
+
+        Log.d("DATA", message);
+
+        return message;
+    }
+
+    /**
+     * @return bool
+     */
     public boolean isConnect() {
         return  isConnect;
     }
 
+    /**
+     * @return bool
+     */
     public boolean isAsyncRunning() {
         return asyncRunning;
     }

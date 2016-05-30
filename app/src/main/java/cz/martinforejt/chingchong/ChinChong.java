@@ -26,6 +26,11 @@ public class ChinChong {
     public ChinChong(Player player, GameActivity activity) {
         this.player = player;
         this.activity = activity;
+
+        if(player instanceof ServerPlayer) {
+            ((ServerPlayer) player).restartServer();
+        }
+
         GameThread = new Thread(new GameRunnable());
 
         gameView = GameView.getInstance();
@@ -34,7 +39,7 @@ public class ChinChong {
     public void start() {
         isRunning = true;
         gameTime = true;
-        player.hisTurn(true);
+        //player.hisTurn(true);
         GameThread.start();
     }
 
@@ -73,6 +78,7 @@ public class ChinChong {
 
         @Override
         public void run() {
+            setChongsKeyboard();
             while (isRunning) {
                 try {
                     if (gameTime) {
@@ -156,17 +162,34 @@ public class ChinChong {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            ChinChong.this.player.rival.hasData(false);
         }
 
         /**
          * Prepare game for new round / or end game
          */
         private void endRoundTimePart() {
-            gameTime = true;
             endRoundTime = false;
+
+            // End game - show result screen
+            if(ChinChong.this.player.getThumbs() == 0 || ChinChong.this.player.getRival().getThumbs() == 0) {
+                onUi(new Runnable() {
+                    @Override
+                    public void run() {
+                        GameFragment.getInstance().endGame();
+                    }
+                });
+            } else {
+                gameTime = true;
+                setChongsKeyboard();
+            }
+        }
+
+        public void setChongsKeyboard() {
             if (ChinChong.this.player.isHisTurn()) {
                 ChinChong.this.player.hisTurn(false);
-                ChinChong.this.player.getRival().hisTurn(true);
+                ChinChong.this.player.rival.hisTurn(true);
                 onUi(new Runnable() {
                     @Override
                     public void run() {
@@ -175,7 +198,7 @@ public class ChinChong {
                 });
             } else {
                 ChinChong.this.player.hisTurn(true);
-                ChinChong.this.player.getRival().hisTurn(false);
+                ChinChong.this.player.rival.hisTurn(false);
                 onUi(new Runnable() {
                     @Override
                     public void run() {

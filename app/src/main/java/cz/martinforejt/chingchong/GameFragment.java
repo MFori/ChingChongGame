@@ -180,6 +180,13 @@ public class GameFragment extends Fragment {
         }
     }
 
+    public void endGame() {
+        game.end();
+        GameActivity activity = (GameActivity) getActivity();
+        activity.changeFragment(ResultFragment.newInstance(), ResultFragment.TAG, true);
+        game = null;
+    }
+
     public void animate(int chongs) {
         this.animate.setText("CHING - CHONG " + String.valueOf(chongs));
     }
@@ -213,7 +220,7 @@ public class GameFragment extends Fragment {
 
     public void isHisTurn(boolean hisTurn) {
         int background = 0;
-        if(hisTurn){
+        if (hisTurn) {
             background = R.drawable.chong_button_active;
         } else {
             background = R.drawable.chong_button_unactive;
@@ -237,7 +244,7 @@ public class GameFragment extends Fragment {
 
     @Override
     public void onPause() {
-        game.end();
+        if (game != null) game.pause();
         super.onDestroy();
     }
 

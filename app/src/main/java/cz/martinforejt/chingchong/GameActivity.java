@@ -116,6 +116,7 @@ public class GameActivity extends AppCompatActivity {
             case MultiPlayerFragment.TAG:
             case AboutFragment.TAG:
             case SettingsFragment.TAG:
+            case ResultFragment.TAG:
                 changeFragment(MenuFragment.newInstance(), MenuFragment.TAG, SLIDE_LEFT, false);
                 break;
         }

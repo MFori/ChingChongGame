@@ -1,0 +1,16 @@
+<cz.martinforejt.chingchong.GameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cz.martinforejt.chingchong.ResultFragment">
+
+    <ImageButton
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_margin="5dp"
+        android:background="@null"
+        android:onClick="backToMenu"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back" />
+
+</cz.martinforejt.chingchong.GameLayout>

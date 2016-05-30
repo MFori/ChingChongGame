@@ -15,7 +15,7 @@ public abstract class Player implements PlayerInterface, Serializable {
     protected int chongs;
     protected boolean isHisTurn;
 
-    protected Rival rival;
+    public Rival rival;
 
     public Player(String name, String rivalName) {
         this.name = name;
