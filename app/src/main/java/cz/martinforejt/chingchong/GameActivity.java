@@ -1,29 +1,21 @@
-/**
- * Created on 14.5.2016
- *
- * @author Martin Forejt
- * @email me@martinforejt.cz
- */
 package cz.martinforejt.chingchong;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 
-import java.lang.reflect.Method;
-import java.util.concurrent.Callable;
-
+/**
+ * Created by Martin Forejt on 14.05.2016.
+ * forejt.martin97@gmail.com
+ * class GameActivity
+ */
 public class GameActivity extends AppCompatActivity {
 
     public static final boolean SLIDE_LEFT = false;
@@ -36,8 +28,6 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Log.d("ON", "CREATE");
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -124,6 +114,9 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *
+     */
     public void exitDialog() {
         LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
         View view = layoutInflater.inflate(R.layout.exit_dialog, null);
@@ -136,6 +129,7 @@ public class GameActivity extends AppCompatActivity {
 
         final AlertDialog dialog = builder.create();
 
+        // Close dialog
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,6 +137,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        // Close app
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,27 +148,54 @@ public class GameActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Click on MultiPlayer button
+     *
+     * @param v Button
+     */
     public void playMultiPlayer(View v) {
         changeFragment(MultiPlayerFragment.newInstance(), MultiPlayerFragment.TAG, SLIDE_RIGHT, false);
     }
 
+    /**
+     * Click on SinglePlayer button
+     *
+     * @param v Button
+     */
     public void playSinglePlayer(View v) {
         changeFragment(GameFragment.newInstance(new OfflinePlayer("Martin", "Pepa")), GameFragment.TAG, true);
     }
 
+    /**
+     * Click on Create MultiPlayer game (create server)
+     *
+     * @param v Button
+     */
     public void createGame(View v) {
         changeFragment(CreateGameFragment.newInstance(), CreateGameFragment.TAG, SLIDE_RIGHT, false);
     }
 
+    /**
+     * Click on Join MultiPlayer game (create client)
+     *
+     * @param v Button
+     */
     public void joinGame(View v) {
         changeFragment(JoinGameFragment.newInstance(), JoinGameFragment.TAG, SLIDE_RIGHT, false);
     }
 
+    /**
+     * Click on back arrow
+     *
+     * @param v Button
+     */
     public void backToMenu(View v) {
         onBackPressed();
     }
 
     /**
+     * Save tag of visible fragment
+     *
      * @param visibleFragment String - tag
      */
     public static void setVisibleFragment(String visibleFragment) {
@@ -181,6 +203,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     /**
+     * Return tag of visible fragment
+     *
      * @return String - fragment tag
      */
     public static String getVisibleFragment() {
@@ -188,8 +212,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     /**
-     *
-     * @param duration
+     * @param duration float
      */
     public void animateBlackScene(float duration) {
         if (!isAnimatingScene) {
