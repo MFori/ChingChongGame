@@ -1,11 +1,11 @@
 package cz.martinforejt.chingchong;
 
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Created by Martin Forejt on 16.05.2016.
  * forejt.martin97@gmail.com
+ * class ChingChong
  */
 public class ChinChong {
 
@@ -27,7 +27,7 @@ public class ChinChong {
         this.player = player;
         this.activity = activity;
 
-        if(player instanceof ServerPlayer) {
+        if (player instanceof ServerPlayer) {
             ((ServerPlayer) player).restartServer();
         }
 
@@ -36,27 +36,54 @@ public class ChinChong {
         gameView = GameView.getInstance();
     }
 
+    /**
+     *
+     */
     public void start() {
         isRunning = true;
         gameTime = true;
-        //player.hisTurn(true);
+
+        GameFragment.getInstance().isHisTurn(player.isHisTurn());
+        player.rival.hisTurn(!player.isHisTurn());
+
         GameThread.start();
     }
 
+    /**
+     *
+     */
     public void pause() {
         isRunning = false;
-        GameThread.interrupt();
     }
 
+    /**
+     *
+     */
     public void resume() {
+        GameThread.interrupt();
+        GameThread = null;
+        gameTime = true;
+
+        animateTime = false;
+        getDataTime = false;
+        endRoundTime = false;
+
+        isRunning = true;
+        GameThread = new Thread(new GameRunnable());
         GameThread.start();
     }
 
+    /**
+     * @param thumbs int
+     */
     public void thumbsChange(int thumbs) {
         if (gameTime)
             this.player.setShowsThumbs(thumbs);
     }
 
+    /**
+     * @param chongs int
+     */
     public void chongsChange(int chongs) {
         if (gameTime && this.player.isHisTurn()) {
             this.player.setChongs(chongs);
@@ -64,10 +91,20 @@ public class ChinChong {
         }
     }
 
+    /**
+     *
+     */
     public void end() {
         isRunning = false;
         GameThread.interrupt();
         GameThread = null;
+    }
+
+    /**
+     * @return bool
+     */
+    public boolean isPaused() {
+        return !isRunning;
     }
 
     /**
@@ -78,7 +115,8 @@ public class ChinChong {
 
         @Override
         public void run() {
-            setChongsKeyboard();
+            Log.d("START", "RUN");
+            //setChongsKeyboard();
             while (isRunning) {
                 try {
                     if (gameTime) {
@@ -100,19 +138,20 @@ public class ChinChong {
          * Game time - player can play ( change thumbs and chongs )
          */
         private void gameTimePart() {
-            gameView.setCountDownAnimationg();
+            gameView.setCountDownAnimation();
             onUi(new Runnable() {
                 @Override
                 public void run() {
                     gameView.animateCountDown();
                 }
             });
-            try {
-                while (gameView.isCountDownAnimating()) {
+            Log.d("TE", "T");
+            while (gameView.isCountDownAnimating()) {
+                try {
                     Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
             gameTime = false;
             getDataTime = true;
@@ -173,11 +212,12 @@ public class ChinChong {
             endRoundTime = false;
 
             // End game - show result screen
-            if(ChinChong.this.player.getThumbs() == 0 || ChinChong.this.player.getRival().getThumbs() == 0) {
+            if (ChinChong.this.player.getThumbs() == 0 || ChinChong.this.player.getRival().getThumbs() == 0) {
+                player.onDestroy();
                 onUi(new Runnable() {
                     @Override
                     public void run() {
-                        GameFragment.getInstance().endGame();
+                        GameFragment.getInstance().endGame(ChinChong.this.player.getThumbs() == 0);
                     }
                 });
             } else {
@@ -186,6 +226,9 @@ public class ChinChong {
             }
         }
 
+        /**
+         *
+         */
         public void setChongsKeyboard() {
             if (ChinChong.this.player.isHisTurn()) {
                 ChinChong.this.player.hisTurn(false);

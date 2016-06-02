@@ -1,9 +1,3 @@
-/**
- * Created on 14.5.2016
- *
- * @author Martin Forejt
- * @email me@martinforejt.cz
- */
 package cz.martinforejt.chingchong;
 
 import android.content.Intent;
@@ -19,6 +13,8 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 /**
+ * Created by Martin Forejt on 14.05.2016.
+ * forejt.martin97@gmail.com
  * class SplashActivity
  * Launch Activity
  */
@@ -98,7 +94,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         t.interrupt();
         t = null;

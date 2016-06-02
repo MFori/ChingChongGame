@@ -18,6 +18,7 @@ import java.util.Enumeration;
 /**
  * Created by Martin Forejt on 16.05.2016.
  * forejt.martin97@gmail.com
+ * class ServerPlayer
  */
 public class ServerPlayer extends Player {
 
@@ -34,36 +35,65 @@ public class ServerPlayer extends Player {
     ServerSocket serverSocket;
 
     /**
-     * @param name String
+     * @param name      String
      * @param rivalName String
      */
-    public ServerPlayer(String name, String rivalName){
+    public ServerPlayer(String name, String rivalName) {
         super(name, rivalName);
         hisTurn(true);
         restartServer();
     }
 
+    /**
+     *
+     */
     public void restartServer() {
-        if(socketServerThread != null) {
-            socketServerThread.interrupt();
-            socketServerThread = null;
-        }
+        stopServer();
+        startServer();
+    }
 
+    /**
+     *
+     */
+    public void startServer() {
         socketServerThread = new Thread(new SocketServerThread());
         socketServerThread.start();
     }
 
-    public void sendData(){
+    /**
+     *
+     */
+    public void stopServer() {
+        if (socketServerThread != null) {
+            socketServerThread.interrupt();
+            socketServerThread = null;
+        }
+    }
+
+    /**
+     *
+     */
+    public void sendData() {
         waitingForData = true;
     }
 
-    public void haveData(){
+    /**
+     *
+     */
+    public void haveData() {
         int visibleThumbs = rival.getShowsThumbs() + this.getShowsThumbs();
 
+        Log.d("VISIBLE", String.valueOf(visibleThumbs));
+        Log.d("VISIBLE", String.valueOf(getChongs()));
         if (rival.isHisTurn()) {
+            Log.d("VISIBLE", "RIVAL");
             if (visibleThumbs == rival.getChongs()) rival.setThumbs(rival.getThumbs() - 1);
         } else if (this.isHisTurn) {
-            if (visibleThumbs == this.getChongs()) this.setThumbs(this.getThumbs() - 1);
+            Log.d("VISIBLE", "JA");
+            if (visibleThumbs == this.getChongs()) {
+                Log.d("VISIBLE", "ROVNA");
+                this.setThumbs(this.getThumbs() - 1);
+            }
         }
 
         rival.hasData(true);
@@ -81,7 +111,14 @@ public class ServerPlayer extends Player {
                 serverSocket = new ServerSocket(socketServerPORT);
 
                 while (true) {
+
+                    /*if(serverSocket.isClosed()){
+                        onDestroy();
+                        restartServer();
+                    }*/
+
                     Socket socket = serverSocket.accept();
+
                     InputStream is = socket.getInputStream();
                     InputStreamReader isr = new InputStreamReader(is);
                     BufferedReader br = new BufferedReader(isr);
@@ -93,7 +130,7 @@ public class ServerPlayer extends Player {
 
                     int messageType = getMessageType(message);
 
-                    switch (messageType){
+                    switch (messageType) {
                         case MESSAGE_CONNECT:
                             CreateGameFragment.getInstance().startGame();
                             break;
@@ -104,7 +141,7 @@ public class ServerPlayer extends Player {
                             break;
                     }
 
-                    if(messageType == MESSAGE_DATA && !waitingForData) continue;
+                    if (messageType == MESSAGE_DATA && !waitingForData) continue;
 
                     SocketServerReplyThread socketServerReplyThread = new SocketServerReplyThread(socket, messageType);
                     socketServerReplyThread.run();
@@ -117,15 +154,16 @@ public class ServerPlayer extends Player {
 
         /**
          * Read message type from message
+         *
          * @param message String
          * @return int
          */
         private int getMessageType(String message) {
-            if(message.equals("connect")) return MESSAGE_CONNECT;
-            else if(message.equals("end")) return MESSAGE_END;
+            if (message.equals("connect")) return MESSAGE_CONNECT;
+            else if (message.equals("end")) return MESSAGE_END;
             else {
                 String[] data = message.split(";");
-                if(data[0].equals("data")) return MESSAGE_DATA;
+                if (data[0].equals("data")) return MESSAGE_DATA;
             }
             return 0;
         }
@@ -141,7 +179,7 @@ public class ServerPlayer extends Player {
         private int message;
 
         /**
-         * @param socket Socket
+         * @param socket  Socket
          * @param message int
          */
         SocketServerReplyThread(Socket socket, int message) {
@@ -158,7 +196,7 @@ public class ServerPlayer extends Player {
                 outputStream = hostThreadSocket.getOutputStream();
                 PrintStream printStream = new PrintStream(outputStream);
 
-                switch (message){
+                switch (message) {
                     case MESSAGE_CONNECT:
                         msgReply = createConnectMessage();
                         break;
@@ -185,6 +223,9 @@ public class ServerPlayer extends Player {
 
     }
 
+    /**
+     * @param message String
+     */
     private void consumeData(String message) {
         String[] data = message.split(";");
 
@@ -218,6 +259,7 @@ public class ServerPlayer extends Player {
 
     /**
      * Return server socket port (always 8080)
+     *
      * @return int
      */
     public int getPort() {
@@ -226,6 +268,7 @@ public class ServerPlayer extends Player {
 
     /**
      * Return server socket ip address
+     *
      * @return String
      */
     public String getIpAddress() {
@@ -258,6 +301,7 @@ public class ServerPlayer extends Player {
      * Close server socket waiting...
      */
     public void onDestroy() {
+        Log.d("DESTROY", "DESTROY");
         if (serverSocket != null) {
             try {
                 serverSocket.close();
@@ -265,6 +309,7 @@ public class ServerPlayer extends Player {
                 e.printStackTrace();
             }
         }
+        stopServer();
     }
 
 }

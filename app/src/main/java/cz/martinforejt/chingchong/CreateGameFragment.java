@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link CreateGameFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Created by Martin Forejt on 16.05.2016.
+ * forejt.martin97@gmail.com
+ * class CreateGameFragment
  */
 public class CreateGameFragment extends Fragment {
 
@@ -27,13 +27,12 @@ public class CreateGameFragment extends Fragment {
 
     public static CreateGameFragment newInstance() {
         instance = new CreateGameFragment();
-        /*Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);*/
         return instance;
     }
 
+    /**
+     * @return CreateGameFragment
+     */
     public static CreateGameFragment getInstance() {
         return instance;
     }
@@ -45,10 +44,6 @@ public class CreateGameFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
         GameActivity.setVisibleFragment(TAG);
 
         player = new ServerPlayer("pepa", "rival");
@@ -65,6 +60,9 @@ public class CreateGameFragment extends Fragment {
         return view;
     }
 
+    /**
+     *
+     */
     public void startGame() {
         getActivity().runOnUiThread(new Runnable() {
             @Override

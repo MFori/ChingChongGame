@@ -37,6 +37,8 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.d("ON", "CREATE");
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -246,6 +248,11 @@ public class GameActivity extends AppCompatActivity {
                 }
             }).start();
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
 }

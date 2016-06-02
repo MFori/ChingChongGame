@@ -1,7 +1,5 @@
 package cz.martinforejt.chingchong;
 
-import android.app.Activity;
-import android.media.Image;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,8 +9,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+/**
+ * Created by Martin Forejt on 16.05.2016.
+ * forejt.martin97@gmail.com
+ * class GameFragment
+ */
 public class GameFragment extends Fragment {
 
     public static final String TYPE_MULTI_PLAYER = "multiplayer";
@@ -71,7 +73,6 @@ public class GameFragment extends Fragment {
 
         GameActivity.setVisibleFragment(TAG);
         game = new ChinChong(player, (GameActivity) getActivity());
-        game.start();
 
         left = (ImageButton) view.findViewById(R.id.left);
         right = (ImageButton) view.findViewById(R.id.right);
@@ -101,13 +102,21 @@ public class GameFragment extends Fragment {
         playerName.setText(player.getName());
         rivalName.setText(player.getRival().getName());
 
+        game.start();
+
         return view;
     }
 
+    /**
+     * @return GameView
+     */
     public GameView getGameView() {
         return gameView;
     }
 
+    /**
+     *
+     */
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -146,6 +155,9 @@ public class GameFragment extends Fragment {
         }
     };
 
+    /**
+     * @param thumbs int
+     */
     public void setPlayerThumbs(int thumbs) {
         switch (thumbs) {
             case 2:
@@ -163,6 +175,9 @@ public class GameFragment extends Fragment {
         }
     }
 
+    /**
+     * @param thumbs int
+     */
     public void setRivalThumbs(int thumbs) {
         switch (thumbs) {
             case 2:
@@ -180,17 +195,28 @@ public class GameFragment extends Fragment {
         }
     }
 
-    public void endGame() {
+    /**
+     * Show result fragment
+     *
+     * @param win bool - is player winner ( has 0 thumbs )
+     */
+    public void endGame(boolean win) {
         game.end();
         GameActivity activity = (GameActivity) getActivity();
-        activity.changeFragment(ResultFragment.newInstance(), ResultFragment.TAG, true);
+        activity.changeFragment(ResultFragment.newInstance(win, player), ResultFragment.TAG, true);
         game = null;
     }
 
+    /**
+     * @param chongs int
+     */
     public void animate(int chongs) {
         this.animate.setText("CHING - CHONG " + String.valueOf(chongs));
     }
 
+    /**
+     * @param chongs int
+     */
     public void setActiveChongs(int chongs) {
         int background = R.drawable.chong_button_active;
         int choosen = R.drawable.chong_button_active_choosen;
@@ -218,6 +244,9 @@ public class GameFragment extends Fragment {
         }
     }
 
+    /**
+     * @param hisTurn bool
+     */
     public void isHisTurn(boolean hisTurn) {
         int background = 0;
         if (hisTurn) {
@@ -233,11 +262,6 @@ public class GameFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
     public void onDetach() {
         super.onDetach();
     }
@@ -245,7 +269,13 @@ public class GameFragment extends Fragment {
     @Override
     public void onPause() {
         if (game != null) game.pause();
-        super.onDestroy();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        if (game != null) game.resume();
+        super.onResume();
     }
 
 }

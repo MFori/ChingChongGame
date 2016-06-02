@@ -3,10 +3,11 @@ package cz.martinforejt.chingchong;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
@@ -15,6 +16,7 @@ import java.net.UnknownHostException;
 /**
  * Created by Martin Forejt on 16.05.2016.
  * forejt.martin97@gmail.com
+ * class ClientPlayer
  */
 public class ClientPlayer extends Player {
 
@@ -32,19 +34,26 @@ public class ClientPlayer extends Player {
         this.ipAddress = ipAddress;
     }
 
+    /**
+     *
+     */
     public void connect() {
         Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
         mAsync.execute(MESSAGE_CONNECT);
         isConnect = false;
     }
 
+    /**
+     *
+     */
     public void sendData() {
-        //Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
-        //mAsync.execute(MESSAGE_CONNECT);
         Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
         mAsync.execute(MESSAGE_DATA);
     }
 
+    /**
+     *
+     */
     public void haveData() {
         int visibleThumbs = rival.getShowsThumbs() + this.getShowsThumbs();
 
@@ -57,6 +66,9 @@ public class ClientPlayer extends Player {
         rival.hasData(true);
     }
 
+    /**
+     * class Async
+     */
     public class Async extends AsyncTask<Integer, Void, Void> {
 
         String response = "";
@@ -73,61 +85,63 @@ public class ClientPlayer extends Player {
 
             asyncRunning = true;
 
-            //for (int i = 0; i < type.length; i++) {
+            Socket socket = null;
 
-                Socket socket = null;
+            try {
+                socket = new Socket(dstAddress, dstPort);
+
+                //Send the message to the server
+                OutputStream os = socket.getOutputStream();
+                OutputStreamWriter osw = new OutputStreamWriter(os);
+                BufferedWriter bw = new BufferedWriter(osw);
+
+                String message = "";
+                if (type[0] == MESSAGE_CONNECT) message = createConnectMessage();
+                if (type[0] == MESSAGE_DATA) message = createDataMessage();
+                if (type[0] == MESSAGE_END) message = createEndMessage();
+
+                String sendMessage = message + "\n";
+                bw.write(sendMessage);
+                bw.flush();
 
                 try {
-                    socket = new Socket(dstAddress, dstPort);
-
-                    //Send the message to the server
-                    OutputStream os = socket.getOutputStream();
-                    OutputStreamWriter osw = new OutputStreamWriter(os);
-                    BufferedWriter bw = new BufferedWriter(osw);
-
-                    String message = "";
-                    if (type[0] == MESSAGE_CONNECT) message = createConnectMessage();
-                    if (type[0] == MESSAGE_DATA) message = createDataMessage();
-                    if (type[0] == MESSAGE_END) message = createEndMessage();
-
-                    String sendMessage = message + "\n";
-                    bw.write(sendMessage);
-                    bw.flush();
-
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
-                            1024);
-                    byte[] buffer = new byte[1024];
-
-                    int bytesRead;
-                    InputStream inputStream = socket.getInputStream();
-
-			/*
-             * notice: inputStream.read() will block if no data return
-			 */
-                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-                        byteArrayOutputStream.write(buffer, 0, bytesRead);
-                        response += byteArrayOutputStream.toString("UTF-8");
-                    }
-
-                } catch (UnknownHostException e) {
-                    // TODO Auto-generated catch block
+                    Thread.sleep(200);
+                } catch (Exception e) {
                     e.printStackTrace();
-                    response = "UnknownHostException: " + e.toString();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                    response = "IOException: " + e.toString();
-                } finally {
-                    if (socket != null) {
-                        try {
-                            socket.close();
-                        } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
+                }
+
+                InputStream inputStream = socket.getInputStream();
+
+                BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder total = new StringBuilder();
+                String line;
+                while ((line = r.readLine()) != null) {
+                    total.append(line).append('\n');
+                }
+
+                response = total.toString().trim();
+
+                os.close();
+                inputStream.close();
+
+            } catch (UnknownHostException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                response = "UnknownHostException: " + e.toString();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                response = "IOException: " + e.toString();
+            } finally {
+                if (socket != null) {
+                    try {
+                        socket.close();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
                     }
                 }
-            //}
+            }
             return null;
         }
 
@@ -137,7 +151,7 @@ public class ClientPlayer extends Player {
 
             int messageType = getMessageType(response);
 
-            switch (messageType){
+            switch (messageType) {
                 case MESSAGE_CONNECT:
                     isConnect = true;
                     break;
@@ -155,16 +169,23 @@ public class ClientPlayer extends Player {
         }
     }
 
+    /**
+     * @param message string
+     * @return int
+     */
     private int getMessageType(String message) {
-        if(message.equals("connect")) return MESSAGE_CONNECT;
-        else if(message.equals("end")) return MESSAGE_END;
+        if (message.equals("connect")) return MESSAGE_CONNECT;
+        else if (message.equals("end")) return MESSAGE_END;
         else {
             String[] data = message.split(";");
-            if(data[0].equals("data")) return MESSAGE_DATA;
+            if (data[0].equals("data")) return MESSAGE_DATA;
         }
         return 0;
     }
 
+    /**
+     * @param message string
+     */
     private void consumeData(String message) {
         String[] data = message.split(";");
 
@@ -207,7 +228,7 @@ public class ClientPlayer extends Player {
      * @return bool
      */
     public boolean isConnect() {
-        return  isConnect;
+        return isConnect;
     }
 
     /**
@@ -215,5 +236,12 @@ public class ClientPlayer extends Player {
      */
     public boolean isAsyncRunning() {
         return asyncRunning;
+    }
+
+    /**
+     *
+     */
+    public void onDestroy() {
+
     }
 }

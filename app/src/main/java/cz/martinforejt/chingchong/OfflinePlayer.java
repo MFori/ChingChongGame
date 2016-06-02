@@ -5,6 +5,7 @@ import java.util.Random;
 /**
  * Created by Martin Forejt on 16.05.2016.
  * forejt.martin97@gmail.com
+ * class OfflinePlayer
  */
 public class OfflinePlayer extends Player {
 
@@ -12,6 +13,9 @@ public class OfflinePlayer extends Player {
         super(name, rivalName);
     }
 
+    /**
+     *
+     */
     public void sendData() {
 
         int allThumbs = rival.getThumbs() + this.getThumbs();
@@ -39,7 +43,17 @@ public class OfflinePlayer extends Player {
         this.rival.hasData(true);
     }
 
+    /**
+     *
+     */
     public void haveData() {
+
+    }
+
+    /**
+     *
+     */
+    public void onDestroy() {
 
     }
 

@@ -8,16 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+/**
+ * Created by Martin Forejt on 16.05.2016.
+ * forejt.martin97@gmail.com
+ * class MenuFragment
+ */
 public class MenuFragment extends Fragment {
 
     public static final String TAG = "menu";
 
     public static MenuFragment newInstance() {
         MenuFragment fragment = new MenuFragment();
-        /*Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);*/
         return fragment;
     }
 
@@ -27,10 +28,6 @@ public class MenuFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            //mParam1 = getArguments().getString(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         GameActivity.setVisibleFragment(TAG);
     }
 
@@ -38,12 +35,10 @@ public class MenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View v = inflater.inflate(R.layout.fragment_menu, container, false);
 
+        // take care of menu buttons
         Menu.getInstance(v, getActivity()).init();
-
-        ImageButton rate = (ImageButton) v.findViewById(R.id.menu_rate);
 
         return v;
     }

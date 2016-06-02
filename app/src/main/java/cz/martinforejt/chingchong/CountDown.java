@@ -9,6 +9,7 @@ import android.graphics.Paint;
 /**
  * Created by Martin Forejt on 24.05.2016.
  * forejt.martin97@gmail.com
+ * class CountDown
  */
 public class CountDown {
 
@@ -22,8 +23,14 @@ public class CountDown {
 
     public CountDown(Context context, int number) {
         initBitmap(context, number);
+        this.context = context;
+        this.number = number;
     }
 
+    /**
+     * @param context Context
+     * @param number  int
+     */
     private static void initBitmap(Context context, int number) {
         int id = R.drawable.countdown_1;
         switch (number) {
@@ -46,6 +53,9 @@ public class CountDown {
         original = BitmapFactory.decodeResource(context.getResources(), id);
     }
 
+    /**
+     * @param canvas Canvas
+     */
     public void draw(Canvas canvas) {
         Bitmap bitmap = Bitmap.createScaledBitmap(original, width, height, false);
 
@@ -56,24 +66,75 @@ public class CountDown {
         canvas.drawBitmap(bitmap, x, y, paint);
     }
 
+    /**
+     * @param width int
+     */
     public void setWidth(int width) {
         this.width = width;
     }
+
+    /**
+     * @return int
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * @param height int
+     */
 
     public void setHeight(int height) {
         this.height = height;
     }
 
+    /**
+     * @return int
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * @param opacity int
+     */
     public void setOpacity(int opacity) {
         this.opacity = opacity;
     }
 
+    /**
+     * @return int
+     */
+    public int getOpacity() {
+        return opacity;
+    }
+
+    /**
+     * @param x int
+     */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     * @return int
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * @param y int
+     */
     public void setY(int y) {
         this.y = y;
+    }
+
+    /**
+     * @return int
+     */
+    public int getY() {
+        return y;
     }
 
 }

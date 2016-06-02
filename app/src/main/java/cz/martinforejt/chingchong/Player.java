@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Martin Forejt on 16.05.2016.
  * forejt.martin97@gmail.com
+ * abstract class Player
  */
 public abstract class Player implements PlayerInterface, Serializable {
 
@@ -12,7 +13,7 @@ public abstract class Player implements PlayerInterface, Serializable {
 
     protected int thumbs = 2;
     protected int showsThumbs = 0;
-    protected int chongs;
+    protected int chongs = 0;
     protected boolean isHisTurn;
 
     public Rival rival;
@@ -22,48 +23,87 @@ public abstract class Player implements PlayerInterface, Serializable {
         rival = new Rival(rivalName);
     }
 
+    /**
+     * @return Rival
+     */
     public Rival getRival() {
         return rival;
     }
 
+    /**
+     * @param thumbs int
+     * @return Player
+     */
     public Player setThumbs(int thumbs) {
         this.thumbs = thumbs;
         return this;
     }
 
+    /**
+     * @return int
+     */
     public int getThumbs() {
         return thumbs;
     }
 
+    /**
+     * @param showsThumbs int
+     * @return Player
+     */
     public Player setShowsThumbs(int showsThumbs) {
         this.showsThumbs = showsThumbs;
         return this;
     }
 
+    /**
+     * @return int
+     */
     public int getShowsThumbs() {
         return showsThumbs;
     }
 
+    /**
+     * @return bool
+     */
     public boolean isHisTurn() {
         return isHisTurn;
     }
 
+    /**
+     * @return int
+     */
     public int getChongs() {
         return chongs;
     }
 
+    /**
+     * @param chongs int
+     * @return Player
+     */
     public Player setChongs(int chongs) {
         this.chongs = chongs;
         return this;
     }
 
+    /**
+     * @param turn bool
+     * @return Player
+     */
     public Player hisTurn(boolean turn) {
         isHisTurn = turn;
         return this;
     }
 
+    /**
+     * @return String
+     */
     public String getName() {
         return name;
     }
+
+    /**
+     *
+     */
+    abstract void onDestroy();
 
 }

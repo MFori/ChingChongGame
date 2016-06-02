@@ -13,4 +13,23 @@
         android:scaleType="fitCenter"
         android:src="@drawable/back" />
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/win"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="REMATCH"
+            android:id="@+id/btn_rematch"/>
+
+    </LinearLayout>
+
 </cz.martinforejt.chingchong.GameLayout>

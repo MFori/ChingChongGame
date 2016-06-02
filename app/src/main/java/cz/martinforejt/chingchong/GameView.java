@@ -4,15 +4,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 /**
- * Created by Martin Forejt on 15.05.2016.
+ * Created by Martin Forejt on 16.05.2016.
  * forejt.martin97@gmail.com
+ * class GameView
  */
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -81,6 +81,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    /**
+     *
+     */
     public void animateCountDown() {
         countDownAnimating = true;
         new Thread(new Runnable() {
@@ -118,6 +121,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }).start();
     }
 
+    /**
+     * @param canvas Canvas
+     * @param number CountDown
+     * @param width  int
+     * @param height int
+     * @param x      int
+     * @param y      int
+     * @param alpha  int
+     */
     private void drawCountDown(Canvas canvas, CountDown number, int width, int height, int x, int y, int alpha) {
         number.setOpacity(alpha);
         number.setWidth(width);
@@ -127,15 +139,24 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         number.draw(canvas);
     }
 
+    /**
+     * @return bool
+     */
     public boolean isCountDownAnimating() {
         return countDownAnimating;
     }
 
-    public GameView setCountDownAnimationg() {
+    /**
+     * @return GameView
+     */
+    public GameView setCountDownAnimation() {
         countDownAnimating = true;
         return this;
     }
 
+    /**
+     *
+     */
     private void clear() {
         Canvas canvas = holder.lockCanvas();
         if (canvas != null) {
@@ -146,7 +167,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
     }
 
     public static GameView getInstance() {

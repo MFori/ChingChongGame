@@ -12,9 +12,9 @@ import android.widget.EditText;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link JoinGameFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Created by Martin Forejt on 17.05.2016.
+ * forejt.martin97@gmail.com
+ * class JoinGameFragment
  */
 public class JoinGameFragment extends Fragment {
 
@@ -27,10 +27,6 @@ public class JoinGameFragment extends Fragment {
 
     public static JoinGameFragment newInstance() {
         JoinGameFragment fragment = new JoinGameFragment();
-        /*Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);*/
         return fragment;
     }
 
@@ -41,15 +37,8 @@ public class JoinGameFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
-        GameActivity.setVisibleFragment(TAG);
 
-        /*ClientPlayer clientPlayer = new ClientPlayer("pepa", "sfd", "192.168.0.100");
-        clientPlayer.connect();
-        clientPlayer.connect();*/
+        GameActivity.setVisibleFragment(TAG);
     }
 
     @Override
@@ -68,10 +57,10 @@ public class JoinGameFragment extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        while (player.isAsyncRunning()){
+                        while (player.isAsyncRunning()) {
                             continue;
                         }
-                        if(player.isConnect()){
+                        if (player.isConnect()) {
                             Log.d("CONNECTED", "YES");
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override

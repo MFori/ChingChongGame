@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
 /**
  * Created by Martin Forejt on 15.05.2016.
  * forejt.martin97@gmail.com
+ * class Menu
  */
 public class Menu implements View.OnClickListener {
 
@@ -18,12 +18,20 @@ public class Menu implements View.OnClickListener {
     protected static View view;
     protected static GameActivity activity;
 
+    /**
+     * @param view     View
+     * @param activity Activity
+     * @return Menu
+     */
     public static Menu getInstance(View view, Activity activity) {
         Menu.view = view;
         Menu.activity = (GameActivity) activity;
         return new Menu();
     }
 
+    /**
+     *
+     */
     public void init() {
         rate = (ImageButton) view.findViewById(R.id.menu_rate);
         rate.setOnClickListener(Menu.this);
