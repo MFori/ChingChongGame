@@ -27,8 +27,14 @@ public class ServerPlayer extends Player {
     static final int MESSAGE_CONNECT = 1;
     static final int MESSAGE_DATA = 2;
     static final int MESSAGE_END = 3;
+    static final int MESSAGE_REMATCH = 4;
+    static final int MESSAGE_PAUSE = 5;
 
     private boolean waitingForData = false;
+    private boolean isRunning = false;
+    private String clientIp = null;
+    private boolean wantRematch = false;
+    private boolean clientWantRematch = false;
 
     Thread socketServerThread = null;
 
@@ -40,7 +46,8 @@ public class ServerPlayer extends Player {
      */
     public ServerPlayer(String name, String rivalName) {
         super(name, rivalName);
-        hisTurn(true);
+        hisTurn(false);
+        rival.hisTurn(true);
         restartServer();
     }
 
@@ -56,6 +63,7 @@ public class ServerPlayer extends Player {
      *
      */
     public void startServer() {
+        isRunning = true;
         socketServerThread = new Thread(new SocketServerThread());
         socketServerThread.start();
     }
@@ -64,6 +72,14 @@ public class ServerPlayer extends Player {
      *
      */
     public void stopServer() {
+        isRunning = false;
+        if (serverSocket != null) {
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         if (socketServerThread != null) {
             socketServerThread.interrupt();
             socketServerThread = null;
@@ -110,12 +126,7 @@ public class ServerPlayer extends Player {
             try {
                 serverSocket = new ServerSocket(socketServerPORT);
 
-                while (true) {
-
-                    /*if(serverSocket.isClosed()){
-                        onDestroy();
-                        restartServer();
-                    }*/
+                while (isRunning) {
 
                     Socket socket = serverSocket.accept();
 
@@ -124,27 +135,31 @@ public class ServerPlayer extends Player {
                     BufferedReader br = new BufferedReader(isr);
                     String message = br.readLine();
 
-                    String message1 = message + "#" + " from "
-                            + socket.getInetAddress() + ":"
-                            + socket.getPort() + "\n";
+                    if (clientIp == null || clientIp.equals(socket.getInetAddress().toString())) {
+                        int messageType = getMessageType(message);
 
-                    int messageType = getMessageType(message);
+                        switch (messageType) {
+                            case MESSAGE_CONNECT:
+                                if (clientIp == null) clientIp = socket.getInetAddress().toString();
+                                CreateGameFragment.getInstance().startGame();
+                                break;
+                            case MESSAGE_DATA:
+                                consumeData(message);
+                                break;
+                            case MESSAGE_END:
+                                break;
+                            case MESSAGE_REMATCH:
+                                clientWantRematch = true;
+                                if (wantRematch) ResultFragment.getInstance().rematch();
+                                break;
+                        }
 
-                    switch (messageType) {
-                        case MESSAGE_CONNECT:
-                            CreateGameFragment.getInstance().startGame();
-                            break;
-                        case MESSAGE_DATA:
-                            consumeData(message);
-                            break;
-                        case MESSAGE_END:
-                            break;
+                        if (messageType != MESSAGE_CONNECT && clientIp == null) continue;
+                        if (messageType == MESSAGE_DATA && !waitingForData) continue;
+
+                        SocketServerReplyThread socketServerReplyThread = new SocketServerReplyThread(socket, messageType);
+                        socketServerReplyThread.run();
                     }
-
-                    if (messageType == MESSAGE_DATA && !waitingForData) continue;
-
-                    SocketServerReplyThread socketServerReplyThread = new SocketServerReplyThread(socket, messageType);
-                    socketServerReplyThread.run();
 
                 }
             } catch (IOException e) {
@@ -159,11 +174,18 @@ public class ServerPlayer extends Player {
          * @return int
          */
         private int getMessageType(String message) {
-            if (message.equals("connect")) return MESSAGE_CONNECT;
-            else if (message.equals("end")) return MESSAGE_END;
-            else {
-                String[] data = message.split(";");
-                if (data[0].equals("data")) return MESSAGE_DATA;
+            String[] data = message.split(";");
+            switch (data[0]) {
+                case "connect":
+                    return MESSAGE_CONNECT;
+                case "end":
+                    return MESSAGE_END;
+                case "data":
+                    return MESSAGE_DATA;
+                case "rematch":
+                    return MESSAGE_REMATCH;
+                case "pause":
+                    return MESSAGE_PAUSE;
             }
             return 0;
         }
@@ -190,7 +212,7 @@ public class ServerPlayer extends Player {
         @Override
         public void run() {
             OutputStream outputStream;
-            String msgReply = "Hello from Server, you are #";
+            String msgReply = "";
 
             try {
                 outputStream = hostThreadSocket.getOutputStream();
@@ -205,6 +227,10 @@ public class ServerPlayer extends Player {
                         break;
                     case MESSAGE_END:
                         msgReply = "end";
+                        break;
+                    case MESSAGE_REMATCH:
+                        if (wantRematch) msgReply = "rematch";
+                        else msgReply = "";
                         break;
                 }
 
@@ -228,6 +254,8 @@ public class ServerPlayer extends Player {
      */
     private void consumeData(String message) {
         String[] data = message.split(";");
+
+        Log.d("CONSUME", message);
 
         ServerPlayer.this.rival.setShowsThumbs(Integer.valueOf(data[1]));
         ServerPlayer.this.rival.setChongs(Integer.valueOf(data[2]));
@@ -255,6 +283,22 @@ public class ServerPlayer extends Player {
         Log.d("DATA", message);
 
         return message;
+    }
+
+    /**
+     * @return bool
+     */
+    public boolean clientWantRematch() {
+        return clientWantRematch;
+    }
+
+    /**
+     * @param wantRematch bool
+     * @return ServerPlayer
+     */
+    public ServerPlayer wantRematch(boolean wantRematch) {
+        this.wantRematch = wantRematch;
+        return this;
     }
 
     /**
@@ -301,7 +345,7 @@ public class ServerPlayer extends Player {
      * Close server socket waiting...
      */
     public void onDestroy() {
-        Log.d("DESTROY", "DESTROY");
+        Log.d("SERVER", "DESTROY");
         if (serverSocket != null) {
             try {
                 serverSocket.close();

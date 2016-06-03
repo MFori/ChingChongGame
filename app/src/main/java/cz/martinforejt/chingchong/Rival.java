@@ -11,9 +11,9 @@ public class Rival implements Serializable {
 
     private String name;
     private int thumbs = 2;
-    private int chongs;
+    private int chongs = 0;
     protected int showsThumbs = 0;
-    private boolean isHisTurn;
+    private boolean isHisTurn = false;
 
     private boolean hasData = false;
 

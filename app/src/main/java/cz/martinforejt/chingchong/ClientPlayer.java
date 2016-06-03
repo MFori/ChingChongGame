@@ -23,6 +23,8 @@ public class ClientPlayer extends Player {
     static final int MESSAGE_CONNECT = 1;
     static final int MESSAGE_DATA = 2;
     static final int MESSAGE_END = 3;
+    static final int MESSAGE_REMATCH = 4;
+    static final int MESSAGE_PAUSE = 5;
 
     private String ipAddress = "";
     private boolean isConnect = false;
@@ -30,7 +32,8 @@ public class ClientPlayer extends Player {
 
     public ClientPlayer(String name, String rivalName, String ipAddress) {
         super(name, rivalName);
-        hisTurn(false);
+        hisTurn(true);
+        rival.hisTurn(false);
         this.ipAddress = ipAddress;
     }
 
@@ -49,6 +52,12 @@ public class ClientPlayer extends Player {
     public void sendData() {
         Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
         mAsync.execute(MESSAGE_DATA);
+    }
+
+    public void rematch() {
+        Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
+        mAsync.execute(MESSAGE_REMATCH);
+        isConnect = false;
     }
 
     /**
@@ -97,8 +106,10 @@ public class ClientPlayer extends Player {
 
                 String message = "";
                 if (type[0] == MESSAGE_CONNECT) message = createConnectMessage();
-                if (type[0] == MESSAGE_DATA) message = createDataMessage();
-                if (type[0] == MESSAGE_END) message = createEndMessage();
+                else if (type[0] == MESSAGE_DATA) message = createDataMessage();
+                else if (type[0] == MESSAGE_END) message = createEndMessage();
+                else if (type[0] == MESSAGE_REMATCH) message = createRematchMessage();
+                else return null;
 
                 String sendMessage = message + "\n";
                 bw.write(sendMessage);
@@ -153,6 +164,7 @@ public class ClientPlayer extends Player {
 
             switch (messageType) {
                 case MESSAGE_CONNECT:
+                case MESSAGE_REMATCH:
                     isConnect = true;
                     break;
                 case MESSAGE_DATA:
@@ -174,11 +186,18 @@ public class ClientPlayer extends Player {
      * @return int
      */
     private int getMessageType(String message) {
-        if (message.equals("connect")) return MESSAGE_CONNECT;
-        else if (message.equals("end")) return MESSAGE_END;
-        else {
-            String[] data = message.split(";");
-            if (data[0].equals("data")) return MESSAGE_DATA;
+        String[] data = message.split(";");
+        switch (data[0]) {
+            case "connect":
+                return MESSAGE_CONNECT;
+            case "end":
+                return MESSAGE_END;
+            case "data":
+                return MESSAGE_DATA;
+            case "rematch":
+                return MESSAGE_REMATCH;
+            case "pause":
+                return MESSAGE_PAUSE;
         }
         return 0;
     }
@@ -222,6 +241,13 @@ public class ClientPlayer extends Player {
         Log.d("DATA", message);
 
         return message;
+    }
+
+    /**
+     * @return String
+     */
+    private String createRematchMessage() {
+        return "rematch";
     }
 
     /**

@@ -60,17 +60,19 @@ public class ChinChong {
      *
      */
     public void resume() {
-        GameThread.interrupt();
-        GameThread = null;
-        gameTime = true;
+        if(!isRunning) {
+            GameThread.interrupt();
+            GameThread = null;
+            gameTime = true;
 
-        animateTime = false;
-        getDataTime = false;
-        endRoundTime = false;
+            animateTime = false;
+            getDataTime = false;
+            endRoundTime = false;
 
-        isRunning = true;
-        GameThread = new Thread(new GameRunnable());
-        GameThread.start();
+            isRunning = true;
+            GameThread = new Thread(new GameRunnable());
+            GameThread.start();
+        }
     }
 
     /**
@@ -162,8 +164,12 @@ public class ChinChong {
          */
         private void gettingDataTimePart() {
             ChinChong.this.player.sendData();
+            player.rival.hasData(false);
             while (getDataTime) {
+                Log.d("WHILE", "DATA");
                 if (ChinChong.this.player.getRival().hasData()) {
+                    Log.d("WHILE", "HAS");
+                    Log.d("WHILE", String.valueOf(player.getShowsThumbs() + player.rival.getShowsThumbs()));
                     getDataTime = false;
                     animateTime = true;
                     break;

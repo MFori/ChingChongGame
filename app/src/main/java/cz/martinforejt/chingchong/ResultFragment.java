@@ -3,6 +3,7 @@ package cz.martinforejt.chingchong;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ public class ResultFragment extends Fragment {
     private boolean winner;
     private Player player;
 
+    private static ResultFragment instance;
+
     private Button rematch;
 
     /**
@@ -37,7 +40,15 @@ public class ResultFragment extends Fragment {
         args.putBoolean(ARG_WINNER, win);
         args.putSerializable(ARG_PLAYER, player);
         fragment.setArguments(args);
+        instance = fragment;
         return fragment;
+    }
+
+    /**
+     * @return ResultFragment
+     */
+    public static ResultFragment getInstance() {
+        return instance;
     }
 
     @Override
@@ -85,14 +96,60 @@ public class ResultFragment extends Fragment {
         @Override
         public void onClick(View v) {
             restorePlayer();
-            ((GameActivity) getActivity()).changeFragment(GameFragment.newInstance(player), GameFragment.TAG, true);
+            Log.d("REMATCH", "ALL");
+            // Client
+            if (player instanceof ClientPlayer) {
+                Log.d("REMATCH", "SINGLE");
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("REMATCH", "SINGLE_RUN");
+                        boolean isConnect = false;
+                        while (!isConnect) {
+                            ((ClientPlayer) player).rematch();
+                            while (((ClientPlayer) player).isAsyncRunning()) {
+                                continue;
+                            }
+                            if (((ClientPlayer) player).isConnect()) {
+                                rematch();
+                                return;
+                            }
+                            try {
+                                Thread.sleep(200);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            isConnect = ((ClientPlayer) player).isConnect();
+                        }
+                    }
+                }).start();
+            }
+            // Server
+            else if (player instanceof ServerPlayer) {
+                ((ServerPlayer) player).wantRematch(true);
+            }
         }
     };
+
+    /**
+     *
+     */
+    public void rematch() {
+        player.onDestroy();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ((GameActivity) getActivity()).changeFragment(GameFragment.newInstance(player), GameFragment.TAG, true);
+            }
+        });
+    }
 
     /**
      * Restore player thumbs information
      */
     private void restorePlayer() {
+        if(player instanceof ServerPlayer) ((ServerPlayer) player).restartServer();
+
         player.setThumbs(2);
         player.setShowsThumbs(0);
         player.setChongs(0);
@@ -101,7 +158,8 @@ public class ResultFragment extends Fragment {
         player.rival.setShowsThumbs(0);
         player.rival.setChongs(0);
 
-        player.hisTurn(player instanceof ServerPlayer || player instanceof OfflinePlayer);
+        player.hisTurn(player instanceof ClientPlayer);
+        player.rival.hisTurn(!(player instanceof ClientPlayer));
     }
 
     public ResultFragment() {

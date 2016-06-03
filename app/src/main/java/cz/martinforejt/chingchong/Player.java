@@ -14,7 +14,7 @@ public abstract class Player implements PlayerInterface, Serializable {
     protected int thumbs = 2;
     protected int showsThumbs = 0;
     protected int chongs = 0;
-    protected boolean isHisTurn;
+    protected boolean isHisTurn = false;
 
     public Rival rival;
 
