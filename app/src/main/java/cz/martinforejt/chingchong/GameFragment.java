@@ -17,8 +17,6 @@ import android.widget.TextView;
  */
 public class GameFragment extends Fragment {
 
-    public static final String TYPE_MULTI_PLAYER = "multiplayer";
-    public static final String TYPE_SINGLE_PLAYER = "singleplayer";
     public static final String TAG = "game";
 
     private static GameFragment instance;
@@ -26,7 +24,8 @@ public class GameFragment extends Fragment {
     private ChinChong game;
     private Player player;
 
-    private boolean leftActive = true, rightActive = true;
+    private boolean leftActive = true,
+            rightActive = true;
     private int leftThumb = 0, rightThumb = 0;
 
     GameView gameView;
@@ -74,30 +73,7 @@ public class GameFragment extends Fragment {
         GameActivity.setVisibleFragment(TAG);
         game = new ChinChong(player, (GameActivity) getActivity());
 
-        left = (ImageButton) view.findViewById(R.id.left);
-        right = (ImageButton) view.findViewById(R.id.right);
-        num0 = (Button) view.findViewById(R.id.click0);
-        num1 = (Button) view.findViewById(R.id.click1);
-        num2 = (Button) view.findViewById(R.id.click2);
-        num3 = (Button) view.findViewById(R.id.click3);
-        num4 = (Button) view.findViewById(R.id.click4);
-
-        left.setOnClickListener(onClickListener);
-        right.setOnClickListener(onClickListener);
-        num0.setOnClickListener(onClickListener);
-        num1.setOnClickListener(onClickListener);
-        num2.setOnClickListener(onClickListener);
-        num3.setOnClickListener(onClickListener);
-        num4.setOnClickListener(onClickListener);
-
-        playerName = (TextView) view.findViewById(R.id.player_name);
-        rivalName = (TextView) view.findViewById(R.id.rival_name);
-        animate = (TextView) view.findViewById(R.id.animate);
-
-        playerThumb1 = (ImageView) view.findViewById(R.id.player_thumb_1);
-        playerThumb2 = (ImageView) view.findViewById(R.id.player_thumb_2);
-        rivalThumb1 = (ImageView) view.findViewById(R.id.rival_thumb_1);
-        rivalThumb2 = (ImageView) view.findViewById(R.id.rival_thumb_2);
+        initElements(view);
 
         playerName.setText(player.getName());
         rivalName.setText(player.getRival().getName());
@@ -108,14 +84,7 @@ public class GameFragment extends Fragment {
     }
 
     /**
-     * @return GameView
-     */
-    public GameView getGameView() {
-        return gameView;
-    }
-
-    /**
-     *
+     * Listener for thumbs and chongs
      */
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -156,6 +125,8 @@ public class GameFragment extends Fragment {
     };
 
     /**
+     * Set players available thumbs
+     *
      * @param thumbs int
      */
     public void setPlayerThumbs(int thumbs) {
@@ -176,6 +147,8 @@ public class GameFragment extends Fragment {
     }
 
     /**
+     * Set rival available thumbs
+     *
      * @param thumbs int
      */
     public void setRivalThumbs(int thumbs) {
@@ -208,6 +181,8 @@ public class GameFragment extends Fragment {
     }
 
     /**
+     * Animate result
+     *
      * @param chongs int
      */
     public void animate(int chongs) {
@@ -215,6 +190,8 @@ public class GameFragment extends Fragment {
     }
 
     /**
+     * Set active chong background
+     *
      * @param chongs int
      */
     public void setActiveChongs(int chongs) {
@@ -245,10 +222,12 @@ public class GameFragment extends Fragment {
     }
 
     /**
+     * Enable/Disable chongs 'keyboard'
+     *
      * @param hisTurn bool
      */
     public void isHisTurn(boolean hisTurn) {
-        int background = 0;
+        int background;
         if (hisTurn) {
             background = R.drawable.chong_button_active;
         } else {
@@ -259,6 +238,38 @@ public class GameFragment extends Fragment {
         num2.setBackgroundResource(background);
         num3.setBackgroundResource(background);
         num4.setBackgroundResource(background);
+    }
+
+    /**
+     * Init views from layout
+     *
+     * @param view View - fragment
+     */
+    private void initElements(View view) {
+        left = (ImageButton) view.findViewById(R.id.left);
+        right = (ImageButton) view.findViewById(R.id.right);
+        num0 = (Button) view.findViewById(R.id.click0);
+        num1 = (Button) view.findViewById(R.id.click1);
+        num2 = (Button) view.findViewById(R.id.click2);
+        num3 = (Button) view.findViewById(R.id.click3);
+        num4 = (Button) view.findViewById(R.id.click4);
+
+        left.setOnClickListener(onClickListener);
+        right.setOnClickListener(onClickListener);
+        num0.setOnClickListener(onClickListener);
+        num1.setOnClickListener(onClickListener);
+        num2.setOnClickListener(onClickListener);
+        num3.setOnClickListener(onClickListener);
+        num4.setOnClickListener(onClickListener);
+
+        playerName = (TextView) view.findViewById(R.id.player_name);
+        rivalName = (TextView) view.findViewById(R.id.rival_name);
+        animate = (TextView) view.findViewById(R.id.animate);
+
+        playerThumb1 = (ImageView) view.findViewById(R.id.player_thumb_1);
+        playerThumb2 = (ImageView) view.findViewById(R.id.player_thumb_2);
+        rivalThumb1 = (ImageView) view.findViewById(R.id.rival_thumb_1);
+        rivalThumb2 = (ImageView) view.findViewById(R.id.rival_thumb_2);
     }
 
     @Override

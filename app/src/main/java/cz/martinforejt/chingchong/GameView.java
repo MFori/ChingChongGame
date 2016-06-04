@@ -16,7 +16,6 @@ import android.view.SurfaceView;
  */
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
-    private Thread thread;
     private SurfaceHolder holder;
     Bitmap time;
     Paint paint;
@@ -82,7 +81,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
-     *
+     * Animate countdown from 5 to 0
      */
     public void animateCountDown() {
         countDownAnimating = true;
@@ -96,8 +95,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     for (int i = 5; i > 0; i--) {
                         width = (TimeWidth * 6) / 7;
                         alpha = 255;
+
+                        // create number object
                         CountDown number = new CountDown(context, i);
                         long start = System.currentTimeMillis();
+                        // 1200 milis for number
                         while ((System.currentTimeMillis() - start) < 1200) {
                             canvas = holder.lockCanvas();
                             if (canvas != null) {
@@ -122,6 +124,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
+     * Draw number bitmap on canvas
+     *
      * @param canvas Canvas
      * @param number CountDown
      * @param width  int
@@ -140,6 +144,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
+     * Check if still countdown animation
+     *
      * @return bool
      */
     public boolean isCountDownAnimating() {
@@ -155,7 +161,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
-     *
+     * Draw only background
      */
     private void clear() {
         Canvas canvas = holder.lockCanvas();
@@ -169,6 +175,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceDestroyed(SurfaceHolder holder) {
     }
 
+    /**
+     * Get instance of GameView
+     *
+     * @return GameView
+     */
     public static GameView getInstance() {
         return instance;
     }

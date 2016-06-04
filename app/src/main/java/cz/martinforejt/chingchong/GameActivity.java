@@ -35,11 +35,21 @@ public class GameActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_game);
 
+        Config.init(getApplicationContext());
+
         black_scene = findViewById(R.id.black_scene);
 
         // Set default fragment
-        MenuFragment fragment = MenuFragment.newInstance();
-        changeFragment(fragment, MenuFragment.TAG, false);
+        Fragment fragment;
+        String tag;
+        if (Config.getName().equals("")) {
+            fragment = new NewPlayerFragment();
+            tag = NewPlayerFragment.TAG;
+        } else {
+            fragment = MenuFragment.newInstance();
+            tag = MenuFragment.TAG;
+        }
+        changeFragment(fragment, tag, false);
     }
 
     /**
@@ -91,7 +101,8 @@ public class GameActivity extends AppCompatActivity {
     public void onBackPressed() {
         switch (visibleFragment) {
             case MenuFragment.TAG:
-                //super.onBackPressed();
+            case NewPlayerFragment.TAG:
+                // open exit dialog
                 exitDialog();
                 break;
             case GameFragment.TAG:
@@ -115,7 +126,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Show exit dialog
      */
     public void exitDialog() {
         LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
@@ -163,7 +174,7 @@ public class GameActivity extends AppCompatActivity {
      * @param v Button
      */
     public void playSinglePlayer(View v) {
-        changeFragment(GameFragment.newInstance(new OfflinePlayer("Martin", "Pepa")), GameFragment.TAG, true);
+        changeFragment(GameFragment.newInstance(new OfflinePlayer(Config.getName(), Config.RIVAL_OFFLINE_NAME)), GameFragment.TAG, true);
     }
 
     /**
@@ -212,7 +223,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     /**
-     * @param duration float
+     * Animate black screen with alpha
+     *
+     * @param duration float - permeation time
      */
     public void animateBlackScene(float duration) {
         if (!isAnimatingScene) {

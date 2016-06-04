@@ -11,13 +11,20 @@ public class Rival implements Serializable {
 
     private String name;
     private int thumbs = 2;
-    private int chongs = 0;
+    private int chongs = -1;
     protected int showsThumbs = 0;
     private boolean isHisTurn = false;
 
     private boolean hasData = false;
 
     public Rival(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @param name String
+     */
+    public void setName(String name) {
         this.name = name;
     }
 

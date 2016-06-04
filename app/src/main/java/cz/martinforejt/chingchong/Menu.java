@@ -30,7 +30,7 @@ public class Menu implements View.OnClickListener {
     }
 
     /**
-     *
+     * Initialize menu layout elements
      */
     public void init() {
         rate = (ImageButton) view.findViewById(R.id.menu_rate);
@@ -70,32 +70,42 @@ public class Menu implements View.OnClickListener {
         }
 
         if (fragment != null) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    float alpha = 1;
-                    try {
-                        while (alpha > 0) {
-                            Thread.sleep(5);
-                            alpha -= 0.07;
-                            final float _alpha = alpha;
-                            activity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    rate.setAlpha(_alpha);
-                                    exit.setAlpha(_alpha);
-                                    settings.setAlpha(_alpha);
-                                    about.setAlpha(_alpha);
-                                }
-                            });
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-            activity.changeFragment(fragment, tag, GameActivity.SLIDE_RIGHT, false);
+            changeFragment(fragment, tag);
         }
+    }
+
+    /**
+     * Change the fragment
+     *
+     * @param fragment Fragment
+     * @param tag      String
+     */
+    private void changeFragment(Fragment fragment, String tag) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                float alpha = 1;
+                try {
+                    while (alpha > 0) {
+                        Thread.sleep(5);
+                        alpha -= 0.07;
+                        final float _alpha = alpha;
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                rate.setAlpha(_alpha);
+                                exit.setAlpha(_alpha);
+                                settings.setAlpha(_alpha);
+                                about.setAlpha(_alpha);
+                            }
+                        });
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        activity.changeFragment(fragment, tag, GameActivity.SLIDE_RIGHT, false);
     }
 
     /**
@@ -104,9 +114,13 @@ public class Menu implements View.OnClickListener {
     private void showStore() {
         final String appPackageName = activity.getPackageName(); // getPackageName() from Context or Activity object
         try {
-            activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+            activity.startActivity(
+                    new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName))
+            );
         } catch (android.content.ActivityNotFoundException anfe) {
-            activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+            activity.startActivity(
+                    new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName))
+            );
         }
     }
 

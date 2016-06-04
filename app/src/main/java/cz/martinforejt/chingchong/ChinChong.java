@@ -1,6 +1,5 @@
 package cz.martinforejt.chingchong;
 
-import android.util.Log;
 
 /**
  * Created by Martin Forejt on 16.05.2016.
@@ -23,6 +22,12 @@ public class ChinChong {
 
     private GameView gameView;
 
+    /**
+     * Game construct
+     *
+     * @param player   Player ( offline/client/server )
+     * @param activity GameActivity
+     */
     public ChinChong(Player player, GameActivity activity) {
         this.player = player;
         this.activity = activity;
@@ -33,16 +38,18 @@ public class ChinChong {
 
         GameThread = new Thread(new GameRunnable());
 
+        // get surfaceView
         gameView = GameView.getInstance();
     }
 
     /**
-     *
+     * Start the game, run the main game Thread
      */
     public void start() {
         isRunning = true;
         gameTime = true;
 
+        // Display/Hide chongs choose 'keyboard'
         GameFragment.getInstance().isHisTurn(player.isHisTurn());
         player.rival.hisTurn(!player.isHisTurn());
 
@@ -50,17 +57,18 @@ public class ChinChong {
     }
 
     /**
-     *
+     * Pause the game, end main Thread
      */
     public void pause() {
         isRunning = false;
     }
 
     /**
-     *
+     * Resume paused game if is paused
+     * Restore game logic
      */
     public void resume() {
-        if(!isRunning) {
+        if (!isRunning) {
             GameThread.interrupt();
             GameThread = null;
             gameTime = true;
@@ -76,6 +84,8 @@ public class ChinChong {
     }
 
     /**
+     * Trigger for thumbs change in game fragment layout
+     *
      * @param thumbs int
      */
     public void thumbsChange(int thumbs) {
@@ -84,6 +94,9 @@ public class ChinChong {
     }
 
     /**
+     * Trigger for chongs change in game fragment layout
+     * Only if is player turn
+     *
      * @param chongs int
      */
     public void chongsChange(int chongs) {
@@ -94,7 +107,7 @@ public class ChinChong {
     }
 
     /**
-     *
+     * End the game and stop main game Thread
      */
     public void end() {
         isRunning = false;
@@ -103,6 +116,8 @@ public class ChinChong {
     }
 
     /**
+     * Check if game is in pause mode
+     *
      * @return bool
      */
     public boolean isPaused() {
@@ -111,23 +126,28 @@ public class ChinChong {
 
     /**
      * GameRunnable
-     * Main Game Thread
+     * For main Game Thread
      */
     private class GameRunnable implements Runnable {
 
+        /**
+         * Main game loop
+         */
         @Override
         public void run() {
-            Log.d("START", "RUN");
-            //setChongsKeyboard();
             while (isRunning) {
                 try {
                     if (gameTime) {
+                        // player can play
                         gameTimePart();
                     } else if (getDataTime) {
+                        // players changing data
                         gettingDataTimePart();
                     } else if (animateTime) {
+                        // animation result, when has all data
                         animateResultTimePart();
                     } else if (endRoundTime) {
+                        // set up for new round
                         endRoundTimePart();
                     }
                 } catch (Exception e) {
@@ -147,13 +167,14 @@ public class ChinChong {
                     gameView.animateCountDown();
                 }
             });
-            Log.d("TE", "T");
+
             while (gameView.isCountDownAnimating()) {
                 try {
-                    Thread.sleep(1);
+                    Thread.sleep(2);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                // TODO ZKUSIT misto sleep countinue;
             }
             gameTime = false;
             getDataTime = true;
@@ -163,13 +184,12 @@ public class ChinChong {
          * Getting data from rival
          */
         private void gettingDataTimePart() {
+            // send data to rival
             ChinChong.this.player.sendData();
             player.rival.hasData(false);
             while (getDataTime) {
-                Log.d("WHILE", "DATA");
+                // player has data from rival
                 if (ChinChong.this.player.getRival().hasData()) {
-                    Log.d("WHILE", "HAS");
-                    Log.d("WHILE", String.valueOf(player.getShowsThumbs() + player.rival.getShowsThumbs()));
                     getDataTime = false;
                     animateTime = true;
                     break;
@@ -207,8 +227,6 @@ public class ChinChong {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            ChinChong.this.player.rival.hasData(false);
         }
 
         /**
@@ -216,6 +234,7 @@ public class ChinChong {
          */
         private void endRoundTimePart() {
             endRoundTime = false;
+            ChinChong.this.player.rival.hasData(false);
 
             // End game - show result screen
             if (ChinChong.this.player.getThumbs() == 0 || ChinChong.this.player.getRival().getThumbs() == 0) {
@@ -233,7 +252,7 @@ public class ChinChong {
         }
 
         /**
-         *
+         * Enable/Disable chongs choosing 'keyboard'
          */
         public void setChongsKeyboard() {
             if (ChinChong.this.player.isHisTurn()) {

@@ -10,6 +10,7 @@ import android.graphics.Paint;
  * Created by Martin Forejt on 24.05.2016.
  * forejt.martin97@gmail.com
  * class CountDown
+ * Draws countDown img ( 5 - 4,..)
  */
 public class CountDown {
 
@@ -21,6 +22,12 @@ public class CountDown {
     protected int width, height, opacity;
     protected int x, y;
 
+    /**
+     * Construct
+     *
+     * @param context Context
+     * @param number  int
+     */
     public CountDown(Context context, int number) {
         initBitmap(context, number);
         this.context = context;
@@ -28,6 +35,8 @@ public class CountDown {
     }
 
     /**
+     * Get (create from resources) the original bitmap for current number
+     *
      * @param context Context
      * @param number  int
      */
@@ -54,6 +63,8 @@ public class CountDown {
     }
 
     /**
+     * Draw bitmap on canvas
+     *
      * @param canvas Canvas
      */
     public void draw(Canvas canvas) {
@@ -67,6 +78,8 @@ public class CountDown {
     }
 
     /**
+     * Set bitmap width
+     *
      * @param width int
      */
     public void setWidth(int width) {
@@ -74,6 +87,8 @@ public class CountDown {
     }
 
     /**
+     * Return bitmap width
+     *
      * @return int
      */
     public int getWidth() {
@@ -81,14 +96,17 @@ public class CountDown {
     }
 
     /**
+     * Set bitmap height
+     *
      * @param height int
      */
-
     public void setHeight(int height) {
         this.height = height;
     }
 
     /**
+     * Return bitmap height
+     *
      * @return int
      */
     public int getHeight() {
@@ -96,6 +114,8 @@ public class CountDown {
     }
 
     /**
+     * Set bitmap opacity
+     *
      * @param opacity int
      */
     public void setOpacity(int opacity) {
@@ -103,6 +123,8 @@ public class CountDown {
     }
 
     /**
+     * Return bitmap opacity
+     *
      * @return int
      */
     public int getOpacity() {
@@ -110,6 +132,8 @@ public class CountDown {
     }
 
     /**
+     * Set x position of bitmap
+     *
      * @param x int
      */
     public void setX(int x) {
@@ -117,6 +141,8 @@ public class CountDown {
     }
 
     /**
+     * Return x position of bitmap
+     *
      * @return int
      */
     public int getX() {
@@ -124,6 +150,8 @@ public class CountDown {
     }
 
     /**
+     * Set y position of bitmap
+     *
      * @param y int
      */
     public void setY(int y) {
@@ -131,6 +159,8 @@ public class CountDown {
     }
 
     /**
+     * Return y position of bitmap
+     *
      * @return int
      */
     public int getY() {

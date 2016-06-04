@@ -1,6 +1,5 @@
 package cz.martinforejt.chingchong;
 
-
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,18 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 /**
  * Created by Martin Forejt on 16.05.2016.
  * forejt.martin97@gmail.com
  * class CreateGameFragment
+ * Uses for creating game - creating server player
  */
 public class CreateGameFragment extends Fragment {
 
     public static final String TAG = "create";
 
     private ServerPlayer player;
-    private String playerName = "";
 
     private static CreateGameFragment instance;
 
@@ -46,7 +44,7 @@ public class CreateGameFragment extends Fragment {
         super.onCreate(savedInstanceState);
         GameActivity.setVisibleFragment(TAG);
 
-        player = new ServerPlayer("pepa", "rival");
+        player = new ServerPlayer(Config.getName(), "");
     }
 
     @Override
@@ -61,7 +59,7 @@ public class CreateGameFragment extends Fragment {
     }
 
     /**
-     *
+     * Starts the game ( add gameFragment )
      */
     public void startGame() {
         getActivity().runOnUiThread(new Runnable() {

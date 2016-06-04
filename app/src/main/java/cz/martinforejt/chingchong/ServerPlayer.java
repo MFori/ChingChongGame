@@ -140,8 +140,7 @@ public class ServerPlayer extends Player {
 
                         switch (messageType) {
                             case MESSAGE_CONNECT:
-                                if (clientIp == null) clientIp = socket.getInetAddress().toString();
-                                CreateGameFragment.getInstance().startGame();
+                                consumeConnect(message, socket);
                                 break;
                             case MESSAGE_DATA:
                                 consumeData(message);
@@ -263,10 +262,27 @@ public class ServerPlayer extends Player {
     }
 
     /**
+     * @param message String
+     */
+    private void consumeConnect(String message, Socket socket) {
+        if (clientIp == null) clientIp = socket.getInetAddress().toString();
+        CreateGameFragment.getInstance().startGame();
+
+        String[] data = message.split(";");
+
+        rival.setName(data[1]);
+    }
+
+    /**
      * @return String
      */
     private String createConnectMessage() {
-        return "connect";
+        String message = "connect";
+
+        message += ";";
+        message += this.getName();
+
+        return message;
     }
 
     /**

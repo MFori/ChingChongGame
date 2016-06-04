@@ -20,16 +20,23 @@ import java.net.UnknownHostException;
  */
 public class ClientPlayer extends Player {
 
+    // Messages types
     static final int MESSAGE_CONNECT = 1;
     static final int MESSAGE_DATA = 2;
     static final int MESSAGE_END = 3;
     static final int MESSAGE_REMATCH = 4;
     static final int MESSAGE_PAUSE = 5;
 
+    // Server ip Address
     private String ipAddress = "";
     private boolean isConnect = false;
     private boolean asyncRunning = false;
 
+    /**
+     * @param name      String
+     * @param rivalName String
+     * @param ipAddress String - server ip address
+     */
     public ClientPlayer(String name, String rivalName, String ipAddress) {
         super(name, rivalName);
         hisTurn(true);
@@ -38,7 +45,7 @@ public class ClientPlayer extends Player {
     }
 
     /**
-     *
+     * Connect to Server (server player)
      */
     public void connect() {
         Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
@@ -47,13 +54,16 @@ public class ClientPlayer extends Player {
     }
 
     /**
-     *
+     * Send data to server
      */
     public void sendData() {
         Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
         mAsync.execute(MESSAGE_DATA);
     }
 
+    /**
+     * Send rematch request to server
+     */
     public void rematch() {
         Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
         mAsync.execute(MESSAGE_REMATCH);
@@ -61,7 +71,7 @@ public class ClientPlayer extends Player {
     }
 
     /**
-     *
+     * Calculate and consume data from server
      */
     public void haveData() {
         int visibleThumbs = rival.getShowsThumbs() + this.getShowsThumbs();
@@ -104,7 +114,7 @@ public class ClientPlayer extends Player {
                 OutputStreamWriter osw = new OutputStreamWriter(os);
                 BufferedWriter bw = new BufferedWriter(osw);
 
-                String message = "";
+                String message;
                 if (type[0] == MESSAGE_CONNECT) message = createConnectMessage();
                 else if (type[0] == MESSAGE_DATA) message = createDataMessage();
                 else if (type[0] == MESSAGE_END) message = createEndMessage();
@@ -115,12 +125,14 @@ public class ClientPlayer extends Player {
                 bw.write(sendMessage);
                 bw.flush();
 
+                //
                 try {
                     Thread.sleep(200);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
+                // Get reply from server
                 InputStream inputStream = socket.getInputStream();
 
                 BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
@@ -130,17 +142,16 @@ public class ClientPlayer extends Player {
                     total.append(line).append('\n');
                 }
 
+                // final message
                 response = total.toString().trim();
 
                 os.close();
                 inputStream.close();
 
             } catch (UnknownHostException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
                 response = "UnknownHostException: " + e.toString();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
                 response = "IOException: " + e.toString();
             } finally {
@@ -148,7 +159,6 @@ public class ClientPlayer extends Player {
                     try {
                         socket.close();
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
@@ -158,12 +168,13 @@ public class ClientPlayer extends Player {
 
         @Override
         protected void onPostExecute(Void result) {
-            Log.d("EXECUTE", response);
+            Log.d("Execute: ", response);
 
             int messageType = getMessageType(response);
 
             switch (messageType) {
                 case MESSAGE_CONNECT:
+                    consumeConnect(response);
                 case MESSAGE_REMATCH:
                     isConnect = true;
                     break;
@@ -182,8 +193,10 @@ public class ClientPlayer extends Player {
     }
 
     /**
+     * Return type of message
+     *
      * @param message string
-     * @return int
+     * @return int - type
      */
     private int getMessageType(String message) {
         String[] data = message.split(";");
@@ -203,7 +216,11 @@ public class ClientPlayer extends Player {
     }
 
     /**
-     * @param message string
+     * Save data from server to rival object
+     *
+     * @param message string - data
+     *                Data structure:
+     *                " data ; rivalShowsThumbs ; rivalChongs ; rivalAvailableThumbs "
      */
     private void consumeData(String message) {
         String[] data = message.split(";");
@@ -214,13 +231,31 @@ public class ClientPlayer extends Player {
     }
 
     /**
-     * @return String
+     * @param message String
      */
-    private String createConnectMessage() {
-        return "connect";
+    private void consumeConnect(String message) {
+        String[] data = message.split(";");
+
+        rival.setName(data[1]);
     }
 
     /**
+     * Return the connect message
+     *
+     * @return String
+     */
+    private String createConnectMessage() {
+        String message = "connect";
+
+        message += ";";
+        message += this.getName();
+
+        return message;
+    }
+
+    /**
+     * Return the end message
+     *
      * @return String
      */
     private String createEndMessage() {
@@ -228,6 +263,8 @@ public class ClientPlayer extends Player {
     }
 
     /**
+     * Return the data message
+     *
      * @return String
      */
     private String createDataMessage() {
@@ -238,12 +275,14 @@ public class ClientPlayer extends Player {
         message += ";" + String.valueOf(ClientPlayer.this.getChongs());
         message += ";" + String.valueOf(ClientPlayer.this.getThumbs());
 
-        Log.d("DATA", message);
+        Log.d("Data(send): ", message);
 
         return message;
     }
 
     /**
+     * Return rematch message
+     *
      * @return String
      */
     private String createRematchMessage() {
@@ -251,6 +290,8 @@ public class ClientPlayer extends Player {
     }
 
     /**
+     * Check if is connect to server ( server player )
+     *
      * @return bool
      */
     public boolean isConnect() {
@@ -258,6 +299,8 @@ public class ClientPlayer extends Player {
     }
 
     /**
+     * Check if asyncTask is running
+     *
      * @return bool
      */
     public boolean isAsyncRunning() {
@@ -265,7 +308,7 @@ public class ClientPlayer extends Player {
     }
 
     /**
-     *
+     * Required destroy method
      */
     public void onDestroy() {
 

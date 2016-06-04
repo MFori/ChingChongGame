@@ -1,6 +1,5 @@
 package cz.martinforejt.chingchong;
 
-
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -10,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-
 /**
  * Created by Martin Forejt on 17.05.2016.
  * forejt.martin97@gmail.com
  * class JoinGameFragment
+ * For join the game - create client player
  */
 public class JoinGameFragment extends Fragment {
 
@@ -26,8 +25,7 @@ public class JoinGameFragment extends Fragment {
     private Button joinBtn;
 
     public static JoinGameFragment newInstance() {
-        JoinGameFragment fragment = new JoinGameFragment();
-        return fragment;
+        return new JoinGameFragment();
     }
 
     public JoinGameFragment() {
@@ -52,7 +50,7 @@ public class JoinGameFragment extends Fragment {
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                player = new ClientPlayer("pepa", "rival", ipAddress.getText().toString());
+                player = new ClientPlayer(Config.getName(), "", ipAddress.getText().toString());
                 player.connect();
                 new Thread(new Runnable() {
                     @Override
@@ -80,6 +78,5 @@ public class JoinGameFragment extends Fragment {
 
         return view;
     }
-
 
 }
