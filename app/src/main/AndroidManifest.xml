@@ -27,6 +27,7 @@
             android:screenOrientation="landscape"
             android:configChanges="orientation|screenSize">
         </activity>
+        <service android:name=".Music" android:enabled="true"/>
     </application>
 
 </manifest>
