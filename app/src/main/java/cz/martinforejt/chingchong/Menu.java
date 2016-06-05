@@ -24,7 +24,6 @@ public class Menu implements View.OnClickListener {
     /**
      * @param view     View
      * @param activity Activity
-     * @return Menu
      */
     public Menu(View view, Activity activity) {
         this.view = view;

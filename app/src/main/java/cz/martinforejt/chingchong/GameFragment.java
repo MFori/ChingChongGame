@@ -1,10 +1,13 @@
 package cz.martinforejt.chingchong;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -66,21 +69,27 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_game, container, false);
+        final View view = inflater.inflate(R.layout.fragment_game, container, false);
 
         gameView = (GameView) view.findViewById(R.id.gameView);
 
         GameActivity.setVisibleFragment(TAG);
+
         game = new ChinChong(player, (GameActivity) getActivity());
+        game.start();
 
         initElements(view);
 
         playerName.setText(player.getName());
         rivalName.setText(player.getRival().getName());
 
-        game.start();
-
         return view;
+    }
+
+    @Override
+    public void onStart() {
+//        game.start();
+        super.onStart();
     }
 
     /**
@@ -130,20 +139,21 @@ public class GameFragment extends Fragment {
      * @param thumbs int
      */
     public void setPlayerThumbs(int thumbs) {
-        switch (thumbs) {
-            case 2:
-                playerThumb1.setVisibility(View.VISIBLE);
-                playerThumb2.setVisibility(View.VISIBLE);
-                break;
-            case 1:
-                playerThumb1.setVisibility(View.GONE);
-                playerThumb2.setVisibility(View.VISIBLE);
-                break;
-            case 0:
-                playerThumb1.setVisibility(View.GONE);
-                playerThumb2.setVisibility(View.GONE);
-                break;
-        }
+        if (game != null)
+            switch (thumbs) {
+                case 2:
+                    playerThumb1.setVisibility(View.VISIBLE);
+                    playerThumb2.setVisibility(View.VISIBLE);
+                    break;
+                case 1:
+                    playerThumb1.setVisibility(View.GONE);
+                    playerThumb2.setVisibility(View.VISIBLE);
+                    break;
+                case 0:
+                    playerThumb1.setVisibility(View.GONE);
+                    playerThumb2.setVisibility(View.GONE);
+                    break;
+            }
     }
 
     /**
@@ -152,20 +162,21 @@ public class GameFragment extends Fragment {
      * @param thumbs int
      */
     public void setRivalThumbs(int thumbs) {
-        switch (thumbs) {
-            case 2:
-                rivalThumb1.setVisibility(View.VISIBLE);
-                rivalThumb2.setVisibility(View.VISIBLE);
-                break;
-            case 1:
-                rivalThumb1.setVisibility(View.GONE);
-                rivalThumb2.setVisibility(View.VISIBLE);
-                break;
-            case 0:
-                rivalThumb1.setVisibility(View.GONE);
-                rivalThumb2.setVisibility(View.GONE);
-                break;
-        }
+        if (game != null)
+            switch (thumbs) {
+                case 2:
+                    rivalThumb1.setVisibility(View.VISIBLE);
+                    rivalThumb2.setVisibility(View.VISIBLE);
+                    break;
+                case 1:
+                    rivalThumb1.setVisibility(View.GONE);
+                    rivalThumb2.setVisibility(View.VISIBLE);
+                    break;
+                case 0:
+                    rivalThumb1.setVisibility(View.GONE);
+                    rivalThumb2.setVisibility(View.GONE);
+                    break;
+            }
     }
 
     /**
@@ -193,7 +204,8 @@ public class GameFragment extends Fragment {
      *
      */
     public void showPaused() {
-       animate.setText("PAUSED");
+        if (game != null)
+            animate.setText("PAUSED");
     }
 
     /**
@@ -269,6 +281,8 @@ public class GameFragment extends Fragment {
         num3.setOnClickListener(onClickListener);
         num4.setOnClickListener(onClickListener);
 
+        isHisTurn(player instanceof ClientPlayer);
+
         playerName = (TextView) view.findViewById(R.id.player_name);
         rivalName = (TextView) view.findViewById(R.id.rival_name);
         animate = (TextView) view.findViewById(R.id.animate);
@@ -288,6 +302,13 @@ public class GameFragment extends Fragment {
     public void onPause() {
         if (game != null) game.pause();
         super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        if (game != null) game.end();
+        game = null;
+        super.onDestroy();
     }
 
     @Override

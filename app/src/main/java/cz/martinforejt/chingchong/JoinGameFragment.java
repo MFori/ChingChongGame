@@ -56,6 +56,7 @@ public class JoinGameFragment extends Fragment {
                     @Override
                     public void run() {
                         while (player.isAsyncRunning()) {
+                            //Log.d("WAIT", "WHILE");
                             continue;
                         }
                         if (player.isConnect()) {

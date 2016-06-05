@@ -29,6 +29,9 @@ public class ResultFragment extends Fragment {
 
     private Button rematch;
 
+    Thread rematchT = null;
+    boolean waitForRematch = false;
+
     /**
      * @param win    bool
      * @param player Player
@@ -82,6 +85,8 @@ public class ResultFragment extends Fragment {
     }
 
     /**
+     * Initialize layout elements
+     *
      * @param v View
      */
     private void initElements(View v) {
@@ -90,7 +95,7 @@ public class ResultFragment extends Fragment {
     }
 
     /**
-     *
+     * On rematch button click listener
      */
     View.OnClickListener playRematch = new View.OnClickListener() {
         @Override
@@ -98,29 +103,38 @@ public class ResultFragment extends Fragment {
             restorePlayer();
             // Client
             if (player instanceof ClientPlayer) {
-                Log.d("Rematch: ", "client");
-                new Thread(new Runnable() {
+                rematchT = new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        waitForRematch = true;
                         boolean isConnect = false;
                         while (!isConnect) {
+
+                            Log.d("Rematch: ", "Call client");
                             ((ClientPlayer) player).rematch();
-                            while (((ClientPlayer) player).isAsyncRunning()) {
-                                continue;
-                            }
-                            if (((ClientPlayer) player).isConnect()) {
-                                rematch();
-                                return;
-                            }
+
                             try {
                                 Thread.sleep(200);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
+
+                            if (!waitForRematch) return;
+                            while (true) {
+                                if (!((ClientPlayer) player).isAsyncRunning()) break;
+                                if (!waitForRematch) return;
+                            }
                             isConnect = ((ClientPlayer) player).isConnect();
+                            if (isConnect) {
+                                rematch();
+                                return;
+                            }
+
+                            //isConnect = ((ClientPlayer) player).isConnect();
                         }
                     }
-                }).start();
+                });
+                rematchT.start();
             }
             // Server
             else if (player instanceof ServerPlayer) {
@@ -134,10 +148,10 @@ public class ResultFragment extends Fragment {
     };
 
     /**
-     *
+     * Start game with same rival
      */
     public void rematch() {
-        player.onDestroy();
+        //player.onDestroy();
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -152,13 +166,13 @@ public class ResultFragment extends Fragment {
     private void restorePlayer() {
         if (player instanceof ServerPlayer) ((ServerPlayer) player).restartServer();
 
-        player.setThumbs(2);
-        player.setShowsThumbs(0);
-        player.setChongs(0);
+        player.setThumbs(Player.DEFAULT_THUMBS);
+        player.setShowsThumbs(Player.DEFAULT_SHOWS_THUMBS);
+        player.setChongs(Player.DEFAULT_CHONGS);
 
-        player.rival.setThumbs(2);
-        player.rival.setShowsThumbs(0);
-        player.rival.setChongs(0);
+        player.rival.setThumbs(Player.DEFAULT_THUMBS);
+        player.rival.setShowsThumbs(Player.DEFAULT_SHOWS_THUMBS);
+        player.rival.setChongs(Player.DEFAULT_CHONGS);
 
         player.hisTurn(player instanceof ClientPlayer);
         player.rival.hisTurn(!(player instanceof ClientPlayer));
@@ -166,6 +180,17 @@ public class ResultFragment extends Fragment {
 
     public ResultFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onDestroy() {
+        waitForRematch = false;
+        if (rematchT != null) {
+            rematchT.interrupt();
+            rematchT = null;
+        }
+        player.onDestroy();
+        super.onDestroy();
     }
 
 }

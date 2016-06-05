@@ -52,7 +52,7 @@ public class ChinChong {
         gameTime = true;
 
         // Display/Hide chongs choose 'keyboard'
-        GameFragment.getInstance().isHisTurn(player.isHisTurn());
+        //GameFragment.getInstance().isHisTurn(player.isHisTurn());
         player.rival.hisTurn(!player.isHisTurn());
 
         GameThread.start();
@@ -118,6 +118,7 @@ public class ChinChong {
         isRunning = false;
         GameThread.interrupt();
         GameThread = null;
+        player.onDestroy();
     }
 
     /**
@@ -194,6 +195,13 @@ public class ChinChong {
             ChinChong.this.player.sendData();
             while (getDataTime) {
 
+                // player has data from rival
+                if (ChinChong.this.player.getRival().hasData()) {
+                    getDataTime = false;
+                    animateTime = true;
+                    break;
+                }
+
                 if(player instanceof ClientPlayer) {
                     if(((ClientPlayer) player).isError()) {
                         Log.d("Error: ", "Client");
@@ -210,14 +218,13 @@ public class ChinChong {
 
                 if(player instanceof ServerPlayer) {
                     if(((ServerPlayer) player).isClientPaused()) paused();
+                    try{
+                        Thread.sleep(100);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
 
-                // player has data from rival
-                if (ChinChong.this.player.getRival().hasData()) {
-                    getDataTime = false;
-                    animateTime = true;
-                    break;
-                }
             }
         }
 
@@ -306,7 +313,11 @@ public class ChinChong {
          * @param runnable Runnable
          */
         public void onUi(Runnable runnable) {
-            activity.runOnUiThread(runnable);
+            try{
+                activity.runOnUiThread(runnable);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
         public void paused() {

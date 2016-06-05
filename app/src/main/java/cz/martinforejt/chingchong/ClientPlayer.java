@@ -137,12 +137,13 @@ public class ClientPlayer extends Player {
                 bw.write(sendMessage);
                 bw.flush();
 
-                //
-                try {
-                    Thread.sleep(200);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                //if(type[0] == MESSAGE_CONNECT || type[0] == MESSAGE_REMATCH) {
+                    try {
+                        Thread.sleep(150);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                //}
 
                 // Get reply from server
                 InputStream inputStream = socket.getInputStream();
@@ -184,6 +185,7 @@ public class ClientPlayer extends Player {
 
             switch (messageType) {
                 case MESSAGE_CONNECT:
+                    isConnect = true;
                     consumeConnect(response);
                 case MESSAGE_REMATCH:
                     isConnect = true;
@@ -199,9 +201,9 @@ public class ClientPlayer extends Player {
                     break;
             }
 
-            asyncRunning = false;
-
             super.onPostExecute(result);
+
+            asyncRunning = false;
         }
     }
 

@@ -153,7 +153,7 @@ public class ServerPlayer extends Player {
                                 break;
                             case MESSAGE_REMATCH:
                                 clientWantRematch = true;
-                                if (wantRematch) ResultFragment.getInstance().rematch();
+                                //wantRematch = false;
                                 break;
                             case MESSAGE_PAUSE:
                                 clientPaused = true;
@@ -236,7 +236,11 @@ public class ServerPlayer extends Player {
                         msgReply = "end";
                         break;
                     case MESSAGE_REMATCH:
-                        if (wantRematch) msgReply = "rematch";
+                        if (wantRematch) {
+                            msgReply = "rematch";
+                            ResultFragment.getInstance().rematch();
+                            wantRematch = false;
+                        }
                         else msgReply = "";
                         break;
                 }

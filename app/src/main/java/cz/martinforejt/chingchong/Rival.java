@@ -10,9 +10,9 @@ import java.io.Serializable;
 public class Rival implements Serializable {
 
     private String name;
-    private int thumbs = 2;
-    private int chongs = -1;
-    protected int showsThumbs = 0;
+    private int thumbs = Player.DEFAULT_THUMBS;
+    private int chongs = Player.DEFAULT_CHONGS;
+    protected int showsThumbs = Player.DEFAULT_SHOWS_THUMBS;
     private boolean isHisTurn = false;
 
     private boolean hasData = false;

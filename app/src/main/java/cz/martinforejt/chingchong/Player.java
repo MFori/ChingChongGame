@@ -11,9 +11,13 @@ public abstract class Player implements PlayerInterface, Serializable {
 
     protected String name;
 
-    protected int thumbs = 2;
-    protected int showsThumbs = 0;
-    protected int chongs = -1;
+    public static final int DEFAULT_THUMBS = 2;
+    public static final int DEFAULT_SHOWS_THUMBS = 0;
+    public static final int DEFAULT_CHONGS = -1;
+
+    protected int thumbs = DEFAULT_THUMBS;
+    protected int showsThumbs = DEFAULT_SHOWS_THUMBS;
+    protected int chongs = DEFAULT_CHONGS;
     protected boolean isHisTurn = false;
 
     public Rival rival;

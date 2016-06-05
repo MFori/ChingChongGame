@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class GameActivity extends AppCompatActivity {
     protected static String visibleFragment = "menu";
 
     SoundManager soundManager;
+    BackgroundMusic backgroundMusic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class GameActivity extends AppCompatActivity {
         black_scene = findViewById(R.id.black_scene);
 
         soundManager = SoundManager.getInstance(getApplicationContext());
+        backgroundMusic = new BackgroundMusic(getApplicationContext(), BackgroundMusic.TRACK_01);
 
         // Set default fragment
         Fragment fragment;
@@ -296,7 +299,14 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onResume() {
+        backgroundMusic.start();
+        super.onResume();
+    }
+
+    @Override
     public void onPause() {
+        backgroundMusic.stop();
         super.onPause();
     }
 

@@ -125,9 +125,18 @@ public class SoundManager {
             try {
                 soundPool.play(soundIds[effect], 1, 1, 1, 0, 1.0f);
             } catch (Exception e) {
-                Log.d("PLAY", "E");
+                e.printStackTrace();
+                Log.d("Cant play: ", "EFFECT: " + String.valueOf(effect));
             }
         }
+    }
+
+    public void startBackground() {
+
+    }
+
+    public void stopBackground() {
+
     }
 
 }
