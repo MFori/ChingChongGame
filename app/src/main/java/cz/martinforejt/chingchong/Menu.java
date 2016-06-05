@@ -3,7 +3,9 @@ package cz.martinforejt.chingchong;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.media.SoundPool;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -15,18 +17,19 @@ import android.widget.ImageButton;
 public class Menu implements View.OnClickListener {
 
     protected ImageButton rate, exit, settings, about;
-    protected static View view;
-    protected static GameActivity activity;
+    protected View view;
+    protected GameActivity activity;
+    private SoundManager soundManager;
 
     /**
      * @param view     View
      * @param activity Activity
      * @return Menu
      */
-    public static Menu getInstance(View view, Activity activity) {
-        Menu.view = view;
-        Menu.activity = (GameActivity) activity;
-        return new Menu();
+    public Menu(View view, Activity activity) {
+        this.view = view;
+        this.activity = (GameActivity) activity;
+        soundManager = SoundManager.getInstance(activity.getApplicationContext());
     }
 
     /**
@@ -51,6 +54,12 @@ public class Menu implements View.OnClickListener {
 
         Fragment fragment = null;
         String tag = "";
+
+        try {
+            soundManager.play(SoundManager.EFFECT_MENU);
+        } catch (Exception e) {
+            Log.d("EX", "MENU");
+        }
 
         switch (view.getId()) {
             case R.id.menu_rate:

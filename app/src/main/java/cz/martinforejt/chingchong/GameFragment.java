@@ -190,6 +190,13 @@ public class GameFragment extends Fragment {
     }
 
     /**
+     *
+     */
+    public void showPaused() {
+       animate.setText("PAUSED");
+    }
+
+    /**
      * Set active chong background
      *
      * @param chongs int

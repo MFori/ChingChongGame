@@ -106,4 +106,13 @@ public abstract class Player implements PlayerInterface, Serializable {
      */
     abstract void onDestroy();
 
+    /**
+     *
+     */
+    abstract void onPause();
+
+    /**
+     *
+     */
+    abstract void onResume();
 }

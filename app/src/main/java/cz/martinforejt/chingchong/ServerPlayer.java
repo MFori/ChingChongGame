@@ -32,9 +32,11 @@ public class ServerPlayer extends Player {
 
     private boolean waitingForData = false;
     private boolean isRunning = false;
-    private String clientIp = null;
     private boolean wantRematch = false;
+
+    private String clientIp = null;
     private boolean clientWantRematch = false;
+    private boolean clientPaused = false;
 
     Thread socketServerThread = null;
 
@@ -80,6 +82,7 @@ public class ServerPlayer extends Player {
                 e.printStackTrace();
             }
         }
+        serverSocket = null;
         if (socketServerThread != null) {
             socketServerThread.interrupt();
             socketServerThread = null;
@@ -114,6 +117,7 @@ public class ServerPlayer extends Player {
 
         rival.hasData(true);
         waitingForData = false;
+        clientPaused = false;
     }
 
     /**
@@ -151,10 +155,13 @@ public class ServerPlayer extends Player {
                                 clientWantRematch = true;
                                 if (wantRematch) ResultFragment.getInstance().rematch();
                                 break;
+                            case MESSAGE_PAUSE:
+                                clientPaused = true;
+                                break;
                         }
 
                         if (messageType != MESSAGE_CONNECT && clientIp == null) continue;
-                        if (messageType == MESSAGE_DATA && !waitingForData) continue;
+                        if (messageType == MESSAGE_PAUSE) continue;
 
                         SocketServerReplyThread socketServerReplyThread = new SocketServerReplyThread(socket, messageType);
                         socketServerReplyThread.run();
@@ -222,7 +229,8 @@ public class ServerPlayer extends Player {
                         msgReply = createConnectMessage();
                         break;
                     case MESSAGE_DATA:
-                        msgReply = createDataMessage();
+                        if (!waitingForData) msgReply = "error";
+                        else msgReply = createDataMessage();
                         break;
                     case MESSAGE_END:
                         msgReply = "end";
@@ -318,6 +326,15 @@ public class ServerPlayer extends Player {
     }
 
     /**
+     * Check if client is paused
+     *
+     * @return bool
+     */
+    public boolean isClientPaused() {
+        return clientPaused;
+    }
+
+    /**
      * Return server socket port (always 8080)
      *
      * @return int
@@ -370,6 +387,27 @@ public class ServerPlayer extends Player {
             }
         }
         stopServer();
+    }
+
+    /**
+     *
+     */
+    public void onPause() {
+        if (serverSocket != null) {
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        stopServer();
+    }
+
+    /**
+     *
+     */
+    public void onResume() {
+        startServer();
     }
 
 }

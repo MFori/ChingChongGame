@@ -4,27 +4,43 @@
     android:layout_height="match_parent"
     tools:context="cz.martinforejt.chingchong.AboutFragment">
 
+    <ImageButton
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_margin="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:onClick="backToMenu"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="About"
+        android:textSize="35sp"/>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical">
-
-        <ImageButton
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_margin="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/back"
-            android:background="@null"
-            android:onClick="backToMenu"/>
-
+        android:layout_marginTop="60dp"
+        android:orientation="vertical"
+        android:gravity="center">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:text="ABOUT"
             android:textSize="50dp" />
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Icons from icons8.com"
+            android:textSize="20sp"/>
 
     </LinearLayout>
 

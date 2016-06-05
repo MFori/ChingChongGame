@@ -26,11 +26,13 @@ public class ClientPlayer extends Player {
     static final int MESSAGE_END = 3;
     static final int MESSAGE_REMATCH = 4;
     static final int MESSAGE_PAUSE = 5;
+    static final int MESSAGE_ERROR = 6;
 
     // Server ip Address
     private String ipAddress = "";
     private boolean isConnect = false;
     private boolean asyncRunning = false;
+    private boolean isError = false;
 
     /**
      * @param name      String
@@ -59,6 +61,7 @@ public class ClientPlayer extends Player {
     public void sendData() {
         Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
         mAsync.execute(MESSAGE_DATA);
+        isError = false;
     }
 
     /**
@@ -68,6 +71,14 @@ public class ClientPlayer extends Player {
         Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
         mAsync.execute(MESSAGE_REMATCH);
         isConnect = false;
+    }
+
+    /**
+     * Send pause message to server
+     */
+    public void sendPause() {
+        Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
+        mAsync.execute(MESSAGE_PAUSE);
     }
 
     /**
@@ -119,6 +130,7 @@ public class ClientPlayer extends Player {
                 else if (type[0] == MESSAGE_DATA) message = createDataMessage();
                 else if (type[0] == MESSAGE_END) message = createEndMessage();
                 else if (type[0] == MESSAGE_REMATCH) message = createRematchMessage();
+                else if (type[0] == MESSAGE_PAUSE) message = createPauseMessage();
                 else return null;
 
                 String sendMessage = message + "\n";
@@ -148,12 +160,10 @@ public class ClientPlayer extends Player {
                 os.close();
                 inputStream.close();
 
-            } catch (UnknownHostException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-                response = "UnknownHostException: " + e.toString();
-            } catch (IOException e) {
-                e.printStackTrace();
-                response = "IOException: " + e.toString();
+
+                response = "error";
             } finally {
                 if (socket != null) {
                     try {
@@ -184,6 +194,9 @@ public class ClientPlayer extends Player {
                     break;
                 case MESSAGE_END:
                     break;
+                case MESSAGE_ERROR:
+                    isError = true;
+                    break;
             }
 
             asyncRunning = false;
@@ -211,6 +224,8 @@ public class ClientPlayer extends Player {
                 return MESSAGE_REMATCH;
             case "pause":
                 return MESSAGE_PAUSE;
+            case "error":
+                return MESSAGE_ERROR;
         }
         return 0;
     }
@@ -290,12 +305,30 @@ public class ClientPlayer extends Player {
     }
 
     /**
+     * Return pause message
+     *
+     * @return String
+     */
+    private String createPauseMessage() {
+        return "pause";
+    }
+
+    /**
      * Check if is connect to server ( server player )
      *
      * @return bool
      */
     public boolean isConnect() {
         return isConnect;
+    }
+
+    /**
+     * Check for error
+     *
+     * @return bool
+     */
+    public boolean isError() {
+        return isError;
     }
 
     /**
@@ -311,6 +344,20 @@ public class ClientPlayer extends Player {
      * Required destroy method
      */
     public void onDestroy() {
+
+    }
+
+    /**
+     *
+     */
+    public void onPause() {
+        sendPause();
+    }
+
+    /**
+     *
+     */
+    public void onResume() {
 
     }
 }

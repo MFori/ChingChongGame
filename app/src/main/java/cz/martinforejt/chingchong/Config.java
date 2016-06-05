@@ -13,12 +13,14 @@ public class Config {
     private static Context context;
     private static SharedPreferences sharedPreferences;
 
+    // Name
     private static final String PREF_NAME = "config";
     private static final String NAME = "player_name";
-
     public static final String RIVAL_OFFLINE_NAME = "Android";
-
     private static String name = null;
+
+    // Sound
+    private static boolean isSoundOn = true;
 
     /**
      * Initialize config, call when app start
@@ -53,6 +55,15 @@ public class Config {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(NAME, Config.name);
         editor.apply();
+    }
+
+    /**
+     * Check if sound is on
+     *
+     * @return bool
+     */
+    public static boolean isIsSoundOn() {
+        return isSoundOn;
     }
 
 }

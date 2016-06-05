@@ -3,20 +3,28 @@
     android:layout_height="match_parent"
     tools:context="cz.martinforejt.chingchong.SettingsFragment">
 
+    <ImageButton
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_margin="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:onClick="backToMenu"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="Settings"
+        android:textSize="35sp"/>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical">
-
-        <ImageButton
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_margin="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/back"
-            android:background="@null"
-            android:onClick="backToMenu"/>
-
+        android:orientation="vertical"
+        android:layout_marginTop="60dp">
 
         <TextView
             android:layout_width="match_parent"

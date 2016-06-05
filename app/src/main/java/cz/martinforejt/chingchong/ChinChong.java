@@ -1,6 +1,8 @@
 package cz.martinforejt.chingchong;
 
 
+import android.util.Log;
+
 /**
  * Created by Martin Forejt on 16.05.2016.
  * forejt.martin97@gmail.com
@@ -61,6 +63,8 @@ public class ChinChong {
      */
     public void pause() {
         isRunning = false;
+        player.onPause();
+        gameView.stopCountDown();
     }
 
     /**
@@ -69,10 +73,11 @@ public class ChinChong {
      */
     public void resume() {
         if (!isRunning) {
+            player.onResume();
             GameThread.interrupt();
             GameThread = null;
-            gameTime = true;
 
+            gameTime = true;
             animateTime = false;
             getDataTime = false;
             endRoundTime = false;
@@ -185,9 +190,28 @@ public class ChinChong {
          */
         private void gettingDataTimePart() {
             // send data to rival
-            ChinChong.this.player.sendData();
             player.rival.hasData(false);
+            ChinChong.this.player.sendData();
             while (getDataTime) {
+
+                if(player instanceof ClientPlayer) {
+                    if(((ClientPlayer) player).isError()) {
+                        Log.d("Error: ", "Client");
+                        paused();
+                        try{
+                            Thread.sleep(200);
+                            ChinChong.this.player.sendData();
+                            continue;
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                if(player instanceof ServerPlayer) {
+                    if(((ServerPlayer) player).isClientPaused()) paused();
+                }
+
                 // player has data from rival
                 if (ChinChong.this.player.getRival().hasData()) {
                     getDataTime = false;
@@ -283,6 +307,15 @@ public class ChinChong {
          */
         public void onUi(Runnable runnable) {
             activity.runOnUiThread(runnable);
+        }
+
+        public void paused() {
+            onUi(new Runnable() {
+                @Override
+                public void run() {
+                    GameFragment.getInstance().showPaused();
+                }
+            });
         }
 
     }

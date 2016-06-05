@@ -96,14 +96,12 @@ public class ResultFragment extends Fragment {
         @Override
         public void onClick(View v) {
             restorePlayer();
-            Log.d("REMATCH", "ALL");
             // Client
             if (player instanceof ClientPlayer) {
-                Log.d("REMATCH", "SINGLE");
+                Log.d("Rematch: ", "client");
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d("REMATCH", "SINGLE_RUN");
                         boolean isConnect = false;
                         while (!isConnect) {
                             ((ClientPlayer) player).rematch();
@@ -128,6 +126,10 @@ public class ResultFragment extends Fragment {
             else if (player instanceof ServerPlayer) {
                 ((ServerPlayer) player).wantRematch(true);
             }
+            // Offline
+            else if (player instanceof OfflinePlayer) {
+                rematch();
+            }
         }
     };
 
@@ -148,7 +150,7 @@ public class ResultFragment extends Fragment {
      * Restore player thumbs information
      */
     private void restorePlayer() {
-        if(player instanceof ServerPlayer) ((ServerPlayer) player).restartServer();
+        if (player instanceof ServerPlayer) ((ServerPlayer) player).restartServer();
 
         player.setThumbs(2);
         player.setShowsThumbs(0);

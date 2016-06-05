@@ -11,11 +11,20 @@
         android:scaleType="fitCenter"
         android:src="@drawable/back"
         android:background="@null"
+        android:contentDescription="@null"
         android:onClick="backToMenu"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="Multiplayer"
+        android:textSize="35sp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_gravity="center"
         android:orientation="horizontal">
 

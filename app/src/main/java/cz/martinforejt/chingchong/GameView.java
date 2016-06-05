@@ -100,7 +100,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                         CountDown number = new CountDown(context, i);
                         long start = System.currentTimeMillis();
                         // 1200 milis for number
-                        while ((System.currentTimeMillis() - start) < 1200) {
+                        while ((System.currentTimeMillis() - start) < 1200 && countDownAnimating) {
                             canvas = holder.lockCanvas();
                             if (canvas != null) {
                                 canvas.drawColor(getResources().getColor(R.color.backgroundblue));
@@ -113,6 +113,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                                 if (width > (TimeWidth * 6) / 8) alpha -= 1;
                             }
                         }
+                        if (!countDownAnimating) break;
                     }
                     clear();
                 } catch (Exception e) {
@@ -150,6 +151,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
      */
     public boolean isCountDownAnimating() {
         return countDownAnimating;
+    }
+
+    /**
+     *
+     */
+    public void stopCountDown() {
+        countDownAnimating = false;
     }
 
     /**

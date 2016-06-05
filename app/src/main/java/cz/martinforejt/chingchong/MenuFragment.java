@@ -38,7 +38,8 @@ public class MenuFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_menu, container, false);
 
         // take care of menu buttons
-        Menu.getInstance(v, getActivity()).init();
+        Menu menu = new Menu(v, getActivity());
+        menu.init();
 
         return v;
     }

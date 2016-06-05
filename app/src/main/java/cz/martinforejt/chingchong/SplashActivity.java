@@ -1,6 +1,7 @@
 package cz.martinforejt.chingchong;
 
 import android.content.Intent;
+import android.media.AudioManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +34,8 @@ public class SplashActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_splash);
+
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         container = (LinearLayout) findViewById(R.id.loading_container);
         loader = (LinearLayout) findViewById(R.id.loading_bar);

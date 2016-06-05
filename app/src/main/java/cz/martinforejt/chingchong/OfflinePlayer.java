@@ -11,6 +11,8 @@ public class OfflinePlayer extends Player {
 
     public OfflinePlayer(String name, String rivalName) {
         super(name, rivalName);
+        hisTurn(true);
+        rival.hisTurn(false);
     }
 
     /**
@@ -54,6 +56,20 @@ public class OfflinePlayer extends Player {
      *
      */
     public void onDestroy() {
+
+    }
+
+    /**
+     *
+     */
+    public void onPause() {
+
+    }
+
+    /**
+     *
+     */
+    public void onResume() {
 
     }
 

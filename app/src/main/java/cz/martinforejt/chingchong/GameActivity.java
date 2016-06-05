@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,6 +27,8 @@ public class GameActivity extends AppCompatActivity {
     protected boolean isAnimatingScene = false;
     protected static String visibleFragment = "menu";
 
+    SoundManager soundManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +39,13 @@ public class GameActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_game);
 
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
         Config.init(getApplicationContext());
 
         black_scene = findViewById(R.id.black_scene);
+
+        soundManager = SoundManager.getInstance(getApplicationContext());
 
         // Set default fragment
         Fragment fragment;
@@ -99,6 +107,7 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        soundManager.play(SoundManager.EFFECT_MENU);
         switch (visibleFragment) {
             case MenuFragment.TAG:
             case NewPlayerFragment.TAG:
