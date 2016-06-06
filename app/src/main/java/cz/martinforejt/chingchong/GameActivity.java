@@ -41,9 +41,9 @@ public class GameActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_game);
 
-        setVolumeControlStream(AudioManager.STREAM_MUSIC);
-
         Config.init(getApplicationContext());
+
+        if(Config.isIsSoundOn()) setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         black_scene = findViewById(R.id.black_scene);
 

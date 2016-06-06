@@ -12,25 +12,153 @@
         android:background="@null"
         android:onClick="backToMenu"/>
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="Join"
+        android:textSize="35sp"/>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="60dp"
         android:orientation="vertical">
 
-        <EditText
+        <TextView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:hint="IP ADDRESS"
-            android:id="@+id/ip_address_edit"/>
+            android:layout_height="70dp"
+            android:id="@+id/ip_address_text"
+            android:gravity="center"
+            android:text="IP ADDRESS"
+            android:textSize="42sp"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="JOIN"
-            android:id="@+id/joinBtn"/>
+        <!-- Keyboard -->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="0"
+                    android:id="@+id/ip_key_0"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="1"
+                    android:id="@+id/ip_key_1"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="2"
+                    android:id="@+id/ip_key_2"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="3"
+                    android:id="@+id/ip_key_3"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="4"
+                    android:id="@+id/ip_key_4"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="5"
+                    android:id="@+id/ip_key_5"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="6"
+                    android:id="@+id/ip_key_6"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="7"
+                    android:id="@+id/ip_key_7"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="8"
+                    android:id="@+id/ip_key_8"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="9"
+                    android:id="@+id/ip_key_9"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="."
+                    android:id="@+id/ip_key_dot"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="back"
+                    android:id="@+id/ip_key_back"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="X"
+                    android:id="@+id/ip_key_cancel"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="2"
+                    android:text="OK"
+                    android:id="@+id/ip_key_ok"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 

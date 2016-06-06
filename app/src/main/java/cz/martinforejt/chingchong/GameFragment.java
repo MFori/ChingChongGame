@@ -197,7 +197,8 @@ public class GameFragment extends Fragment {
      * @param chongs int
      */
     public void animate(int chongs) {
-        this.animate.setText("CHING - CHONG " + String.valueOf(chongs));
+        if (game != null)
+            this.animate.setText("CHING - CHONG " + String.valueOf(chongs));
     }
 
     /**
@@ -214,29 +215,31 @@ public class GameFragment extends Fragment {
      * @param chongs int
      */
     public void setActiveChongs(int chongs) {
-        int background = R.drawable.chong_button_active;
-        int choosen = R.drawable.chong_button_active_choosen;
-        num0.setBackgroundResource(background);
-        num1.setBackgroundResource(background);
-        num2.setBackgroundResource(background);
-        num3.setBackgroundResource(background);
-        num4.setBackgroundResource(background);
-        switch (chongs) {
-            case 0:
-                num0.setBackgroundResource(choosen);
-                break;
-            case 1:
-                num1.setBackgroundResource(choosen);
-                break;
-            case 2:
-                num2.setBackgroundResource(choosen);
-                break;
-            case 3:
-                num3.setBackgroundResource(choosen);
-                break;
-            case 4:
-                num4.setBackgroundResource(choosen);
-                break;
+        if (game != null) {
+            int background = R.drawable.chong_button_active;
+            int choosen = R.drawable.chong_button_active_choosen;
+            num0.setBackgroundResource(background);
+            num1.setBackgroundResource(background);
+            num2.setBackgroundResource(background);
+            num3.setBackgroundResource(background);
+            num4.setBackgroundResource(background);
+            switch (chongs) {
+                case 0:
+                    num0.setBackgroundResource(choosen);
+                    break;
+                case 1:
+                    num1.setBackgroundResource(choosen);
+                    break;
+                case 2:
+                    num2.setBackgroundResource(choosen);
+                    break;
+                case 3:
+                    num3.setBackgroundResource(choosen);
+                    break;
+                case 4:
+                    num4.setBackgroundResource(choosen);
+                    break;
+            }
         }
     }
 
@@ -246,17 +249,19 @@ public class GameFragment extends Fragment {
      * @param hisTurn bool
      */
     public void isHisTurn(boolean hisTurn) {
-        int background;
-        if (hisTurn) {
-            background = R.drawable.chong_button_active;
-        } else {
-            background = R.drawable.chong_button_unactive;
+        if (game != null) {
+            int background;
+            if (hisTurn) {
+                background = R.drawable.chong_button_active;
+            } else {
+                background = R.drawable.chong_button_unactive;
+            }
+            num0.setBackgroundResource(background);
+            num1.setBackgroundResource(background);
+            num2.setBackgroundResource(background);
+            num3.setBackgroundResource(background);
+            num4.setBackgroundResource(background);
         }
-        num0.setBackgroundResource(background);
-        num1.setBackgroundResource(background);
-        num2.setBackgroundResource(background);
-        num3.setBackgroundResource(background);
-        num4.setBackgroundResource(background);
     }
 
     /**
@@ -281,7 +286,7 @@ public class GameFragment extends Fragment {
         num3.setOnClickListener(onClickListener);
         num4.setOnClickListener(onClickListener);
 
-        isHisTurn(player instanceof ClientPlayer);
+        isHisTurn(player instanceof ClientPlayer || player instanceof OfflinePlayer);
 
         playerName = (TextView) view.findViewById(R.id.player_name);
         rivalName = (TextView) view.findViewById(R.id.rival_name);
