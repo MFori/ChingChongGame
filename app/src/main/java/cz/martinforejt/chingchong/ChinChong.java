@@ -199,6 +199,7 @@ public class ChinChong {
                 if (ChinChong.this.player.getRival().hasData()) {
                     getDataTime = false;
                     animateTime = true;
+                    noPaused();
                     break;
                 }
 
@@ -324,7 +325,16 @@ public class ChinChong {
             onUi(new Runnable() {
                 @Override
                 public void run() {
-                    GameFragment.getInstance().showPaused();
+                    GameFragment.getInstance().showPauseRivalDialog();
+                }
+            });
+        }
+
+        public void noPaused() {
+            onUi(new Runnable() {
+                @Override
+                public void run() {
+                    GameFragment.getInstance().hidePauseRivalDialog();
                 }
             });
         }

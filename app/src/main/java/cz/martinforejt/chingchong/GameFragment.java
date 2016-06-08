@@ -1,5 +1,6 @@
 package cz.martinforejt.chingchong;
 
+import android.app.AlertDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -30,6 +31,7 @@ public class GameFragment extends Fragment {
     private boolean leftActive = true,
             rightActive = true;
     private int leftThumb = 0, rightThumb = 0;
+    private PauseDialog pauseDialog = null;
 
     GameView gameView;
 
@@ -82,6 +84,15 @@ public class GameFragment extends Fragment {
 
         playerName.setText(player.getName());
         rivalName.setText(player.getRival().getName());
+
+        pauseDialog = new PauseDialog(getActivity());
+        pauseDialog.setEndListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pauseDialog.close();
+                endGame();
+            }
+        });
 
         return view;
     }
@@ -192,6 +203,15 @@ public class GameFragment extends Fragment {
     }
 
     /**
+     * End game without result and rematch variant
+     */
+    public void endGame() {
+        game.end();
+        game = null;
+        ((GameActivity) getActivity()).changeFragment(MenuFragment.newInstance(), MenuFragment.TAG, true);
+    }
+
+    /**
      * Animate result
      *
      * @param chongs int
@@ -201,16 +221,9 @@ public class GameFragment extends Fragment {
             this.animate.setText("CHING - CHONG " + String.valueOf(chongs));
     }
 
-    /**
-     *
-     */
-    public void showPaused() {
-        if (game != null)
-            animate.setText("PAUSED");
-    }
 
     /**
-     * Set active chong background
+     * Set active chong background2
      *
      * @param chongs int
      */
@@ -296,6 +309,20 @@ public class GameFragment extends Fragment {
         playerThumb2 = (ImageView) view.findViewById(R.id.player_thumb_2);
         rivalThumb1 = (ImageView) view.findViewById(R.id.rival_thumb_1);
         rivalThumb2 = (ImageView) view.findViewById(R.id.rival_thumb_2);
+    }
+
+    /**
+     * Show pause dialog
+     */
+    public void showPauseRivalDialog() {
+        if (game != null) pauseDialog.open();
+    }
+
+    /**
+     * Hide pause dialog if is visible
+     */
+    public void hidePauseRivalDialog() {
+        if (game != null) pauseDialog.hide();
     }
 
     @Override

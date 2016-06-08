@@ -39,7 +39,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Icons from icons8.com"
+            android:text="Icons from icons8.com and freepik.com"
             android:textSize="20sp"/>
 
     </LinearLayout>

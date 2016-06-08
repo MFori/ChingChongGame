@@ -346,7 +346,7 @@ public class ClientPlayer extends Player {
      * Required destroy method
      */
     public void onDestroy() {
-
+        onPause();
     }
 
     /**

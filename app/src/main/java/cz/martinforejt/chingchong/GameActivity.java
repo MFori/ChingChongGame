@@ -151,6 +151,7 @@ public class GameActivity extends AppCompatActivity {
         final Button btnNo = (Button) view.findViewById(R.id.dialogBtnNo);
 
         final AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(true);
 
         // Close dialog
         btnNo.setOnClickListener(new View.OnClickListener() {

@@ -27,16 +27,18 @@
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="70dp"
+            android:layout_height="85dp"
             android:id="@+id/ip_address_text"
             android:gravity="center"
-            android:text="IP ADDRESS"
+            android:hint="IP ADDRESS"
+            android:text=""
             android:textSize="42sp"/>
 
         <!-- Keyboard -->
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:background="@color/backgroundbrownOp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -49,6 +51,8 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:text="0"
+                    android:textSize="35sp"
+                    android:background="@drawable/keyboardkey"
                     android:id="@+id/ip_key_0"/>
 
                 <Button
@@ -56,6 +60,8 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:text="1"
+                    android:textSize="35sp"
+                    android:background="@drawable/keyboardkey"
                     android:id="@+id/ip_key_1"/>
 
                 <Button
@@ -63,6 +69,8 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:text="2"
+                    android:textSize="35sp"
+                    android:background="@drawable/keyboardkey"
                     android:id="@+id/ip_key_2"/>
 
                 <Button
@@ -70,6 +78,8 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:text="3"
+                    android:textSize="35sp"
+                    android:background="@drawable/keyboardkey"
                     android:id="@+id/ip_key_3"/>
 
                 <Button
@@ -77,6 +87,8 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:text="4"
+                    android:textSize="35sp"
+                    android:background="@drawable/keyboardkey"
                     android:id="@+id/ip_key_4"/>
 
             </LinearLayout>
@@ -91,6 +103,8 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:text="5"
+                    android:textSize="35sp"
+                    android:background="@drawable/keyboardkey"
                     android:id="@+id/ip_key_5"/>
 
                 <Button
@@ -98,6 +112,8 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:text="6"
+                    android:textSize="35sp"
+                    android:background="@drawable/keyboardkey"
                     android:id="@+id/ip_key_6"/>
 
                 <Button
@@ -105,6 +121,8 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:text="7"
+                    android:textSize="35sp"
+                    android:background="@drawable/keyboardkey"
                     android:id="@+id/ip_key_7"/>
 
                 <Button
@@ -112,6 +130,8 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:text="8"
+                    android:textSize="35sp"
+                    android:background="@drawable/keyboardkey"
                     android:id="@+id/ip_key_8"/>
 
                 <Button
@@ -119,6 +139,8 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:text="9"
+                    android:textSize="35sp"
+                    android:background="@drawable/keyboardkey"
                     android:id="@+id/ip_key_9"/>
 
             </LinearLayout>
@@ -133,6 +155,9 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:text="."
+                    android:paddingBottom="20dp"
+                    android:textSize="45sp"
+                    android:background="@drawable/keyboardkey"
                     android:id="@+id/ip_key_dot"/>
 
                 <Button
@@ -140,6 +165,8 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:text="back"
+                    android:textSize="30sp"
+                    android:background="@drawable/keyboardkey"
                     android:id="@+id/ip_key_back"/>
 
                 <Button
@@ -147,6 +174,8 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:text="X"
+                    android:textSize="30sp"
+                    android:background="@drawable/keyboardkey"
                     android:id="@+id/ip_key_cancel"/>
 
                 <Button
@@ -154,6 +183,8 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="2"
                     android:text="OK"
+                    android:textSize="30sp"
+                    android:background="@drawable/keyboardkey"
                     android:id="@+id/ip_key_ok"/>
 
             </LinearLayout>

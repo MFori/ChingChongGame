@@ -169,7 +169,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
-     * Draw only background
+     * Draw only background2
      */
     private void clear() {
         Canvas canvas = holder.lockCanvas();

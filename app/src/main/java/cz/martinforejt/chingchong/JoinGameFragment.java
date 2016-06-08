@@ -123,7 +123,7 @@ public class JoinGameFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getActivity(), "Error", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Can not connect...", Toast.LENGTH_LONG).show();
                         }
                     });
                 }

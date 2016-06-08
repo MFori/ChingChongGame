@@ -4,6 +4,13 @@
     android:layout_height="match_parent"
     tools:context="cz.martinforejt.chingchong.MenuFragment">
 
+    <!--<ImageView
+        android:id="@+id/backgroundImg"
+        android:contentDescription="background"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background" /> -->
+
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="120dp"
@@ -15,19 +22,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="120dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:layout_margin="10dp"
             android:onClick="playMultiPlayer"
             android:text="MULTIPLAYER" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="120dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:layout_margin="10dp"
             android:onClick="playSinglePlayer"
             android:text="SINGLEPLAYER" />

@@ -6,5 +6,7 @@
     </style>
 
     <color name="backgroundblue">#276eb9</color>
+    <color name="backgroundbrown">#6f5b3d</color>
+    <color name="backgroundbrownOp">#a96f5b3d</color>
 
 </resources>
