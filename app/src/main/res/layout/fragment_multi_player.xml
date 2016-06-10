@@ -8,39 +8,46 @@
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_margin="5dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/back"
         android:background="@null"
         android:contentDescription="@null"
-        android:onClick="backToMenu"/>
+        android:onClick="backToMenu"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back" />
 
     <TextView
         android:layout_width="fill_parent"
+        android:layout_marginTop="5dp"
         android:layout_height="60dp"
         android:gravity="center"
         android:text="Multiplayer"
-        android:textSize="35sp"/>
+        android:textSize="35sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_margin="10dp"
+            android:layout_width="150dp"
+            android:layout_height="140dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/menu_button"
             android:onClick="createGame"
-            android:text="CREATE" />
+            android:text="CREATE"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_margin="10dp"
+            android:layout_width="150dp"
+            android:layout_height="140dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/menu_button"
             android:onClick="joinGame"
-            android:text="JOIN" />
+            android:text="JOIN"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

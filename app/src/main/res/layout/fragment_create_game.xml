@@ -1,5 +1,6 @@
 <cz.martinforejt.chingchong.GameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="cz.martinforejt.chingchong.CreateGameFragment">
 
@@ -7,41 +8,37 @@
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_margin="5dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/back"
         android:background="@null"
-        android:onClick="backToMenu"/>
+        android:onClick="backToMenu"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back" />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="60dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:text="Create"
-        android:textSize="35sp"/>
+        android:textSize="35sp" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/ip_address"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="65dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:textSize="50sp" />
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ip_address"
-            android:gravity="center"
-            android:textSize="40sp" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Waiting for oponent..."
-            android:gravity="center"
-            android:padding="10dp"
-            android:layout_margin="20dp"
-            android:textSize="20sp"/>
-
-
-    </LinearLayout>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        android:id="@+id/waitingText"
+        android:paddingBottom="40dp"
+        android:text="Waiting for oponent..."
+        android:textSize="25sp" />
 
 </cz.martinforejt.chingchong.GameLayout>

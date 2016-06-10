@@ -4,19 +4,22 @@
     android:layout_height="match_parent"
     tools:context="cz.martinforejt.chingchong.MenuFragment">
 
-    <!--<ImageView
-        android:id="@+id/backgroundImg"
-        android:contentDescription="background"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background" /> -->
-
     <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="120dp"
-        android:paddingTop="10dp"
         android:id="@+id/menu_logo"
-        android:src="@drawable/logo"/>
+        android:layout_width="fill_parent"
+        android:layout_height="125dp"
+        android:paddingTop="10dp"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="© 2016 MfStudio"
+        android:onClick="creditsClick"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -26,61 +29,67 @@
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="140dp"
+            android:layout_width="150dp"
             android:layout_height="140dp"
             android:layout_margin="10dp"
+            android:background="@drawable/menu_button"
             android:onClick="playMultiPlayer"
-            android:text="MULTIPLAYER" />
+            android:text="MULTIPLAYER"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Button
-            android:layout_width="140dp"
+            android:layout_width="150dp"
             android:layout_height="140dp"
             android:layout_margin="10dp"
+            android:background="@drawable/menu_button"
             android:onClick="playSinglePlayer"
-            android:text="SINGLEPLAYER" />
+            android:text="SINGLEPLAYER"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <ImageButton
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_margin="5dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/rate"
+        android:id="@+id/menu_rate"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="8dp"
         android:background="@null"
-        android:id="@+id/menu_rate"/>
+        android:scaleType="fitCenter"
+        android:src="@drawable/rate" />
 
 
     <ImageButton
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_margin="5dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/exit"
+        android:id="@+id/menu_exit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="right"
+        android:layout_margin="8dp"
         android:background="@null"
-        android:id="@+id/menu_exit"/>
+        android:scaleType="fitCenter"
+        android:src="@drawable/exit" />
 
 
     <ImageButton
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_margin="5dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/settings"
+        android:id="@+id/menu_settings"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="bottom"
+        android:layout_margin="8dp"
         android:background="@null"
-        android:id="@+id/menu_settings"/>
+        android:scaleType="fitCenter"
+        android:src="@drawable/settings" />
 
 
     <ImageButton
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_margin="5dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/about"
+        android:id="@+id/menu_about"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="bottom|right"
+        android:layout_margin="8dp"
         android:background="@null"
-        android:id="@+id/menu_about"/>
+        android:scaleType="fitCenter"
+        android:src="@drawable/about" />
 
 </cz.martinforejt.chingchong.GameLayout>

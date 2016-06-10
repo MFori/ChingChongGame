@@ -20,15 +20,51 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/win"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/win"/>
+            android:layout_gravity="center"
+            android:text="YOU ARE WINNER"
+            android:textSize="40sp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/myScore"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="Fori 1"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=":"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/rivalScore"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="1 Android"
+                android:textSize="25sp" />
+
+        </LinearLayout>
 
         <Button
+            android:id="@+id/btn_rematch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="REMATCH"
-            android:id="@+id/btn_rematch"/>
+            android:layout_gravity="center"
+            android:text="REMATCH" />
 
     </LinearLayout>
 

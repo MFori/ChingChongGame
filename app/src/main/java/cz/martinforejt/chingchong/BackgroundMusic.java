@@ -15,15 +15,27 @@ public class BackgroundMusic {
     protected static final String TRACK = "track";
     public static final int TRACK_01 = R.raw.back;
 
+    private static BackgroundMusic instance = null;
+
     protected int track;
+
+    public static BackgroundMusic getInstance(Context context) {
+        if (instance == null) {
+            instance = new BackgroundMusic(context);
+        }
+        return instance;
+    }
 
     /**
      * Construct
      *
      * @param context Context
      */
-    public BackgroundMusic(Context context, int track) {
+    private BackgroundMusic(Context context) {
         this.context = context;
+    }
+
+    public void setTrack(int track) {
         this.track = track;
     }
 
@@ -31,8 +43,10 @@ public class BackgroundMusic {
      * Start playing music
      */
     public void start() {
-        musicThread = new MusicThread();
-        musicThread.start();
+        if (Config.isIsSoundOn()) {
+            musicThread = new MusicThread();
+            musicThread.start();
+        }
     }
 
     /**

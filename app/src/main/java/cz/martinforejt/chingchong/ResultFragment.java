@@ -28,9 +28,13 @@ public class ResultFragment extends Fragment {
     private static ResultFragment instance;
 
     private Button rematch;
+    private TextView win, myScore, rivalScore;
+    private static final String TEXT_WIN = "YOU ARE WINNER";
+    private static final String TEXT_LOSS = "YOU ARE LOSER";
 
-    Thread rematchT = null;
-    boolean waitForRematch = false;
+    private Thread rematchT = null;
+    protected boolean waitForRematch = false;
+    protected boolean isRematch = false;
 
     /**
      * @param win    bool
@@ -69,17 +73,18 @@ public class ResultFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_result, container, false);
 
-        // TEST RESULT
-        TextView tv = (TextView) view.findViewById(R.id.win);
-        String result = "";
-        if (winner)
-            result += "YOU ARE WINNER, " + player.getName() + " AND " + player.getRival().getName() + " IS LOOSER";
-        else
-            result += "YOUR ARE LOOSER, " + player.getName() + "AND" + player.getRival().getName() + " IS WINNER";
-        tv.setText(result);
-        // END
-
         initElements(view);
+
+        if (winner) {
+            Config.setMyScore(Config.getMyScore() + 1);
+            win.setText(TEXT_WIN);
+        } else {
+            Config.setScoreRival(Config.getRivalScore() + 1);
+            win.setText(TEXT_LOSS);
+        }
+
+        myScore.setText(player.getName() + " " + String.valueOf(Config.getMyScore()));
+        rivalScore.setText(player.getRival().getName() + " " + String.valueOf(Config.getRivalScore()));
 
         return view;
     }
@@ -92,6 +97,9 @@ public class ResultFragment extends Fragment {
     private void initElements(View v) {
         rematch = (Button) v.findViewById(R.id.btn_rematch);
         rematch.setOnClickListener(playRematch);
+        win = (TextView) v.findViewById(R.id.win);
+        myScore = (TextView) v.findViewById(R.id.myScore);
+        rivalScore = (TextView) v.findViewById(R.id.rivalScore);
     }
 
     /**
@@ -151,7 +159,7 @@ public class ResultFragment extends Fragment {
      * Start game with same rival
      */
     public void rematch() {
-        //player.onDestroy();
+        isRematch = true;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -174,8 +182,8 @@ public class ResultFragment extends Fragment {
         player.rival.setShowsThumbs(Player.DEFAULT_SHOWS_THUMBS);
         player.rival.setChongs(Player.DEFAULT_CHONGS);
 
-        player.hisTurn(player instanceof ClientPlayer);
-        player.rival.hisTurn(!(player instanceof ClientPlayer));
+        player.hisTurn(player instanceof ClientPlayer || player instanceof OfflinePlayer);
+        player.rival.hisTurn(player instanceof ServerPlayer);
     }
 
     public ResultFragment() {
@@ -190,6 +198,7 @@ public class ResultFragment extends Fragment {
             rematchT = null;
         }
         player.onDestroy();
+        if (!isRematch) Config.resetScore();
         super.onDestroy();
     }
 

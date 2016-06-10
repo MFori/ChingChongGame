@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -41,14 +42,15 @@ public class GameActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_game);
 
-        Config.init(getApplicationContext());
+        //Config.init(getApplicationContext());
 
-        if(Config.isIsSoundOn()) setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        if (Config.isIsSoundOn()) setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         black_scene = findViewById(R.id.black_scene);
 
         soundManager = SoundManager.getInstance(getApplicationContext());
-        backgroundMusic = new BackgroundMusic(getApplicationContext(), BackgroundMusic.TRACK_01);
+        backgroundMusic = BackgroundMusic.getInstance(getApplicationContext());
+        backgroundMusic.setTrack(BackgroundMusic.TRACK_01);
 
         // Set default fragment
         Fragment fragment;
@@ -215,6 +217,23 @@ public class GameActivity extends AppCompatActivity {
      */
     public void backToMenu(View v) {
         onBackPressed();
+    }
+
+    /**
+     * Click on credits text ( 2016 MfStudio )
+     *
+     * @param v TextView
+     */
+    public void creditsClick(View v) {
+        try {
+            startActivity(
+                    new Intent(Intent.ACTION_VIEW, Uri.parse("market://dev?id=6858337862983523992"))
+            );
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(
+                    new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/dev?id=6858337862983523992"))
+            );
+        }
     }
 
     /**

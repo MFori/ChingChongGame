@@ -75,7 +75,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         Canvas canvas = null;
         canvas = holder.lockCanvas();
         if (canvas != null) {
-            canvas.drawColor(getResources().getColor(R.color.backgroundblue));
+            canvas.drawColor(getResources().getColor(R.color.backgroundbrown));
             holder.unlockCanvasAndPost(canvas);
         }
     }
@@ -103,7 +103,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                         while ((System.currentTimeMillis() - start) < 1200 && countDownAnimating) {
                             canvas = holder.lockCanvas();
                             if (canvas != null) {
-                                canvas.drawColor(getResources().getColor(R.color.backgroundblue));
+                                canvas.drawColor(getResources().getColor(R.color.backgroundbrown));
                                 int x = gameWidth / 2 - width / 2;
                                 int y = TimeHeight / 2 - ((int) (width * Timeratio) / 2);
                                 int height = (int) (width * Timeratio);
@@ -174,7 +174,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private void clear() {
         Canvas canvas = holder.lockCanvas();
         if (canvas != null) {
-            canvas.drawColor(getResources().getColor(R.color.backgroundblue));
+            canvas.drawColor(getResources().getColor(R.color.backgroundbrown));
             holder.unlockCanvasAndPost(canvas);
         }
     }

@@ -50,9 +50,9 @@ public class SplashActivity extends AppCompatActivity {
                             int c_width = container.getWidth();
                             try {
 
-                                Thread.sleep(100);
-                                while (loader.getWidth() < (c_width - 1)) {
-                                    Thread.sleep(7);
+                                Thread.sleep(85);
+                                while (loader.getWidth() < (c_width - 5)) {
+                                    Thread.sleep(6);
 
                                     final LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) loader.getLayoutParams();
                                     params.width += 1;
@@ -82,6 +82,9 @@ public class SplashActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Config.init(getApplicationContext());
+
     }
 
     /**

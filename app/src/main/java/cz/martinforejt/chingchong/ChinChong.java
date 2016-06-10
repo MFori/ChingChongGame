@@ -270,6 +270,7 @@ public class ChinChong {
 
             // End game - show result screen
             if (ChinChong.this.player.getThumbs() == 0 || ChinChong.this.player.getRival().getThumbs() == 0) {
+                Vibrator.getInstance(activity).vibrate(100);
                 player.onDestroy();
                 onUi(new Runnable() {
                     @Override

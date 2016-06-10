@@ -21,7 +21,9 @@ public class CreateGameFragment extends Fragment {
 
     private static CreateGameFragment instance;
 
-    private TextView ipAddress;
+    private TextView ipAddress, waiting;
+    private Thread waitingThread;
+    private boolean isWaiting = false;
 
     public static CreateGameFragment newInstance() {
         instance = new CreateGameFragment();
@@ -55,13 +57,54 @@ public class CreateGameFragment extends Fragment {
         ipAddress = (TextView) view.findViewById(R.id.ip_address);
         ipAddress.setText(player.getIpAddress());
 
+        waiting = (TextView) view.findViewById(R.id.waitingText);
+        startWaiting();
+
         return view;
+    }
+
+    private void startWaiting() {
+        waitingThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                isWaiting = true;
+                while (isWaiting) {
+                    try {
+                        Thread.sleep(600);
+                        setWaitingText("...");
+                        Thread.sleep(600);
+                        setWaitingText("..");
+                        Thread.sleep(600);
+                        setWaitingText(".");
+                        Thread.sleep(600);
+                        setWaitingText("");
+                        Thread.sleep(600);
+                        setWaitingText(".");
+                        Thread.sleep(600);
+                        setWaitingText("..");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        waitingThread.start();
+    }
+
+    private void setWaitingText(final String text) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                waiting.setText("Waiting for oponent" + text);
+            }
+        });
     }
 
     /**
      * Starts the game ( add gameFragment )
      */
     public void startGame() {
+        isWaiting = false;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -75,6 +118,8 @@ public class CreateGameFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         player.onDestroy();
+        waitingThread.interrupt();
+        waitingThread = null;
     }
 
 }
