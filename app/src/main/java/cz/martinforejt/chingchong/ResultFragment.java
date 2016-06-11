@@ -28,7 +28,7 @@ public class ResultFragment extends Fragment {
     private static ResultFragment instance;
 
     private Button rematch;
-    private TextView win, myScore, rivalScore;
+    private TextView win, myScore, rivalScore, score, waiting;
     private static final String TEXT_WIN = "YOU ARE WINNER";
     private static final String TEXT_LOSS = "YOU ARE LOSER";
 
@@ -83,8 +83,9 @@ public class ResultFragment extends Fragment {
             win.setText(TEXT_LOSS);
         }
 
-        myScore.setText(player.getName() + " " + String.valueOf(Config.getMyScore()));
-        rivalScore.setText(player.getRival().getName() + " " + String.valueOf(Config.getRivalScore()));
+        myScore.setText(player.getName());
+        rivalScore.setText(player.getRival().getName());
+        score.setText(String.valueOf(Config.getMyScore()) + " : " + String.valueOf(Config.getRivalScore()));
 
         return view;
     }
@@ -100,6 +101,8 @@ public class ResultFragment extends Fragment {
         win = (TextView) v.findViewById(R.id.win);
         myScore = (TextView) v.findViewById(R.id.myScore);
         rivalScore = (TextView) v.findViewById(R.id.rivalScore);
+        score = (TextView) v.findViewById(R.id.result_score);
+        waiting = (TextView) v.findViewById(R.id.rematch_text_waiting);
     }
 
     /**
@@ -152,6 +155,9 @@ public class ResultFragment extends Fragment {
             else if (player instanceof OfflinePlayer) {
                 rematch();
             }
+
+            v.setVisibility(View.GONE);
+            waiting.setVisibility(View.VISIBLE);
         }
     };
 

@@ -3,10 +3,12 @@ package cz.martinforejt.chingchong;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.SoundPool;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 /**
@@ -20,6 +22,7 @@ public class Menu implements View.OnClickListener {
     protected View view;
     protected GameActivity activity;
     private SoundManager soundManager;
+    private Button multi, single;
 
     /**
      * @param view     View
@@ -46,6 +49,19 @@ public class Menu implements View.OnClickListener {
 
         about = (ImageButton) view.findViewById(R.id.menu_about);
         about.setOnClickListener(Menu.this);
+
+        multi = (Button) view.findViewById(R.id.menu_button_multiplayer);
+        single = (Button) view.findViewById(R.id.menu_button_singleplayer);
+        setFont();
+    }
+
+    /**
+     *
+     */
+    private void setFont() {
+        Typeface typeface = Typeface.createFromAsset(activity.getAssets(), "fonts/chlorinr.ttf");
+        multi.setTypeface(typeface);
+        single.setTypeface(typeface);
     }
 
     @Override
@@ -84,6 +100,7 @@ public class Menu implements View.OnClickListener {
 
     /**
      * Change the fragment
+     * Animate alpha of menu corner buttons (rate, exit, settings, about)
      *
      * @param fragment Fragment
      * @param tag      String
@@ -95,7 +112,7 @@ public class Menu implements View.OnClickListener {
                 float alpha = 1;
                 try {
                     while (alpha > 0) {
-                        Thread.sleep(5);
+                        Thread.sleep(30);
                         alpha -= 0.07;
                         final float _alpha = alpha;
                         activity.runOnUiThread(new Runnable() {

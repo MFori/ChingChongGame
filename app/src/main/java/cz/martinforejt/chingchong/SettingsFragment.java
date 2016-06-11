@@ -2,6 +2,7 @@ package cz.martinforejt.chingchong;
 
 
 import android.app.AlertDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -63,12 +64,26 @@ public class SettingsFragment extends Fragment {
 
         sound = (Button) v.findViewById(R.id.settings_sound);
         sound.setOnClickListener(soundOnClick);
+        sound.setText(Config.isIsSoundOn() ? "ON" : "OFF");
 
         vibrate = (Button) v.findViewById(R.id.settings_vibrate);
         vibrate.setOnClickListener(vibrateOnClick);
+        vibrate.setText(Config.isVibratorOn() ? "ON" : "OFF");
 
         nameText = (TextView) v.findViewById(R.id.settings_name_text);
         setNameTextView();
+
+        setFont();
+    }
+
+    /**
+     *
+     */
+    private void setFont() {
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/chlorinr.ttf");
+        sound.setTypeface(typeface);
+        vibrate.setTypeface(typeface);
+        changeName.setTypeface(typeface);
     }
 
     private void setNameTextView() {
@@ -99,9 +114,14 @@ public class SettingsFragment extends Fragment {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Config.setName(name.getText().toString());
-                Toast.makeText(getActivity(), "Name saved", Toast.LENGTH_SHORT).show();
-                nameText.setText("Name: " + Config.getName());
+                String n = name.getText().toString().trim();
+                if (!n.equals("")) {
+                    Config.setName(name.getText().toString());
+                    Toast.makeText(getActivity(), "Name saved", Toast.LENGTH_SHORT).show();
+                    nameText.setText("Name: " + Config.getName());
+                } else {
+                    Toast.makeText(getActivity(), "Nothing to save", Toast.LENGTH_SHORT).show();
+                }
                 dialog.dismiss();
             }
         });
@@ -115,11 +135,11 @@ public class SettingsFragment extends Fragment {
             if(Config.isVibratorOn()) {
                 Config.setVibrator(false);
                 Toast.makeText(getActivity(), "Vibrations off", Toast.LENGTH_SHORT).show();
-                vibrate.setText("On");
+                vibrate.setText("Off");
             } else {
                 Config.setVibrator(true);
                 Toast.makeText(getActivity(), "Vibrations on", Toast.LENGTH_SHORT).show();
-                vibrate.setText("Off");
+                vibrate.setText("On");
             }
         }
     };
@@ -130,12 +150,12 @@ public class SettingsFragment extends Fragment {
             if(Config.isIsSoundOn()) {
                 Config.setIsSoundOn(false);
                 Toast.makeText(getActivity(), "Sound off", Toast.LENGTH_SHORT).show();
-                sound.setText("On");
+                sound.setText("Off");
                 BackgroundMusic.getInstance(getActivity()).stop();
             } else {
                 Config.setIsSoundOn(true);
                 Toast.makeText(getActivity(), "Sound on", Toast.LENGTH_SHORT).show();
-                sound.setText("Off");
+                sound.setText("On");
                 BackgroundMusic.getInstance(getActivity()).start();
             }
         }

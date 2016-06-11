@@ -280,6 +280,8 @@ public class ChinChong {
                 });
             } else {
                 gameTime = true;
+                player.setChongs(-1);
+                player.rival.setChongs(-1);
                 setChongsKeyboard();
             }
         }

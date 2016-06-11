@@ -4,9 +4,12 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * Created by Martin Forejt on 14.05.2016.
@@ -42,7 +46,7 @@ public class GameActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_game);
 
-        //Config.init(getApplicationContext());
+        //Config.init(getApplicationContext()); edit: initialize config in splash activity
 
         if (Config.isIsSoundOn()) setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
@@ -128,7 +132,7 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case CreateGameFragment.TAG:
             case JoinGameFragment.TAG:
-                changeFragment(MultiPlayerFragment.newInstance(), MultiPlayerFragment.TAG, SLIDE_LEFT, false);
+                changeFragment(new MultiPlayerFragment(), MultiPlayerFragment.TAG, SLIDE_LEFT, false);
                 break;
             case MultiPlayerFragment.TAG:
             case AboutFragment.TAG:
@@ -180,7 +184,7 @@ public class GameActivity extends AppCompatActivity {
      * @param v Button
      */
     public void playMultiPlayer(View v) {
-        changeFragment(MultiPlayerFragment.newInstance(), MultiPlayerFragment.TAG, SLIDE_RIGHT, false);
+        changeFragment(new MultiPlayerFragment(), MultiPlayerFragment.TAG, SLIDE_RIGHT, false);
     }
 
     /**
@@ -198,7 +202,10 @@ public class GameActivity extends AppCompatActivity {
      * @param v Button
      */
     public void createGame(View v) {
-        changeFragment(CreateGameFragment.newInstance(), CreateGameFragment.TAG, SLIDE_RIGHT, false);
+        if (isInternetConnection())
+            changeFragment(CreateGameFragment.newInstance(), CreateGameFragment.TAG, SLIDE_RIGHT, false);
+        else
+            Toast.makeText(this, "You must be connected to WiFi.", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -207,7 +214,10 @@ public class GameActivity extends AppCompatActivity {
      * @param v Button
      */
     public void joinGame(View v) {
-        changeFragment(JoinGameFragment.newInstance(), JoinGameFragment.TAG, SLIDE_RIGHT, false);
+        if (isInternetConnection())
+            changeFragment(JoinGameFragment.newInstance(), JoinGameFragment.TAG, SLIDE_RIGHT, false);
+        else
+            Toast.makeText(this, "You must be connected to WiFi.", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -316,6 +326,17 @@ public class GameActivity extends AppCompatActivity {
                 }
             }).start();
         }
+    }
+
+    /**
+     * Check if device is connected to wifi
+     *
+     * @return bool
+     */
+    public boolean isInternetConnection() {
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return wifi.isConnected();
     }
 
     @Override

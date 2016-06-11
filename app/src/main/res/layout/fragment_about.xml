@@ -12,7 +12,7 @@
         android:contentDescription="@null"
         android:onClick="backToMenu"
         android:scaleType="fitCenter"
-        android:src="@drawable/back" />
+        android:src="@drawable/menu_back" />
 
     <TextView
         android:layout_width="fill_parent"

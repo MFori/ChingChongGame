@@ -115,14 +115,14 @@ public class GameFragment extends Fragment {
                         // 0 - 1 => 1 , 1 - 1 => 0
                         leftThumb = Math.abs(leftThumb - 1);
                         game.thumbsChange(leftThumb + rightThumb);
-                        left.setImageResource(leftThumb == 1 ? R.drawable.thumb100 : R.drawable.fist);
+                        left.setImageResource(leftThumb == 1 ? R.drawable.thumb_left : R.drawable.left_fist);
                     }
                     break;
                 case R.id.right:
                     if (rightActive) {
                         rightThumb = Math.abs(rightThumb - 1);
                         game.thumbsChange(rightThumb + leftThumb);
-                        right.setImageResource(rightThumb == 1 ? R.drawable.thumb100 : R.drawable.fist);
+                        right.setImageResource(rightThumb == 1 ? R.drawable.thumb_right : R.drawable.right_fist);
                     }
                     break;
                 case R.id.click0:

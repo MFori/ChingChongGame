@@ -62,14 +62,14 @@ public class Config {
     /*****************************************************
      * Vibrations
      ****************************************************/
-    private static boolean isVibratorOn;
+    private static boolean isVibratorOn = false;
     private static final String VIBRATOR = "vibrations";
 
     /**
      *
      */
     private static void initVibrator() {
-        isVibratorOn = sharedPreferences.getBoolean(VIBRATOR, true);
+        isVibratorOn = sharedPreferences.getBoolean(VIBRATOR, false);
     }
 
     /**

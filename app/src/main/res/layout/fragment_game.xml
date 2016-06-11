@@ -2,13 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cz.martinforejt.chingchong.GameFragment"
-    android:background="#2b2b2b">
+    android:background="#2b2b2b"
+    tools:context="cz.martinforejt.chingchong.GameFragment">
 
     <cz.martinforejt.chingchong.GameView
+        android:id="@+id/gameView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/gameView"
         android:layout_margin="10dp" />
 
     <LinearLayout
@@ -31,17 +31,17 @@
                 <LinearLayout
                     android:layout_width="200dp"
                     android:layout_height="40dp"
+                    android:background="@drawable/left_player_background"
                     android:paddingBottom="8dp"
-                    android:paddingRight="35dp"
-                    android:background="@drawable/left_player_background">
+                    android:paddingRight="35dp">
 
                     <TextView
                         android:id="@+id/player_name"
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
                         android:gravity="center"
-                        android:textColor="#fff"
-                        android:text="Máš 2 palce" />
+                        android:text="Máš 2 palce"
+                        android:textColor="#fff" />
 
                     <View
                         android:layout_width="0dp"
@@ -49,17 +49,17 @@
                         android:layout_weight="1" />
 
                     <ImageView
+                        android:id="@+id/player_thumb_1"
                         android:layout_width="22dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/player_thumb_1"
-                        android:src="@drawable/thumb"/>
+                        android:src="@drawable/thumb" />
 
 
                     <ImageView
+                        android:id="@+id/player_thumb_2"
                         android:layout_width="22dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/player_thumb_2"
-                        android:src="@drawable/thumb"/>
+                        android:src="@drawable/thumb" />
 
 
                 </LinearLayout>
@@ -72,23 +72,23 @@
                 <LinearLayout
                     android:layout_width="200dp"
                     android:layout_height="40dp"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="35dp"
-                    android:gravity="right"
                     android:layout_gravity="right"
-                    android:background="@drawable/right_player_background">
+                    android:background="@drawable/right_player_background"
+                    android:gravity="right"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="35dp">
 
                     <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="wrap_content"
                         android:id="@+id/rival_thumb_2"
-                        android:src="@drawable/thumb"/>
-
-                    <ImageView
                         android:layout_width="22dp"
                         android:layout_height="wrap_content"
+                        android:src="@drawable/thumb" />
+
+                    <ImageView
                         android:id="@+id/rival_thumb_1"
-                        android:src="@drawable/thumb"/>
+                        android:layout_width="22dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/thumb" />
 
                     <View
                         android:layout_width="0dp"
@@ -100,8 +100,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
                         android:gravity="right|center_vertical"
-                        android:textColor="#fff"
-                        android:text="Má 2 palce" />
+                        android:text="Má 2 palce"
+                        android:textColor="#fff" />
 
                 </LinearLayout>
 
@@ -135,6 +135,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_marginTop="30dp"
                     android:layout_weight="2">
 
                     <ImageButton
@@ -142,8 +143,10 @@
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/fist"
-                        android:background="@null"/>
+                        android:background="@null"
+                        android:scaleType="fitStart"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/left_fist" />
 
 
                     <ImageButton
@@ -151,8 +154,10 @@
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/fist"
-                        android:background="@null"/>
+                        android:background="@null"
+                        android:scaleType="fitEnd"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/right_fist" />
 
                 </LinearLayout>
 
@@ -160,8 +165,8 @@
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
                     android:background="@drawable/numbers_background"
+                    android:orientation="vertical"
                     android:paddingLeft="15dp"
                     android:paddingTop="15dp">
 
@@ -175,23 +180,23 @@
                             android:id="@+id/click3"
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
-                            android:layout_weight="1"
                             android:layout_margin="6dp"
-                            android:textColor="#fff"
-                            android:textSize="25sp"
+                            android:layout_weight="1"
                             android:background="@drawable/chong_button_active"
-                            android:text="3" />
+                            android:text="3"
+                            android:textColor="#fff"
+                            android:textSize="25sp" />
 
                         <Button
                             android:id="@+id/click4"
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
-                            android:layout_weight="1"
                             android:layout_margin="6dp"
-                            android:textColor="#fff"
-                            android:textSize="25sp"
+                            android:layout_weight="1"
                             android:background="@drawable/chong_button_active"
-                            android:text="4" />
+                            android:text="4"
+                            android:textColor="#fff"
+                            android:textSize="25sp" />
 
                     </LinearLayout>
 
@@ -205,24 +210,24 @@
                             android:id="@+id/click1"
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
-                            android:layout_weight="1"
                             android:layout_margin="6dp"
-                            android:textColor="#fff"
-                            android:textSize="25sp"
+                            android:layout_weight="1"
                             android:background="@drawable/chong_button_active"
-                            android:text="1" />
+                            android:text="1"
+                            android:textColor="#fff"
+                            android:textSize="25sp" />
 
 
                         <Button
                             android:id="@+id/click2"
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
-                            android:layout_weight="1"
                             android:layout_margin="6dp"
-                            android:textColor="#fff"
-                            android:textSize="25sp"
+                            android:layout_weight="1"
                             android:background="@drawable/chong_button_active"
-                            android:text="2" />
+                            android:text="2"
+                            android:textColor="#fff"
+                            android:textSize="25sp" />
 
                     </LinearLayout>
 
@@ -230,12 +235,12 @@
                         android:id="@+id/click0"
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
                         android:layout_margin="6dp"
-                        android:textColor="#fff"
-                        android:textSize="25sp"
+                        android:layout_weight="1"
                         android:background="@drawable/chong_button_active"
-                        android:text="0" />
+                        android:text="0"
+                        android:textColor="#fff"
+                        android:textSize="25sp" />
 
 
                 </LinearLayout>

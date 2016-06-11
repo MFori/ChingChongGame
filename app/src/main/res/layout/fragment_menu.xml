@@ -15,11 +15,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:text="© 2016 MfStudio"
         android:onClick="creditsClick"
-        android:textSize="18sp" />
+        android:text="© 2016 MfStudio"
+        android:typeface="monospace"
+        android:textSize="17sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -29,23 +30,25 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/menu_button_multiplayer"
             android:layout_width="150dp"
             android:layout_height="140dp"
             android:layout_margin="10dp"
             android:background="@drawable/menu_button"
             android:onClick="playMultiPlayer"
-            android:text="MULTIPLAYER"
-            android:textSize="18sp"
+            android:text="MULTI PLAYER"
+            android:textSize="33sp"
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/menu_button_singleplayer"
             android:layout_width="150dp"
             android:layout_height="140dp"
             android:layout_margin="10dp"
             android:background="@drawable/menu_button"
             android:onClick="playSinglePlayer"
-            android:text="SINGLEPLAYER"
-            android:textSize="18sp"
+            android:text="SINGLE PLAYER"
+            android:textSize="33sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -57,7 +60,7 @@
         android:layout_margin="8dp"
         android:background="@null"
         android:scaleType="fitCenter"
-        android:src="@drawable/rate" />
+        android:src="@drawable/menu_rate" />
 
 
     <ImageButton
@@ -68,7 +71,7 @@
         android:layout_margin="8dp"
         android:background="@null"
         android:scaleType="fitCenter"
-        android:src="@drawable/exit" />
+        android:src="@drawable/menu_exit" />
 
 
     <ImageButton
@@ -79,7 +82,7 @@
         android:layout_margin="8dp"
         android:background="@null"
         android:scaleType="fitCenter"
-        android:src="@drawable/settings" />
+        android:src="@drawable/menu_settings" />
 
 
     <ImageButton
@@ -90,6 +93,6 @@
         android:layout_margin="8dp"
         android:background="@null"
         android:scaleType="fitCenter"
-        android:src="@drawable/about" />
+        android:src="@drawable/menu_about" />
 
 </cz.martinforejt.chingchong.GameLayout>
