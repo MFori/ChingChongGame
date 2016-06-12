@@ -1,5 +1,6 @@
 package cz.martinforejt.chingchong;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ public class NewPlayerFragment extends Fragment {
 
         editName = (EditText) view.findViewById(R.id.edit_name_first);
         submit = (Button) view.findViewById(R.id.btn_name_first);
+        setFont();
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,5 +50,12 @@ public class NewPlayerFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Set chlorinr font to submit button
+     */
+    private void setFont() {
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/chlorinr.ttf");
+        submit.setTypeface(typeface);
+    }
 
 }

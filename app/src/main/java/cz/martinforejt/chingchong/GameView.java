@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -28,6 +29,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     static GameView instance;
     Context context;
+
+    Bitmap background;
+    Paint backPaing;
 
     private boolean countDownAnimating = false;
 
@@ -68,6 +72,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         timeHeight = time.getHeight();
 
         time = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inScaled = false;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.background, options);
+        float p = (float) bitmap.getHeight() / (float) bitmap.getWidth();
+        background = Bitmap.createScaledBitmap(bitmap, gameWidth, (int) (gameWidth * p), true);
+        background = Bitmap.createScaledBitmap(bitmap, gameWidth, gameHeight, true);
+        int backgroundWidth = gameWidth;
+        int backgroundHeight = (int) (gameWidth * p);
+        backPaing = new Paint();
+        backPaing.setAntiAlias(true);
+        backPaing.setFilterBitmap(true);
+        backPaing.setDither(true);
     }
 
     @Override
@@ -75,7 +92,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         Canvas canvas = null;
         canvas = holder.lockCanvas();
         if (canvas != null) {
-            canvas.drawColor(getResources().getColor(R.color.backgroundbrown));
+            //canvas.drawColor(getResources().getColor(R.color.backgroundbrown));
+            //canvas.drawBitmap(background, 0, 0, null);
             holder.unlockCanvasAndPost(canvas);
         }
     }
@@ -103,7 +121,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                         while ((System.currentTimeMillis() - start) < 1200 && countDownAnimating) {
                             canvas = holder.lockCanvas();
                             if (canvas != null) {
-                                canvas.drawColor(getResources().getColor(R.color.backgroundbrown));
+                                //canvas.drawColor(getResources().getColor(R.color.backgroundbrown));
+                                canvas.drawBitmap(background, 0, 0, backPaing);
                                 int x = gameWidth / 2 - width / 2;
                                 int y = TimeHeight / 2 - ((int) (width * Timeratio) / 2);
                                 int height = (int) (width * Timeratio);
@@ -174,7 +193,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private void clear() {
         Canvas canvas = holder.lockCanvas();
         if (canvas != null) {
-            canvas.drawColor(getResources().getColor(R.color.backgroundbrown));
+            //canvas.drawColor(getResources().getColor(R.color.backgroundbrown));
+            canvas.drawBitmap(background, 0, 0, backPaing);
             holder.unlockCanvasAndPost(canvas);
         }
     }

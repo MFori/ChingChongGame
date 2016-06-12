@@ -56,7 +56,7 @@ public class Menu implements View.OnClickListener {
     }
 
     /**
-     *
+     * Set chlorinr font to menu buttons
      */
     private void setFont() {
         Typeface typeface = Typeface.createFromAsset(activity.getAssets(), "fonts/chlorinr.ttf");
@@ -84,11 +84,11 @@ public class Menu implements View.OnClickListener {
                 activity.exitDialog();
                 break;
             case R.id.menu_settings:
-                fragment = SettingsFragment.newInstance();
+                fragment = new SettingsFragment();
                 tag = SettingsFragment.TAG;
                 break;
             case R.id.menu_about:
-                fragment = AboutFragment.newInstance();
+                fragment = new AboutFragment();
                 tag = AboutFragment.TAG;
                 break;
         }

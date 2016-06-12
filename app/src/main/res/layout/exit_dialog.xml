@@ -29,13 +29,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:background="@drawable/dialog_button"
+                android:textStyle="bold"
                 android:text="yes" />
 
             <Button
                 android:id="@+id/dialogBtnNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/dialog_button"
                 android:layout_margin="10dp"
+                android:textStyle="bold"
                 android:text="no" />
 
 

@@ -25,11 +25,6 @@ public class SettingsFragment extends Fragment {
     private Button changeName, sound, vibrate;
     private TextView nameText;
 
-    public static SettingsFragment newInstance() {
-        SettingsFragment fragment = new SettingsFragment();
-        return fragment;
-    }
-
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -87,7 +82,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setNameTextView() {
-        nameText.setText("Name: " + Config.getName());
+        nameText.setText("Nickname: " + Config.getName());
     }
 
     /**
@@ -118,7 +113,7 @@ public class SettingsFragment extends Fragment {
                 if (!n.equals("")) {
                     Config.setName(name.getText().toString());
                     Toast.makeText(getActivity(), "Name saved", Toast.LENGTH_SHORT).show();
-                    nameText.setText("Name: " + Config.getName());
+                    nameText.setText("Nickname: " + Config.getName());
                 } else {
                     Toast.makeText(getActivity(), "Nothing to save", Toast.LENGTH_SHORT).show();
                 }

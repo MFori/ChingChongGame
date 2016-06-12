@@ -41,7 +41,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Name: Fori"
+                android:text="Nickname: Fori"
                 android:textColor="#000"
                 android:textSize="27sp"
                 android:textStyle="bold" />
