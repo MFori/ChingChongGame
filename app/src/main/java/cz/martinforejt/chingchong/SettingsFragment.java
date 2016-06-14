@@ -42,10 +42,12 @@ public class SettingsFragment extends Fragment {
 
         initElements(view);
 
-        return  view;
+        return view;
     }
 
     /**
+     * Initialize fragment layout elements
+     *
      * @param v View
      */
     private void initElements(View v) {
@@ -72,7 +74,7 @@ public class SettingsFragment extends Fragment {
     }
 
     /**
-     *
+     * Set chlorinr (assets/fonts/chlorinr.ttf) font to settings buttons
      */
     private void setFont() {
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/chlorinr.ttf");
@@ -81,12 +83,15 @@ public class SettingsFragment extends Fragment {
         changeName.setTypeface(typeface);
     }
 
+    /**
+     * Set name to nickname textView
+     */
     private void setNameTextView() {
         nameText.setText("Nickname: " + Config.getName());
     }
 
     /**
-     *
+     * Open dialog for changing nickname
      */
     public void changeNameDialog() {
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
@@ -124,10 +129,13 @@ public class SettingsFragment extends Fragment {
         dialog.show();
     }
 
+    /**
+     * On vibrate on/off button click listener
+     */
     View.OnClickListener vibrateOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(Config.isVibratorOn()) {
+            if (Config.isVibratorOn()) {
                 Config.setVibrator(false);
                 Toast.makeText(getActivity(), "Vibrations off", Toast.LENGTH_SHORT).show();
                 vibrate.setText("Off");
@@ -139,10 +147,13 @@ public class SettingsFragment extends Fragment {
         }
     };
 
+    /**
+     * On sound on/off button click listener
+     */
     View.OnClickListener soundOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(Config.isIsSoundOn()) {
+            if (Config.isIsSoundOn()) {
                 Config.setIsSoundOn(false);
                 Toast.makeText(getActivity(), "Sound off", Toast.LENGTH_SHORT).show();
                 sound.setText("Off");

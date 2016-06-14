@@ -36,6 +36,7 @@
             android:layout_margin="5dp"
             android:background="@drawable/dialog_button"
             android:textStyle="bold"
+            android:textSize="18sp"
             android:text="save"
             android:layout_gravity="center"/>
 

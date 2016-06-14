@@ -162,7 +162,7 @@ public class Config {
     }
 
     /**
-     *
+     * Reset score
      */
     public static void resetScore() {
         setMyScore(0);

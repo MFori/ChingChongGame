@@ -124,19 +124,11 @@ public class SoundManager {
         if (Config.isIsSoundOn() && isLoaded) {
             try {
                 soundPool.play(soundIds[effect], 1, 1, 1, 0, 1.0f);
+                Log.d("SoundManager:", "Playing: " + String.valueOf(effect));
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.d("Cant play: ", "EFFECT: " + String.valueOf(effect));
             }
         }
     }
-
-    public void startBackground() {
-
-    }
-
-    public void stopBackground() {
-
-    }
-
 }

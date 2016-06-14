@@ -7,6 +7,8 @@ import android.widget.FrameLayout;
 /**
  * Created by Martin Forejt on 14.05.2016.
  * forejt.martin97@gmail.com
+ * <p/>
+ * Manipulating with xFraction: Sliding animation when changing fragments - full width X
  */
 public class GameLayout extends FrameLayout {
 
@@ -22,13 +24,19 @@ public class GameLayout extends FrameLayout {
         super(context, attrs, defStyle);
     }
 
+    /**
+     * @return float
+     */
     public float getXFraction() {
-        if(getWidth() == 0){
+        if (getWidth() == 0) {
             return 0;
         }
         return getX() / getWidth();
     }
 
+    /**
+     * @param xFraction float
+     */
     public void setXFraction(float xFraction) {
         final int width = getWidth();
         setX((width > 0) ? (xFraction * width) : -9999);

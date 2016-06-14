@@ -24,6 +24,7 @@ public class ServerPlayer extends Player {
 
     static final int socketServerPORT = 8080;
 
+    // Message types:
     static final int MESSAGE_CONNECT = 1;
     static final int MESSAGE_DATA = 2;
     static final int MESSAGE_END = 3;
@@ -54,7 +55,7 @@ public class ServerPlayer extends Player {
     }
 
     /**
-     *
+     * Restart server socket and thread
      */
     public void restartServer() {
         stopServer();
@@ -62,7 +63,8 @@ public class ServerPlayer extends Player {
     }
 
     /**
-     *
+     * Start server thread
+     * Open server socket
      */
     public void startServer() {
         isRunning = true;
@@ -71,7 +73,7 @@ public class ServerPlayer extends Player {
     }
 
     /**
-     *
+     * Close socket, stop thread
      */
     public void stopServer() {
         isRunning = false;
@@ -90,14 +92,14 @@ public class ServerPlayer extends Player {
     }
 
     /**
-     *
+     * Open waiting for game data from client
      */
     public void sendData() {
         waitingForData = true;
     }
 
     /**
-     *
+     * Calculate received data
      */
     public void haveData() {
         int visibleThumbs = rival.getShowsThumbs() + this.getShowsThumbs();
@@ -121,7 +123,7 @@ public class ServerPlayer extends Player {
     }
 
     /**
-     *
+     * Main server Thread
      */
     private class SocketServerThread extends Thread {
 
@@ -199,7 +201,7 @@ public class ServerPlayer extends Player {
     }
 
     /**
-     *
+     * Thread for replying to client
      */
     private class SocketServerReplyThread extends Thread {
 
@@ -240,8 +242,7 @@ public class ServerPlayer extends Player {
                             msgReply = "rematch";
                             ResultFragment.getInstance().rematch();
                             wantRematch = false;
-                        }
-                        else msgReply = "";
+                        } else msgReply = "";
                         break;
                 }
 
@@ -261,6 +262,8 @@ public class ServerPlayer extends Player {
     }
 
     /**
+     * Consume game data from client
+     *
      * @param message String
      */
     private void consumeData(String message) {
@@ -274,6 +277,8 @@ public class ServerPlayer extends Player {
     }
 
     /**
+     * Consume connect data from client
+     *
      * @param message String
      */
     private void consumeConnect(String message, Socket socket) {
@@ -286,6 +291,8 @@ public class ServerPlayer extends Player {
     }
 
     /**
+     * Create message for connect reply
+     *
      * @return String
      */
     private String createConnectMessage() {
@@ -298,6 +305,8 @@ public class ServerPlayer extends Player {
     }
 
     /**
+     * Create message for data reply
+     *
      * @return String
      */
     private String createDataMessage() {
@@ -314,6 +323,8 @@ public class ServerPlayer extends Player {
     }
 
     /**
+     * Check if client send rematch request
+     *
      * @return bool
      */
     public boolean clientWantRematch() {
@@ -394,7 +405,7 @@ public class ServerPlayer extends Player {
     }
 
     /**
-     *
+     * Player on pause
      */
     public void onPause() {
         if (serverSocket != null) {
@@ -408,7 +419,7 @@ public class ServerPlayer extends Player {
     }
 
     /**
-     *
+     * Player on resume
      */
     public void onResume() {
         startServer();

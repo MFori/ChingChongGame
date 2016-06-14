@@ -63,6 +63,10 @@ public class CreateGameFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Start waiting thread
+     * Draws waiting on textView ...
+     */
     private void startWaiting() {
         waitingThread = new Thread(new Runnable() {
             @Override
@@ -91,6 +95,11 @@ public class CreateGameFragment extends Fragment {
         waitingThread.start();
     }
 
+    /**
+     * Set text to waiting textView
+     *
+     * @param text String
+     */
     private void setWaitingText(final String text) {
         getActivity().runOnUiThread(new Runnable() {
             @Override

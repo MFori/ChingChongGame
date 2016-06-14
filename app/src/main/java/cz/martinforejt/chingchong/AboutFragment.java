@@ -22,6 +22,7 @@ public class AboutFragment extends Fragment {
 
     private ScrollView scroll;
     private ObjectAnimator scrollAnimator = null;
+    // when touch set to true - stop auto scrolling
     private boolean endScrolling = false;
 
     public AboutFragment() {
@@ -45,11 +46,9 @@ public class AboutFragment extends Fragment {
             @Override
             public void onGlobalLayout() {
 
-
                 if(!endScrolling) {
-                    //ObjectAnimator.ofInt(scroll, "scrollY", scroll.getHeight()).setDuration(10000).start();
                     scrollAnimator = ObjectAnimator.ofInt(scroll, "scrollY", scroll.getHeight());
-                    scrollAnimator.setDuration(10000).start();
+                    scrollAnimator.setDuration(20000).start();
                 }
 
                 if (Build.VERSION.SDK_INT < 16) {

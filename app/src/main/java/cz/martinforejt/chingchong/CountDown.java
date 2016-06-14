@@ -16,7 +16,7 @@ public class CountDown {
 
     private static Bitmap original = null;
 
-    private Context context;
+    // countdown position 5-4-3-2-1
     protected int number;
 
     protected int width, height, opacity;
@@ -30,7 +30,6 @@ public class CountDown {
      */
     public CountDown(Context context, int number) {
         initBitmap(context, number);
-        this.context = context;
         this.number = number;
     }
 

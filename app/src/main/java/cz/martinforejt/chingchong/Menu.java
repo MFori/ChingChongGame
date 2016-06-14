@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.media.SoundPool;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -56,7 +55,7 @@ public class Menu implements View.OnClickListener {
     }
 
     /**
-     * Set chlorinr font to menu buttons
+     * Set chlorinr (assets/fonts/chlorinr.ttf) font to menu buttons
      */
     private void setFont() {
         Typeface typeface = Typeface.createFromAsset(activity.getAssets(), "fonts/chlorinr.ttf");

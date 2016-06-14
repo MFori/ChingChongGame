@@ -106,17 +106,17 @@ public abstract class Player implements PlayerInterface, Serializable {
     }
 
     /**
-     *
+     * On destroy
      */
     abstract void onDestroy();
 
     /**
-     *
+     * On pause
      */
     abstract void onPause();
 
     /**
-     *
+     * On resume
      */
     abstract void onResume();
 }

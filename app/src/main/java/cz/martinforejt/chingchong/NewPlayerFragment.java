@@ -42,7 +42,7 @@ public class NewPlayerFragment extends Fragment {
 
                 if (!name.equals("")) {
                     Config.setName(name);
-                    ((GameActivity) getActivity()).changeFragment(MenuFragment.newInstance(), MenuFragment.TAG, true);
+                    ((GameActivity) getActivity()).changeFragment(new MenuFragment(), MenuFragment.TAG, true);
                 }
             }
         });

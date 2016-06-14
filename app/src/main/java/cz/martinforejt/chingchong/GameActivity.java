@@ -7,7 +7,6 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.media.SoundPool;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -23,6 +22,7 @@ import android.widget.Toast;
  * Created by Martin Forejt on 14.05.2016.
  * forejt.martin97@gmail.com
  * class GameActivity
+ * Main game activity started from splash screen (activity)
  */
 public class GameActivity extends AppCompatActivity {
 
@@ -63,7 +63,7 @@ public class GameActivity extends AppCompatActivity {
             fragment = new NewPlayerFragment();
             tag = NewPlayerFragment.TAG;
         } else {
-            fragment = MenuFragment.newInstance();
+            fragment = new MenuFragment();
             tag = MenuFragment.TAG;
         }
         changeFragment(fragment, tag, false);
@@ -128,7 +128,7 @@ public class GameActivity extends AppCompatActivity {
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.remove(GameFragment.newInstance(new OfflinePlayer("Martin", "Pepa")));
                 transaction.commit();
-                changeFragment(MenuFragment.newInstance(), MenuFragment.TAG, true);
+                changeFragment(new MenuFragment(), MenuFragment.TAG, true);
                 break;
             case CreateGameFragment.TAG:
             case JoinGameFragment.TAG:
@@ -138,7 +138,7 @@ public class GameActivity extends AppCompatActivity {
             case AboutFragment.TAG:
             case SettingsFragment.TAG:
             case ResultFragment.TAG:
-                changeFragment(MenuFragment.newInstance(), MenuFragment.TAG, SLIDE_LEFT, false);
+                changeFragment(new MenuFragment(), MenuFragment.TAG, SLIDE_LEFT, false);
                 break;
         }
     }

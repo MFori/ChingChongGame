@@ -19,6 +19,11 @@ public class PauseDialog extends AlertDialog.Builder {
 
     protected AlertDialog dialog = null;
 
+    /**
+     * Construct
+     *
+     * @param context Context
+     */
     public PauseDialog(Context context) {
         super(context);
 
@@ -29,16 +34,27 @@ public class PauseDialog extends AlertDialog.Builder {
         end = (Button) view.findViewById(R.id.pauseDialogBtnEnd);
     }
 
+    /**
+     * Add on end button click listener
+     *
+     * @param listener View.OnclickListener
+     */
     public void setEndListener(View.OnClickListener listener) {
         end.setOnClickListener(listener);
     }
 
+    /**
+     * Close dialog - destroy
+     */
     public void close() {
         if (dialog != null && isActive) {
             dialog.dismiss();
         }
     }
 
+    /**
+     * Hide dialog - do not destroy
+     */
     public void hide() {
         if (dialog != null && isActive) {
             dialog.dismiss();
@@ -46,9 +62,12 @@ public class PauseDialog extends AlertDialog.Builder {
         }
     }
 
+    /**
+     * Show/create dialog
+     */
     public void open() {
         if (!isActive) {
-            if(dialog==null) {
+            if (dialog == null) {
                 dialog = super.create();
                 dialog.setCanceledOnTouchOutside(false);
             }

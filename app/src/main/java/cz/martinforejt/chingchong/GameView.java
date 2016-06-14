@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -31,14 +30,25 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     Context context;
 
     Bitmap background;
-    Paint backPaing;
+    Paint backPaint;
 
     private boolean countDownAnimating = false;
 
+    /**
+     * Construct
+     *
+     * @param context Context
+     */
     public GameView(Context context) {
         super(context);
     }
 
+    /**
+     * Construct
+     *
+     * @param context Context
+     * @param attrs   AttributeSet
+     */
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -73,18 +83,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         time = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
 
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inScaled = false;
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.background, options);
-        float p = (float) bitmap.getHeight() / (float) bitmap.getWidth();
-        background = Bitmap.createScaledBitmap(bitmap, gameWidth, (int) (gameWidth * p), true);
+        // Background:
+        BitmapFactory.Options BackOptions = new BitmapFactory.Options();
+        BackOptions.inScaled = false;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.background, BackOptions);
+        //float backRatio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
+        //background = Bitmap.createScaledBitmap(bitmap, gameWidth, (int) (gameWidth * backRatio), true);
         background = Bitmap.createScaledBitmap(bitmap, gameWidth, gameHeight, true);
-        int backgroundWidth = gameWidth;
-        int backgroundHeight = (int) (gameWidth * p);
-        backPaing = new Paint();
-        backPaing.setAntiAlias(true);
-        backPaing.setFilterBitmap(true);
-        backPaing.setDither(true);
+
+        backPaint = new Paint();
+        backPaint.setAntiAlias(true);
+        backPaint.setFilterBitmap(true);
+        backPaint.setDither(true);
     }
 
     @Override
@@ -122,7 +132,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                             canvas = holder.lockCanvas();
                             if (canvas != null) {
                                 //canvas.drawColor(getResources().getColor(R.color.backgroundbrown));
-                                canvas.drawBitmap(background, 0, 0, backPaing);
+                                canvas.drawBitmap(background, 0, 0, backPaint);
                                 int x = gameWidth / 2 - width / 2;
                                 int y = TimeHeight / 2 - ((int) (width * Timeratio) / 2);
                                 int height = (int) (width * Timeratio);
@@ -194,7 +204,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         Canvas canvas = holder.lockCanvas();
         if (canvas != null) {
             //canvas.drawColor(getResources().getColor(R.color.backgroundbrown));
-            canvas.drawBitmap(background, 0, 0, backPaing);
+            canvas.drawBitmap(background, 0, 0, backPaint);
             holder.unlockCanvasAndPost(canvas);
         }
     }

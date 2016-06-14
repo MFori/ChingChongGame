@@ -2,7 +2,6 @@ package cz.martinforejt.chingchong;
 
 import android.app.Activity;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -40,7 +39,7 @@ public class MultiPlayerFragment extends Fragment {
     }
 
     /**
-     *
+     * Set chlorinr (assets/fonts/chlorinr.ttf) font to multiplayer-menu buttons
      */
     private void setFont() {
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/chlorinr.ttf");

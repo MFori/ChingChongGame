@@ -1,14 +1,10 @@
 package cz.martinforejt.chingchong;
 
-import android.app.AlertDialog;
-import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -33,16 +29,18 @@ public class GameFragment extends Fragment {
     private int leftThumb = 0, rightThumb = 0;
     private PauseDialog pauseDialog = null;
 
-    GameView gameView;
+    protected GameView gameView;
 
-    /* Testovaci */
-    Button num0, num1, num2, num3, num4;
-    ImageButton left, right;
-    TextView animate;
-    TextView playerName, rivalName;
-    ImageView playerThumb1, playerThumb2, rivalThumb1, rivalThumb2;
-    /* END */
+    protected Button num0, num1, num2, num3, num4;
+    protected ImageButton left, right;
+    protected TextView animate;
+    protected TextView playerName, rivalName;
+    protected ImageView playerThumb1, playerThumb2, rivalThumb1, rivalThumb2;
 
+    /**
+     * @param player Player
+     * @return GameFragment
+     */
     public static GameFragment newInstance(Player player) {
         instance = new GameFragment();
         Bundle args = new Bundle();
@@ -99,7 +97,6 @@ public class GameFragment extends Fragment {
 
     @Override
     public void onStart() {
-//        game.start();
         super.onStart();
     }
 
@@ -208,7 +205,7 @@ public class GameFragment extends Fragment {
     public void endGame() {
         game.end();
         game = null;
-        ((GameActivity) getActivity()).changeFragment(MenuFragment.newInstance(), MenuFragment.TAG, true);
+        ((GameActivity) getActivity()).changeFragment(new MenuFragment(), MenuFragment.TAG, true);
     }
 
     /**
@@ -323,11 +320,6 @@ public class GameFragment extends Fragment {
      */
     public void hidePauseRivalDialog() {
         if (game != null) pauseDialog.hide();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     @Override

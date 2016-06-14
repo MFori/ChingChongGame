@@ -16,7 +16,8 @@ public class OfflinePlayer extends Player {
     }
 
     /**
-     *
+     * Generate random data to rival from range
+     * calculate result
      */
     public void sendData() {
 
