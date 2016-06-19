@@ -11,6 +11,24 @@
         android:layout_height="fill_parent"
         android:layout_margin="10dp" />
 
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:id="@+id/animate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="45dp"
+            android:gravity="center"
+            android:text="CHING CHONG 4"
+            android:textColor="#000"
+            android:textSize="70sp"
+            android:visibility="invisible" />
+
+    </FrameLayout>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -112,11 +130,14 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/animate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#fff"
-                    android:textSize="35sp" />
+                    android:id="@+id/animate_"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:text="CHING CHONG 2"
+                    android:textColor="#000"
+                    android:textSize="70sp"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 
@@ -143,9 +164,9 @@
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
+                        android:adjustViewBounds="true"
                         android:background="@null"
                         android:scaleType="fitStart"
-                        android:adjustViewBounds="true"
                         android:src="@drawable/left_fist" />
 
 
@@ -154,9 +175,9 @@
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
+                        android:adjustViewBounds="true"
                         android:background="@null"
                         android:scaleType="fitEnd"
-                        android:adjustViewBounds="true"
                         android:src="@drawable/right_fist" />
 
                 </LinearLayout>
@@ -184,8 +205,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/chong_button_active"
                             android:text="3"
-                            android:textColor="#fff"
-                            android:textSize="25sp" />
+                            android:textColor="#000"
+                            android:textSize="45sp" />
 
                         <Button
                             android:id="@+id/click4"
@@ -195,8 +216,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/chong_button_active"
                             android:text="4"
-                            android:textColor="#fff"
-                            android:textSize="25sp" />
+                            android:textColor="#000"
+                            android:textSize="45sp" />
 
                     </LinearLayout>
 
@@ -214,8 +235,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/chong_button_active"
                             android:text="1"
-                            android:textColor="#fff"
-                            android:textSize="25sp" />
+                            android:textColor="#000"
+                            android:textSize="45sp" />
 
 
                         <Button
@@ -226,8 +247,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/chong_button_active"
                             android:text="2"
-                            android:textColor="#fff"
-                            android:textSize="25sp" />
+                            android:textColor="#000"
+                            android:textSize="45sp" />
 
                     </LinearLayout>
 
@@ -239,8 +260,8 @@
                         android:layout_weight="1"
                         android:background="@drawable/chong_button_active"
                         android:text="0"
-                        android:textColor="#fff"
-                        android:textSize="25sp" />
+                        android:textColor="#000"
+                        android:textSize="45sp" />
 
 
                 </LinearLayout>

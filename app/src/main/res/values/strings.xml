@@ -1,10 +1,60 @@
 <resources>
-    <string name="app_name">ChingChong</string>
+    <string name="app_name">Ching Chong</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_game">GameActivity</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Buttons -->
+    <string name="menu_multi">MULTI PLAYER</string>
+    <string name="menu_single">SINGLE PLAYER</string>
+    <string name="multi_create">CREATE</string>
+    <string name="multi_join">JOIN</string>
+
+    <!-- Descriptions -->
+    <string name="desc_logo">Ching Chong logo</string>
+    <string name="desc_rate">Rate</string>
+    <string name="desc_exit">Exit</string>
+    <string name="desc_settings">Settings</string>
+    <string name="desc_about">About</string>
+    <string name="desc_back">Go back!</string>
+
+    <!-- Titles -->
+    <string name="title_settings">Settings</string>
+    <string name="title_multiplayer">Multiplayer</string>
+    <string name="title_create">Create</string>
+    <string name="title_join">Join</string>
+
+    <!-- Settings -->
+    <string name="title_nickname">Nickname:</string>
+    <string name="btn_nickname">CHANGE</string>
+    <string name="title_sound">Sound</string>
+    <string name="btn_sound">ON</string>
+    <string name="title_vibrate">Vibrations</string>
+    <string name="btn_vibrate">OFF</string>
+
+    <!-- Exit dialog -->
+    <string name="exit_btn_yes">Yes</string>
+    <string name="exit_btn_no">No</string>
+    <string name="exit_text">Really want to exit game?</string>
+
+    <!-- Pause dialog -->
+    <string name="pause_btn">end</string>
+    <string name="pause_text">WAITING FOR RIVAL...</string>
+
+    <!-- About -->
+    <string name="about_title"><b>Ching Chong</b> \n<i>2016</i></string>
+    <string name="about_how_to_play_title">How to play:</string>
+    <string name="about_how_to_play">
+        just play sdfe pdasf e fdsf wefdsij seijfsdj sdjfowe dsfse dsfewsfd fdsed5 fesd5 few6 6 dsfesd jds  dsf2 s0df wesdf sfdoeisdjf fnseod sdfie jfsie fsjkeop fsjei
+        just play sdfe pdasf e fdsf wefdsij seijfsdj sdjfowe dsfse dsfewsfd fdsed5 fesd5 few6 6 dsfesd jds  dsf2 s0df wesdf sfdoeisdjf fnseod sdfie jfsie fsjkeop fsjei
+        just play sdfe pdasf e fdsf wefdsij seijfsdj sdjfowe dsfse dsfewsfd fdsed5 fesd5 few6 6 dsfesd jds  dsf2 s0df wesdf sfdoeisdjf fnseod sdfie jfsie fsjkeop fsjei
+    </string>
+    <string name="about_links">\n
+        Icons from <i>icons8.com</i> \n
+        Images from <i>freepik.com</i> \n
+    </string>
+
+    <string name="mfStudio">© 2016 MfStudio</string>
+    <string name="loading">Loading...</string>
+    <string name="waiting">Waiting for oponent...</string>
+
 </resources>

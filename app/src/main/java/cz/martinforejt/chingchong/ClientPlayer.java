@@ -34,6 +34,8 @@ public class ClientPlayer extends Player {
     private boolean asyncRunning = false;
     private boolean isError = false;
 
+    private Async connAsync = null;
+
     /**
      * @param name      String
      * @param rivalName String
@@ -47,12 +49,28 @@ public class ClientPlayer extends Player {
     }
 
     /**
+     * Change ip address of server
+     *
+     * @param ipAddress String
+     * @return ClientPlayer
+     */
+    public ClientPlayer changeIp(String ipAddress) {
+        this.ipAddress = ipAddress;
+        return this;
+    }
+
+    /**
      * Connect to Server (server player)
      */
     public void connect() {
-        Async mAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
-        mAsync.execute(MESSAGE_CONNECT);
+        connAsync = new Async(ipAddress, ServerPlayer.socketServerPORT);
+        connAsync.execute(MESSAGE_CONNECT);
         isConnect = false;
+        //asyncRunning = true;
+    }
+
+    public void stopConnect() {
+        if (connAsync != null) connAsync.cancel(true);
     }
 
     /**
@@ -138,11 +156,11 @@ public class ClientPlayer extends Player {
                 bw.flush();
 
                 //if(type[0] == MESSAGE_CONNECT || type[0] == MESSAGE_REMATCH) {
-                    try {
-                        Thread.sleep(150);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                try {
+                    Thread.sleep(150);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 //}
 
                 // Get reply from server

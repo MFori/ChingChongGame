@@ -14,6 +14,7 @@ public class BackgroundMusic {
 
     protected static final String TRACK = "track";
     public static final int TRACK_01 = R.raw.back;
+    public static final int TRACK_02 = R.raw.cdk_sunday;
 
     private static BackgroundMusic instance = null;
 

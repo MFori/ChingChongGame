@@ -1,0 +1,56 @@
+<cz.martinforejt.chingchong.GameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cz.martinforejt.chingchong.MultiPlayerFragment">
+
+    <ImageButton
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_margin="5dp"
+        android:background="@null"
+        android:contentDescription="@string/desc_back"
+        android:onClick="backToMenu"
+        android:scaleType="fitCenter"
+        android:src="@drawable/menu_back" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="@string/title_multiplayer"
+        android:textSize="45sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/multi_create"
+            android:layout_width="230dp"
+            android:layout_height="220dp"
+            android:layout_margin="25dp"
+            android:background="@drawable/menu_button"
+            android:onClick="createGame"
+            android:text="@string/multi_create"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/multi_join"
+            android:layout_width="230dp"
+            android:layout_height="220dp"
+            android:layout_margin="25dp"
+            android:background="@drawable/menu_button"
+            android:onClick="joinGame"
+            android:text="@string/multi_join"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</cz.martinforejt.chingchong.GameLayout>

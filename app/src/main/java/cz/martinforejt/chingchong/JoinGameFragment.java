@@ -20,9 +20,14 @@ public class JoinGameFragment extends Fragment {
 
     public static final String TAG = "join";
 
-    private ClientPlayer player;
+    private ClientPlayer player = null;
 
     private String ipAddress = "";
+
+    boolean isConnecting = false;
+    boolean canConnect = true;
+
+    Thread connThread = null;
 
     private TextView tvIp;
     private Button keyDot, keyBack, keyCancel, keyOk;
@@ -46,7 +51,7 @@ public class JoinGameFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_join_game, container, false);
@@ -90,6 +95,26 @@ public class JoinGameFragment extends Fragment {
         keyOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*if (isConnecting) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while (isConnecting && canConnect) {
+                                Log.d("wait", "w");
+                                continue;
+                            }
+                            if(canConnect) {
+                                connThread.interrupt();
+                                connThread = null;
+                                player.onDestroy();
+                                player = null;
+                                start();
+                            }
+                        }
+                    }).start();
+                } else
+                    start();*/
+                //if(!isConnecting) start();
                 start();
             }
         });
@@ -102,13 +127,25 @@ public class JoinGameFragment extends Fragment {
      * Send request to server
      */
     private void start() {
+        if(player!=null) player.stopConnect();
+        player = null;
         player = new ClientPlayer(Config.getName(), "", ipAddress);
         player.connect();
-        new Thread(new Runnable() {
+        isConnecting = true;
+        connThread = new Thread(new Runnable() {
             @Override
             public void run() {
+                /*if(!player.isAsyncRunning()){
+                    start();
+                    return;
+                }*/
                 while (player.isAsyncRunning()) {
-                    continue;
+                    Log.d("IS", "ASYNC");
+                    try{
+                        Thread.sleep(200);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
                 if (player.isConnect()) {
                     getActivity().runOnUiThread(new Runnable() {
@@ -118,6 +155,8 @@ public class JoinGameFragment extends Fragment {
                             activity.changeFragment(GameFragment.newInstance(player), GameFragment.TAG, true);
                         }
                     });
+                    canConnect = false;
+                    return;
                 } else {
                     Log.d("CONNECTED", "NO");
                     getActivity().runOnUiThread(new Runnable() {
@@ -127,8 +166,10 @@ public class JoinGameFragment extends Fragment {
                         }
                     });
                 }
+                isConnecting = false;
             }
-        }).start();
+        });
+        connThread.start();
     }
 
     /**
@@ -137,7 +178,7 @@ public class JoinGameFragment extends Fragment {
      * @param number String
      */
     private void numberClick(String number) {
-        if(ipAddress.length() < 15) {
+        if (ipAddress.length() < 15) {
             ipAddress += number;
             tvIp.setText(ipAddress);
         }

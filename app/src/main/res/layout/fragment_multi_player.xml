@@ -9,7 +9,7 @@
         android:layout_height="55dp"
         android:layout_margin="5dp"
         android:background="@null"
-        android:contentDescription="@null"
+        android:contentDescription="@string/desc_back"
         android:onClick="backToMenu"
         android:scaleType="fitCenter"
         android:src="@drawable/menu_back" />
@@ -19,7 +19,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="5dp"
         android:gravity="center"
-        android:text="Multiplayer"
+        android:text="@string/title_multiplayer"
         android:textSize="35sp" />
 
     <LinearLayout
@@ -36,7 +36,7 @@
             android:layout_margin="15dp"
             android:background="@drawable/menu_button"
             android:onClick="createGame"
-            android:text="CREATE"
+            android:text="@string/multi_create"
             android:textSize="35sp"
             android:textStyle="bold" />
 
@@ -47,7 +47,7 @@
             android:layout_margin="15dp"
             android:background="@drawable/menu_button"
             android:onClick="joinGame"
-            android:text="JOIN"
+            android:text="@string/multi_join"
             android:textSize="35sp"
             android:textStyle="bold" />
 

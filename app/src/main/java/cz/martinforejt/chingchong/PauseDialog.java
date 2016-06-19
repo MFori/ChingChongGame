@@ -69,7 +69,10 @@ public class PauseDialog extends AlertDialog.Builder {
         if (!isActive) {
             if (dialog == null) {
                 dialog = super.create();
+                // touch
                 dialog.setCanceledOnTouchOutside(false);
+                // backpress
+                dialog.setCancelable(false);
             }
             dialog.show();
             isActive = true;

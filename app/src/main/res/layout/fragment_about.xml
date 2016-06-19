@@ -4,14 +4,6 @@
     android:layout_height="match_parent"
     tools:context="cz.martinforejt.chingchong.AboutFragment">
 
-    <!--<TextView
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:text="About"
-        android:textSize="35sp" /> -->
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -20,155 +12,64 @@
         android:orientation="vertical">
 
         <ScrollView
+            android:id="@+id/about_scroll"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:overScrollMode="never"
-            android:id="@+id/about_scroll"
-            android:scrollbars="none"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:paddingRight="10dp"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
+                android:orientation="vertical"
                 android:paddingBottom="15dp"
-                android:orientation="vertical">
+                android:paddingTop="15dp">
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="ChingChong The Game\n2016"
-                    android:textSize="30sp" />
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/about_title"
+                    android:textSize="33sp" />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/about_how_to_play_title"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:text="@string/about_how_to_play"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/about_links"
                     android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Icons from icons8.com and freepik.com"
-                    android:textSize="20sp" />
-
+                    android:text="@string/mfStudio"
+                    android:typeface="monospace"
+                    android:onClick="creditsClick"
+                    android:layout_marginBottom="20dp"
+                    android:textSize="25sp" />
 
             </LinearLayout>
 
@@ -177,14 +78,14 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="20dp"
-            android:background="@drawable/shadow"/>
+            android:background="@drawable/shadow" />
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="20dp"
-            android:scaleY="-1"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/shadow"/>
+            android:background="@drawable/shadow"
+            android:scaleY="-1" />
 
     </RelativeLayout>
 
@@ -193,7 +94,7 @@
         android:layout_height="55dp"
         android:layout_margin="5dp"
         android:background="@null"
-        android:contentDescription="@null"
+        android:contentDescription="@string/desc_back"
         android:onClick="backToMenu"
         android:scaleType="fitCenter"
         android:src="@drawable/menu_back" />

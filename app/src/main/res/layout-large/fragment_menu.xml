@@ -1,0 +1,103 @@
+<cz.martinforejt.chingchong.GameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cz.martinforejt.chingchong.MenuFragment">
+
+    <ImageView
+        android:id="@+id/menu_logo"
+        android:layout_width="fill_parent"
+        android:layout_height="170dp"
+        android:contentDescription="@string/desc_logo"
+        android:paddingTop="10dp"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:onClick="creditsClick"
+        android:text="@string/mfStudio"
+        android:textSize="22sp"
+        android:typeface="monospace" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/menu_button_multiplayer"
+            android:layout_width="190dp"
+            android:layout_height="180dp"
+            android:layout_margin="25dp"
+            android:background="@drawable/menu_button"
+            android:onClick="playMultiPlayer"
+            android:text="@string/menu_multi"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/menu_button_singleplayer"
+            android:layout_width="190dp"
+            android:layout_height="180dp"
+            android:layout_margin="25dp"
+            android:background="@drawable/menu_button"
+            android:onClick="playSinglePlayer"
+            android:text="@string/menu_single"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/menu_rate"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="8dp"
+        android:background="@null"
+        android:contentDescription="@string/desc_rate"
+        android:scaleType="fitCenter"
+        android:src="@drawable/menu_rate" />
+
+
+    <ImageButton
+        android:id="@+id/menu_exit"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="end"
+        android:layout_margin="8dp"
+        android:background="@null"
+        android:contentDescription="@string/desc_exit"
+        android:scaleType="fitCenter"
+        android:src="@drawable/menu_exit" />
+
+
+    <ImageButton
+        android:id="@+id/menu_settings"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="8dp"
+        android:background="@null"
+        android:contentDescription="@string/desc_settings"
+        android:scaleType="fitCenter"
+        android:src="@drawable/menu_settings" />
+
+
+    <ImageButton
+        android:id="@+id/menu_about"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="8dp"
+        android:background="@null"
+        android:contentDescription="@string/desc_about"
+        android:scaleType="fitCenter"
+        android:src="@drawable/menu_about" />
+
+</cz.martinforejt.chingchong.GameLayout>

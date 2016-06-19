@@ -9,7 +9,7 @@
         android:layout_height="55dp"
         android:layout_margin="5dp"
         android:background="@null"
-        android:contentDescription="@null"
+        android:contentDescription="@string/desc_back"
         android:onClick="backToMenu"
         android:scaleType="fitCenter"
         android:src="@drawable/menu_back" />
@@ -19,7 +19,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="5dp"
         android:gravity="center"
-        android:text="Settings"
+        android:text="@string/title_settings"
         android:textSize="35sp" />
 
     <LinearLayout
@@ -41,7 +41,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Nickname: Fori"
+                android:text="@string/title_nickname"
                 android:textColor="#000"
                 android:textSize="27sp"
                 android:textStyle="bold" />
@@ -51,7 +51,7 @@
                 android:layout_width="100dp"
                 android:layout_height="58dp"
                 android:background="@drawable/menu_button"
-                android:text="Change"
+                android:text="@string/btn_nickname"
                 android:textSize="24sp" />
 
         </LinearLayout>
@@ -73,7 +73,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Sound"
+                android:text="@string/title_sound"
                 android:textColor="#000"
                 android:textSize="27sp"
                 android:textStyle="bold" />
@@ -83,7 +83,7 @@
                 android:layout_width="100dp"
                 android:layout_height="58dp"
                 android:background="@drawable/menu_button"
-                android:text="On"
+                android:text="@string/btn_sound"
                 android:textSize="24sp" />
 
         </LinearLayout>
@@ -104,7 +104,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Vibrations"
+                android:text="@string/title_vibrate"
                 android:textColor="#000"
                 android:textSize="27sp"
                 android:textStyle="bold" />
@@ -114,7 +114,7 @@
                 android:layout_width="100dp"
                 android:layout_height="58dp"
                 android:background="@drawable/menu_button"
-                android:text="On"
+                android:text="@string/btn_vibrate"
                 android:textSize="24sp" />
 
         </LinearLayout>

@@ -9,4 +9,7 @@
     <color name="backgroundbrown">#6f5b3d</color>
     <color name="backgroundbrownOp">#a96f5b3d</color>
 
+    <color name="chongActive">#141414</color>
+    <color name="chongUnActive">#323232</color>
+
 </resources>

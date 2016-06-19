@@ -95,6 +95,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         backPaint.setAntiAlias(true);
         backPaint.setFilterBitmap(true);
         backPaint.setDither(true);
+
+        Canvas c = holder.lockCanvas();
+        c.drawBitmap(background, 0, 0, backPaint);
+        holder.unlockCanvasAndPost(c);
     }
 
     @Override

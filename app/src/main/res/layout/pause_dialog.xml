@@ -14,8 +14,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="30dp"
-            android:text="WAITING FOR RIVAL..." />
+            android:textSize="30sp"
+            android:text="@string/pause_text" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/dialog_button"
                 android:textStyle="bold"
-                android:text="END" />
+                android:text="@string/pause_btn" />
 
         </LinearLayout>
 

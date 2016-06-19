@@ -1,10 +1,16 @@
 package cz.martinforejt.chingchong;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -111,15 +117,24 @@ public class GameFragment extends Fragment {
                     if (leftActive) {
                         // 0 - 1 => 1 , 1 - 1 => 0
                         leftThumb = Math.abs(leftThumb - 1);
-                        game.thumbsChange(leftThumb + rightThumb);
-                        left.setImageResource(leftThumb == 1 ? R.drawable.thumb_left : R.drawable.left_fist);
+                        //game.thumbsChange(leftThumb + rightThumb);
+                        if (game.leftThumbChange(leftThumb == 1, leftThumb + rightThumb)) {
+                            left.setImageResource(leftThumb == 1 ? R.drawable.thumb_left : R.drawable.left_fist);
+                        } else {
+                            leftThumb = Math.abs(leftThumb - 1);
+                        }
                     }
                     break;
                 case R.id.right:
                     if (rightActive) {
                         rightThumb = Math.abs(rightThumb - 1);
-                        game.thumbsChange(rightThumb + leftThumb);
-                        right.setImageResource(rightThumb == 1 ? R.drawable.thumb_right : R.drawable.right_fist);
+                        //game.thumbsChange(rightThumb + leftThumb);
+                        //right.setImageResource(rightThumb == 1 ? R.drawable.thumb_right : R.drawable.right_fist);
+                        if (game.rightThumbChange(rightThumb == 1, leftThumb + rightThumb)) {
+                            right.setImageResource(rightThumb == 1 ? R.drawable.thumb_right : R.drawable.right_fist);
+                        } else {
+                            leftThumb = Math.abs(leftThumb - 1);
+                        }
                     }
                     break;
                 case R.id.click0:
@@ -154,12 +169,16 @@ public class GameFragment extends Fragment {
                     playerThumb2.setVisibility(View.VISIBLE);
                     break;
                 case 1:
-                    playerThumb1.setVisibility(View.GONE);
+                    if (playerThumb1.getVisibility() == View.VISIBLE) {
+                        scaleThumb(playerThumb1);
+                    }
                     playerThumb2.setVisibility(View.VISIBLE);
                     break;
                 case 0:
                     playerThumb1.setVisibility(View.GONE);
-                    playerThumb2.setVisibility(View.GONE);
+                    if (playerThumb2.getVisibility() == View.VISIBLE) {
+                        scaleThumb(playerThumb2);
+                    }
                     break;
             }
     }
@@ -177,14 +196,62 @@ public class GameFragment extends Fragment {
                     rivalThumb2.setVisibility(View.VISIBLE);
                     break;
                 case 1:
-                    rivalThumb1.setVisibility(View.GONE);
+                    if (rivalThumb1.getVisibility() == View.VISIBLE) {
+                        scaleThumb(rivalThumb1);
+                    }
                     rivalThumb2.setVisibility(View.VISIBLE);
                     break;
                 case 0:
                     rivalThumb1.setVisibility(View.GONE);
-                    rivalThumb2.setVisibility(View.GONE);
+                    if (rivalThumb2.getVisibility() == View.VISIBLE) {
+                        scaleThumb(rivalThumb2);
+                    }
                     break;
             }
+    }
+
+    /**
+     * Run scale animation to view (thumb)
+     * First animation scale up (1.1x) than scale to 0 in second step
+     *
+     * @param thumb View (ImageView)
+     */
+    protected void scaleThumb(final View thumb) {
+        final Animation scale2 = new ScaleAnimation(1.2f, 0, 1.2f, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scale2.setDuration(1000);
+        scale2.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                thumb.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        Animation scale1 = new ScaleAnimation(1, 1.2f, 1, 1.2f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scale1.setDuration(500);
+        scale1.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                thumb.startAnimation(scale2);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        thumb.startAnimation(scale1);
     }
 
     /**
@@ -214,10 +281,51 @@ public class GameFragment extends Fragment {
      * @param chongs int
      */
     public void animate(int chongs) {
-        if (game != null)
-            this.animate.setText("CHING - CHONG " + String.valueOf(chongs));
+        if (game != null) {
+            this.animate.setText("CHING CHONG " + String.valueOf(chongs));
+            Animation finalAnim = new ScaleAnimation(0.8f, 1.3f, 0.8f, 1.3f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            finalAnim.setDuration(2500);
+            Animation alpha = new AlphaAnimation(1, 0);
+            alpha.setDuration(2500);
+            AnimationSet set = new AnimationSet(true);
+            set.addAnimation(finalAnim);
+            set.addAnimation(alpha);
+            set.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    GameFragment.this.animate.setVisibility(View.VISIBLE);
+                }
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    GameFragment.this.animate.setVisibility(View.INVISIBLE);
+                }
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+            });
+            this.animate.startAnimation(set);
+        }
     }
 
+    /**
+     * Set comic (assets/fonts/comic.ttf) font to animate text
+     */
+    private void setFontAnimate() {
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/comic.ttf");
+        animate.setTypeface(typeface);
+    }
+
+    /**
+     * Set chlorinr (assets/fonts/chlorinr.ttf) font to chongs buttons
+     */
+    private void setFontChongs() {
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/comic.ttf");
+        num0.setTypeface(typeface);
+        num1.setTypeface(typeface);
+        num2.setTypeface(typeface);
+        num3.setTypeface(typeface);
+        num4.setTypeface(typeface);
+    }
 
     /**
      * Set active chong background2
@@ -254,6 +362,50 @@ public class GameFragment extends Fragment {
     }
 
     /**
+     * Slide right thumb out
+     * Make right thumb invisible
+     */
+    public void hideRightThumb() {
+        if (game != null && right.getVisibility() == View.VISIBLE) {
+            animateHideThumb(right, 300);
+        }
+    }
+
+    /**
+     * Slide right thumb out
+     * Make right thumb invisible
+     */
+    public void hideLeftThumb() {
+        if (game != null && left.getVisibility() == View.VISIBLE) {
+            animateHideThumb(left, -300);
+        }
+    }
+
+    /**
+     * Slide out thumb
+     * @param thumb View (ImageView)
+     */
+    private void animateHideThumb(final View thumb, int x) {
+        TranslateAnimation animation = new TranslateAnimation(0, x, 0, 300);
+        animation.setDuration(1200);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                thumb.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        thumb.startAnimation(animation);
+    }
+
+    /**
      * Enable/Disable chongs 'keyboard'
      *
      * @param hisTurn bool
@@ -261,17 +413,25 @@ public class GameFragment extends Fragment {
     public void isHisTurn(boolean hisTurn) {
         if (game != null) {
             int background;
+            int color;
             if (hisTurn) {
                 background = R.drawable.chong_button_active;
+                color = R.color.chongActive;
             } else {
                 background = R.drawable.chong_button_unactive;
+                color = R.color.chongUnActive;
             }
-            num0.setBackgroundResource(background);
-            num1.setBackgroundResource(background);
-            num2.setBackgroundResource(background);
-            num3.setBackgroundResource(background);
-            num4.setBackgroundResource(background);
+            setChongBackgroundAndTextColor(background, color, num0);
+            setChongBackgroundAndTextColor(background, color, num1);
+            setChongBackgroundAndTextColor(background, color, num2);
+            setChongBackgroundAndTextColor(background, color, num3);
+            setChongBackgroundAndTextColor(background, color, num4);
         }
+    }
+
+    private void setChongBackgroundAndTextColor(int background, int color, Button btn) {
+        btn.setBackgroundResource(background);
+        btn.setTextColor(color);
     }
 
     /**
@@ -301,6 +461,8 @@ public class GameFragment extends Fragment {
         playerName = (TextView) view.findViewById(R.id.player_name);
         rivalName = (TextView) view.findViewById(R.id.rival_name);
         animate = (TextView) view.findViewById(R.id.animate);
+        setFontAnimate();
+        setFontChongs();
 
         playerThumb1 = (ImageView) view.findViewById(R.id.player_thumb_1);
         playerThumb2 = (ImageView) view.findViewById(R.id.player_thumb_2);

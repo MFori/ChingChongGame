@@ -14,8 +14,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="30dp"
-            android:text="Really want to exit game?" />
+            android:textSize="30sp"
+            android:text="@string/exit_text" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -31,7 +31,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/dialog_button"
                 android:textStyle="bold"
-                android:text="yes" />
+                android:text="@string/exit_btn_yes" />
 
             <Button
                 android:id="@+id/dialogBtnNo"
@@ -40,7 +40,7 @@
                 android:background="@drawable/dialog_button"
                 android:layout_margin="10dp"
                 android:textStyle="bold"
-                android:text="no" />
+                android:text="@string/exit_btn_no" />
 
 
         </LinearLayout>

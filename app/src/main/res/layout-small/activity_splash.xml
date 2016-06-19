@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SplashActivity"
+    android:background="@color/backgroundbrown">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
+        android:contentDescription="@string/desc_logo"
+        android:src="@drawable/logo"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/loading"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:textSize="16sp"
+        android:layout_marginBottom="75dp"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="26dp">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/loading_container">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/loading_bar"
+                    android:id="@+id/loading_bar"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/loading">
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

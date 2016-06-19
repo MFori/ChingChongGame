@@ -8,6 +8,7 @@
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_margin="5dp"
+        android:contentDescription="@string/desc_back"
         android:background="@null"
         android:onClick="backToMenu"
         android:scaleType="fitCenter"
@@ -18,7 +19,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="5dp"
         android:gravity="center"
-        android:text="Join"
+        android:text="@string/title_create"
         android:textSize="35sp" />
 
     <LinearLayout

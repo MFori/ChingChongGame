@@ -16,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 /**
@@ -52,9 +54,12 @@ public class GameActivity extends AppCompatActivity {
 
         black_scene = findViewById(R.id.black_scene);
 
+        /*ImageView a = (ImageView) findViewById(R.id.backgroundImg);
+        a.setImageResource(R.drawable.background);*/
+
         soundManager = SoundManager.getInstance(getApplicationContext());
         backgroundMusic = BackgroundMusic.getInstance(getApplicationContext());
-        backgroundMusic.setTrack(BackgroundMusic.TRACK_01);
+        backgroundMusic.setTrack(BackgroundMusic.TRACK_02);
 
         // Set default fragment
         Fragment fragment;

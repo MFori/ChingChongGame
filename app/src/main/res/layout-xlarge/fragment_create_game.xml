@@ -1,0 +1,46 @@
+<cz.martinforejt.chingchong.GameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cz.martinforejt.chingchong.CreateGameFragment">
+
+    <ImageButton
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_margin="5dp"
+        android:contentDescription="@string/desc_back"
+        android:background="@null"
+        android:onClick="backToMenu"
+        android:scaleType="fitCenter"
+        android:src="@drawable/menu_back" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="@string/title_create"
+        android:textSize="50sp" />
+
+    <TextView
+        android:id="@+id/ip_address"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:textSize="100sp"
+        android:textColor="#090909"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        android:id="@+id/waitingText"
+        android:paddingBottom="40dp"
+        android:text="@string/waiting"
+        android:textSize="40sp" />
+
+</cz.martinforejt.chingchong.GameLayout>

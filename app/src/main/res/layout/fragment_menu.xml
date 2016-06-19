@@ -8,6 +8,7 @@
         android:id="@+id/menu_logo"
         android:layout_width="fill_parent"
         android:layout_height="125dp"
+        android:contentDescription="@string/desc_logo"
         android:paddingTop="10dp"
         android:src="@drawable/logo" />
 
@@ -18,7 +19,7 @@
         android:layout_marginBottom="10dp"
         android:gravity="center"
         android:onClick="creditsClick"
-        android:text="© 2016 MfStudio"
+        android:text="@string/mfStudio"
         android:typeface="monospace"
         android:textSize="17sp" />
 
@@ -36,7 +37,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/menu_button"
             android:onClick="playMultiPlayer"
-            android:text="MULTI PLAYER"
+            android:text="@string/menu_multi"
             android:textSize="33sp"
             android:textStyle="bold" />
 
@@ -47,7 +48,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/menu_button"
             android:onClick="playSinglePlayer"
-            android:text="SINGLE PLAYER"
+            android:text="@string/menu_single"
             android:textSize="33sp"
             android:textStyle="bold" />
 
@@ -59,6 +60,7 @@
         android:layout_height="50dp"
         android:layout_margin="8dp"
         android:background="@null"
+        android:contentDescription="@string/desc_rate"
         android:scaleType="fitCenter"
         android:src="@drawable/menu_rate" />
 
@@ -67,7 +69,8 @@
         android:id="@+id/menu_exit"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
+        android:contentDescription="@string/desc_exit"
         android:layout_margin="8dp"
         android:background="@null"
         android:scaleType="fitCenter"
@@ -80,6 +83,7 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:layout_margin="8dp"
+        android:contentDescription="@string/desc_settings"
         android:background="@null"
         android:scaleType="fitCenter"
         android:src="@drawable/menu_settings" />
@@ -89,7 +93,8 @@
         android:id="@+id/menu_about"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_gravity="bottom|right"
+        android:contentDescription="@string/desc_about"
+        android:layout_gravity="bottom|end"
         android:layout_margin="8dp"
         android:background="@null"
         android:scaleType="fitCenter"

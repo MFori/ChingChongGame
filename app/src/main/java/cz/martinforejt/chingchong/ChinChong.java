@@ -1,6 +1,5 @@
 package cz.martinforejt.chingchong;
 
-
 import android.util.Log;
 
 /**
@@ -88,14 +87,55 @@ public class ChinChong {
         }
     }
 
+    // Is left/right thumb on
+    private boolean rightOn = false;
+    private boolean leftOn = false;
+
     /**
      * Trigger for thumbs change in game fragment layout
      *
      * @param thumbs int
      */
-    public void thumbsChange(int thumbs) {
+    private void thumbsChange(int thumbs) {
         if (gameTime)
             this.player.setShowsThumbs(thumbs);
+    }
+
+    /**
+     * Trigger for left thumb change in game fragment layout
+     *
+     * @param up  bool - is left thumb up
+     * @param all int - count up thumbs
+     * @return bool
+     */
+    public boolean leftThumbChange(boolean up, int all) {
+        if (gameTime) {
+            leftOn = up;
+            if (this.player.getThumbs() == 2) {
+                thumbsChange(all);
+            } else if (this.player.getThumbs() == 1) {
+                if (up) thumbsChange(1);
+                else thumbsChange(0);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Trigger for right thumb change in game fragment layout
+     *
+     * @param up  bool - is right thumb up
+     * @param all int - count up thumbs
+     * @return bool
+     */
+    public boolean rightThumbChange(boolean up, int all) {
+        if (gameTime && this.player.getThumbs() == 2) {
+            rightOn = up;
+            thumbsChange(all);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -136,6 +176,8 @@ public class ChinChong {
      */
     private class GameRunnable implements Runnable {
 
+        private int startThumbs;
+
         /**
          * Main game loop
          */
@@ -166,6 +208,9 @@ public class ChinChong {
          * Game time - player can play ( change thumbs and chongs )
          */
         private void gameTimePart() {
+
+            startThumbs = ChinChong.this.player.getThumbs();
+
             gameView.setCountDownAnimation();
             onUi(new Runnable() {
                 @Override
@@ -203,25 +248,25 @@ public class ChinChong {
                     break;
                 }
 
-                if(player instanceof ClientPlayer) {
-                    if(((ClientPlayer) player).isError()) {
+                if (player instanceof ClientPlayer) {
+                    if (((ClientPlayer) player).isError()) {
                         Log.d("Error: ", "Client");
                         paused();
-                        try{
+                        try {
                             Thread.sleep(200);
                             ChinChong.this.player.sendData();
                             continue;
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }
 
-                if(player instanceof ServerPlayer) {
-                    if(((ServerPlayer) player).isClientPaused()) paused();
-                    try{
+                if (player instanceof ServerPlayer) {
+                    if (((ServerPlayer) player).isClientPaused()) paused();
+                    try {
                         Thread.sleep(100);
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -234,21 +279,34 @@ public class ChinChong {
          */
         private void animateResultTimePart() {
             try {
+                final int result = ChinChong.this.player.getShowsThumbs() + ChinChong.this.player.getRival().getShowsThumbs();
                 onUi(new Runnable() {
                     @Override
                     public void run() {
                         //TODO animate
-                        GameFragment.getInstance().animate(
-                                ChinChong.this.player.getShowsThumbs() + ChinChong.this.player.getRival().getShowsThumbs()
-                        );
+                        GameFragment.getInstance().animate(result);
                     }
                 });
+                playResult(result);
+
+                if (ChinChong.this.player.getThumbs() < startThumbs) {
+                    onUi(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(ChinChong.this.player.getThumbs() == 0) GameFragment.getInstance().hideLeftThumb();
+                            else GameFragment.getInstance().hideRightThumb();
+                        }
+                    });
+                    rightOn = false;
+                    ChinChong.this.player.setShowsThumbs(leftOn ? 1 : 0);
+                }
+
                 Thread.sleep(1000);
 
+                // Animate small thumbs in top of screen
                 onUi(new Runnable() {
                     @Override
                     public void run() {
-                        //TODO draw thumbs and set turn animate "Your turn"
                         GameFragment.getInstance().setPlayerThumbs(ChinChong.this.player.getThumbs());
                         GameFragment.getInstance().setRivalThumbs(ChinChong.this.player.getRival().getThumbs());
                     }
@@ -312,18 +370,44 @@ public class ChinChong {
         }
 
         /**
+         * @param res int
+         */
+        public void playResult(int res) {
+            switch (res) {
+                case 0:
+                    SoundManager.getInstance(activity).play(SoundManager.VOICE_0);
+                    break;
+                case 1:
+                    SoundManager.getInstance(activity).play(SoundManager.VOICE_1);
+                    break;
+                case 2:
+                    SoundManager.getInstance(activity).play(SoundManager.VOICE_2);
+                    break;
+                case 3:
+                    SoundManager.getInstance(activity).play(SoundManager.VOICE_3);
+                    break;
+                case 4:
+                    SoundManager.getInstance(activity).play(SoundManager.VOICE_4);
+                    break;
+            }
+        }
+
+        /**
          * Run on ui thread
          *
          * @param runnable Runnable
          */
         public void onUi(Runnable runnable) {
-            try{
+            try {
                 activity.runOnUiThread(runnable);
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
+        /**
+         * Showing rival is paused dialog
+         */
         public void paused() {
             onUi(new Runnable() {
                 @Override
@@ -333,6 +417,9 @@ public class ChinChong {
             });
         }
 
+        /**
+         * Hiding rival is paused dialog
+         */
         public void noPaused() {
             onUi(new Runnable() {
                 @Override

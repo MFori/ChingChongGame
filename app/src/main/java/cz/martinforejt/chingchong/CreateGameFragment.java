@@ -127,6 +127,7 @@ public class CreateGameFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         player.onDestroy();
+        isWaiting = false;
         waitingThread.interrupt();
         waitingThread = null;
     }

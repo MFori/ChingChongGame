@@ -3,6 +3,7 @@ package cz.martinforejt.chingchong;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 
@@ -53,10 +54,10 @@ public class Music extends Service {
      */
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        int track = R.raw.back;
+        int track = BackgroundMusic.TRACK_02;
 
-        try{
-            track = intent.getIntExtra(TRACK, R.raw.back);
+        try {
+            track = intent.getIntExtra(TRACK, BackgroundMusic.TRACK_02);
         } catch (Exception e) {
             e.printStackTrace();
         }
