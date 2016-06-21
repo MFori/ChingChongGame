@@ -96,6 +96,7 @@ public class SoundManager {
             public void run() {
                 try {
                     soundIds[EFFECT_MENU] = soundPool.load(context, RES_ID_MENU, 1);
+                    soundIds[EFFECT_SUCCESS] = soundPool.load(context, RES_SUCCESS, 1);
                     soundIds[VOICE_0] = soundPool.load(context, RES_VOICE_0, 1);
                     soundIds[VOICE_1] = soundPool.load(context, RES_VOICE_1, 1);
                     soundIds[VOICE_2] = soundPool.load(context, RES_VOICE_2, 1);
@@ -118,7 +119,7 @@ public class SoundManager {
      * Effects constants
      */
     public static final int EFFECT_MENU = 0;
-    public static final int EFFECT_START = 1;
+    public static final int EFFECT_SUCCESS = 1;
     public static final int VOICE_0 = 2;
     public static final int VOICE_1 = 3;
     public static final int VOICE_2 = 4;
@@ -128,7 +129,8 @@ public class SoundManager {
     /**
      * Resources
      */
-    private static final int RES_ID_MENU = R.raw.beep;
+    private static final int RES_ID_MENU = R.raw.button;
+    private static final int RES_SUCCESS = R.raw.correct;
     private static final int RES_VOICE_0 = R.raw.voice_zero;
     private static final int RES_VOICE_1 = R.raw.voice_one;
     private static final int RES_VOICE_2 = R.raw.voice_two;

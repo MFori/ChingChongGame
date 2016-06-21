@@ -251,7 +251,7 @@ public class ServerPlayer extends Player {
                 printStream.print(msgReply);
                 printStream.close();
 
-                haveData();
+                if(!rival.hasData()) haveData();
 
             } catch (IOException e) {
                 // TODO Auto-generated catch block

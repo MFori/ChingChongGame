@@ -25,13 +25,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="YOU ARE WINNER"
-            android:textSize="40sp" />
+            android:text="@string/res_text"
+            android:textSize="50sp" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:orientation="horizontal">
 
             <TextView
@@ -40,8 +40,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:gravity="right"
+                android:paddingRight="5dp"
                 android:text="Fori"
-                android:textSize="25sp" />
+                android:textStyle="italic"
+                android:textSize="35sp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -50,7 +52,8 @@
                 android:id="@+id/result_score"
                 android:gravity="center"
                 android:text="1 : 1"
-                android:textSize="25sp" />
+                android:textStyle="bold"
+                android:textSize="35sp" />
 
             <TextView
                 android:id="@+id/rivalScore"
@@ -58,7 +61,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="Android"
-                android:textSize="25sp" />
+                android:textStyle="italic"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:textSize="35sp" />
 
         </LinearLayout>
 
@@ -66,19 +72,22 @@
 
     <Button
         android:id="@+id/btn_rematch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
         android:layout_gravity="bottom|center"
+        android:background="@drawable/menu_button"
+        android:textSize="25sp"
         android:layout_marginBottom="50dp"
-        android:text="REMATCH" />
+        android:text="@string/res_btn" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="50dp"
-        android:text="WAITING FOR OPONENT.."
+        android:text="@string/res_waiting"
         android:id="@+id/rematch_text_waiting"
+        android:textSize="19sp"
         android:visibility="gone"/>
 
 </cz.martinforejt.chingchong.GameLayout>

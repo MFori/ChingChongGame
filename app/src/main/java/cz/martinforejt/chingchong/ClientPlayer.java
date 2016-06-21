@@ -34,6 +34,8 @@ public class ClientPlayer extends Player {
     private boolean asyncRunning = false;
     private boolean isError = false;
 
+    private boolean canConsumeData = false;
+
     private Async connAsync = null;
 
     /**
@@ -82,6 +84,10 @@ public class ClientPlayer extends Player {
         isError = false;
     }
 
+    public void prepareData() {
+        canConsumeData = true;
+    }
+
     /**
      * Send rematch request to server
      */
@@ -103,15 +109,20 @@ public class ClientPlayer extends Player {
      * Calculate and consume data from server
      */
     public void haveData() {
-        int visibleThumbs = rival.getShowsThumbs() + this.getShowsThumbs();
+        if(canConsumeData) {
+            Log.d("CONSUME", "cs");
+            canConsumeData = false;
 
-        if (rival.isHisTurn()) {
-            if (visibleThumbs == rival.getChongs()) rival.setThumbs(rival.getThumbs() - 1);
-        } else if (this.isHisTurn) {
-            if (visibleThumbs == this.getChongs()) this.setThumbs(this.getThumbs() - 1);
+            int visibleThumbs = rival.getShowsThumbs() + this.getShowsThumbs();
+
+            if (rival.isHisTurn()) {
+                if (visibleThumbs == rival.getChongs()) rival.setThumbs(rival.getThumbs() - 1);
+            } else if (this.isHisTurn) {
+                if (visibleThumbs == this.getChongs()) this.setThumbs(this.getThumbs() - 1);
+            }
+
+            rival.hasData(true);
         }
-
-        rival.hasData(true);
     }
 
     /**

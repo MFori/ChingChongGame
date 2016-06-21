@@ -1,0 +1,206 @@
+<cz.martinforejt.chingchong.GameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cz.martinforejt.chingchong.JoinGameFragment">
+
+    <ImageButton
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_margin="5dp"
+        android:contentDescription="@string/desc_back"
+        android:background="@null"
+        android:onClick="backToMenu"
+        android:scaleType="fitCenter"
+        android:src="@drawable/menu_back" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="@string/title_join"
+        android:textSize="35sp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ip_address_text"
+            android:layout_width="fill_parent"
+            android:layout_height="270dp"
+            android:gravity="center"
+            android:hint="@string/join_ip"
+            android:text=""
+            android:textSize="90sp" />
+
+        <!-- Keyboard -->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/backgroundbrownOp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/ip_key_0"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/keyboardkey"
+                    android:text="@string/join_key_0"
+                    android:textSize="85sp" />
+
+                <Button
+                    android:id="@+id/ip_key_1"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/keyboardkey"
+                    android:text="@string/join_key_1"
+                    android:textSize="85sp" />
+
+                <Button
+                    android:id="@+id/ip_key_2"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/keyboardkey"
+                    android:text="@string/join_key_2"
+                    android:textSize="85sp" />
+
+                <Button
+                    android:id="@+id/ip_key_3"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/keyboardkey"
+                    android:text="@string/join_key_3"
+                    android:textSize="85sp" />
+
+                <Button
+                    android:id="@+id/ip_key_4"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/keyboardkey"
+                    android:text="@string/join_key_4"
+                    android:textSize="85sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/ip_key_5"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/keyboardkey"
+                    android:text="@string/join_key_5"
+                    android:textSize="85sp" />
+
+                <Button
+                    android:id="@+id/ip_key_6"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/keyboardkey"
+                    android:text="@string/join_key_6"
+                    android:textSize="85sp" />
+
+                <Button
+                    android:id="@+id/ip_key_7"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/keyboardkey"
+                    android:text="@string/join_key_7"
+                    android:textSize="85sp" />
+
+                <Button
+                    android:id="@+id/ip_key_8"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/keyboardkey"
+                    android:text="@string/join_key_8"
+                    android:textSize="85sp" />
+
+                <Button
+                    android:id="@+id/ip_key_9"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/keyboardkey"
+                    android:text="@string/join_key_9"
+                    android:textSize="85sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/ip_key_dot"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/keyboardkey"
+                    android:padding="55dp"
+                    android:src="@drawable/dot"
+                    android:scaleType="fitCenter"
+                    android:textSize="65sp"
+                    android:textStyle="bold"/>
+
+                <ImageButton
+                    android:id="@+id/ip_key_back"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/keyboardkey"
+                    android:src="@drawable/backspace"
+                    android:contentDescription="@string/join_desc_back"
+                    android:scaleType="fitCenter"
+                    android:padding="10dp"
+                    android:textSize="30sp" />
+
+                <ImageButton
+                    android:id="@+id/ip_key_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/keyboardkey"
+                    android:src="@drawable/delete"
+                    android:scaleType="fitCenter"
+                    android:padding="20dp"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/ip_key_ok"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="2"
+                    android:background="@drawable/keyboardkey"
+                    android:text="@string/join_key_conn"
+                    android:textSize="60sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</cz.martinforejt.chingchong.GameLayout>

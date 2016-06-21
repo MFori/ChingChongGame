@@ -1,6 +1,7 @@
 package cz.martinforejt.chingchong;
 
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -29,8 +30,8 @@ public class ResultFragment extends Fragment {
 
     private Button rematch;
     private TextView win, myScore, rivalScore, score, waiting;
-    private static final String TEXT_WIN = "YOU ARE WINNER";
-    private static final String TEXT_LOSS = "YOU ARE LOSER";
+    private static final String TEXT_WIN = "YOU ARE WINNER! :)";
+    private static final String TEXT_LOSS = "YOU ARE LOSER! :(";
 
     private Thread rematchT = null;
     protected boolean waitForRematch = false;
@@ -103,6 +104,7 @@ public class ResultFragment extends Fragment {
         rivalScore = (TextView) v.findViewById(R.id.rivalScore);
         score = (TextView) v.findViewById(R.id.result_score);
         waiting = (TextView) v.findViewById(R.id.rematch_text_waiting);
+        setFont();
     }
 
     /**
@@ -190,6 +192,14 @@ public class ResultFragment extends Fragment {
 
         player.hisTurn(player instanceof ClientPlayer || player instanceof OfflinePlayer);
         player.rival.hisTurn(player instanceof ServerPlayer);
+    }
+
+    /**
+     * Set chlorinr (assets/fonts/chlorinr.ttf) font to rematch button
+     */
+    private void setFont() {
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/chlorinr.ttf");
+        rematch.setTypeface(typeface);
     }
 
     public ResultFragment() {

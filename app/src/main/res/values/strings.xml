@@ -22,6 +22,7 @@
     <string name="title_multiplayer">Multiplayer</string>
     <string name="title_create">Create</string>
     <string name="title_join">Join</string>
+    <string name="title_new_player">NEW PLAYER</string>
 
     <!-- Settings -->
     <string name="title_nickname">Nickname:</string>
@@ -41,20 +42,52 @@
     <string name="pause_text">WAITING FOR RIVAL...</string>
 
     <!-- About -->
-    <string name="about_title"><b>Ching Chong</b> \n<i>2016</i></string>
+    <string name="about_title"><b>Ching Chong</b></string>
     <string name="about_how_to_play_title">How to play:</string>
     <string name="about_how_to_play">
-        just play sdfe pdasf e fdsf wefdsij seijfsdj sdjfowe dsfse dsfewsfd fdsed5 fesd5 few6 6 dsfesd jds  dsf2 s0df wesdf sfdoeisdjf fnseod sdfie jfsie fsjkeop fsjei
-        just play sdfe pdasf e fdsf wefdsij seijfsdj sdjfowe dsfse dsfewsfd fdsed5 fesd5 few6 6 dsfesd jds  dsf2 s0df wesdf sfdoeisdjf fnseod sdfie jfsie fsjkeop fsjei
-        just play sdfe pdasf e fdsf wefdsij seijfsdj sdjfowe dsfse dsfewsfd fdsed5 fesd5 few6 6 dsfesd jds  dsf2 s0df wesdf sfdoeisdjf fnseod sdfie jfsie fsjkeop fsjei
+        At the beginning of the game you and your opponent have 2 thumbs.
+        Your mission is to get rid of both thumbs.
+        Every round you can show how many thumbs you want.
+        If you\'re on move, you guess how many thumbs will be show a whole.
+        If you guess it, you are hiding on thumb.
+        If you want to play online with a friend, you must be on the same wifi.
     </string>
     <string name="about_links">\n
         Icons from <i>icons8.com</i> \n
         Images from <i>freepik.com</i> \n
     </string>
 
+    <!-- New Player -->
+    <string name="new_player_hint">Nickname</string>
+    <string name="new_player_btn">OK</string>
+
+    <!-- Join game -->
+    <string name="join_ip">IP Address</string>
+    <string name="join_key_0">0</string>
+    <string name="join_key_1">1</string>
+    <string name="join_key_2">2</string>
+    <string name="join_key_3">3</string>
+    <string name="join_key_4">4</string>
+    <string name="join_key_5">5</string>
+    <string name="join_key_6">6</string>
+    <string name="join_key_7">7</string>
+    <string name="join_key_8">8</string>
+    <string name="join_key_9">9</string>
+    <string name="join_key_conn">Connect</string>
+    <string name="join_desc_back">Backspace</string>
+
+    <!-- Game -->
+    <string name="default_name">Player name</string>
+    <string name="default_text">CHING CHONG</string>
+    <string name="desc_thumb">Players thumb</string>
+
+    <!-- Result -->
+    <string name="res_text">YOU ARE WINNER!</string>
+    <string name="res_btn">REMATCH</string>
+    <string name="res_waiting">WAITING FOR OPPONENT...</string>
+
     <string name="mfStudio">© 2016 MfStudio</string>
     <string name="loading">Loading...</string>
-    <string name="waiting">Waiting for oponent...</string>
+    <string name="waiting">Waiting for opponent...</string>
 
 </resources>

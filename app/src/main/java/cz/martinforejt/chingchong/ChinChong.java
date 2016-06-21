@@ -238,6 +238,9 @@ public class ChinChong {
             // send data to rival
             player.rival.hasData(false);
             ChinChong.this.player.sendData();
+            if(ChinChong.this.player instanceof ClientPlayer) {
+                ((ClientPlayer) ChinChong.this.player).prepareData();
+            }
             while (getDataTime) {
 
                 // player has data from rival
@@ -290,6 +293,7 @@ public class ChinChong {
                 playResult(result);
 
                 if (ChinChong.this.player.getThumbs() < startThumbs) {
+                    playSuccess();
                     onUi(new Runnable() {
                         @Override
                         public void run() {
@@ -328,7 +332,6 @@ public class ChinChong {
 
             // End game - show result screen
             if (ChinChong.this.player.getThumbs() == 0 || ChinChong.this.player.getRival().getThumbs() == 0) {
-                Vibrator.getInstance(activity).vibrate(100);
                 player.onDestroy();
                 onUi(new Runnable() {
                     @Override
@@ -390,6 +393,14 @@ public class ChinChong {
                     SoundManager.getInstance(activity).play(SoundManager.VOICE_4);
                     break;
             }
+        }
+
+        /**
+         *
+         */
+        public void playSuccess() {
+           SoundManager.getInstance(activity).play(SoundManager.EFFECT_SUCCESS);
+            Vibrator.getInstance(activity).vibrate(100);
         }
 
         /**

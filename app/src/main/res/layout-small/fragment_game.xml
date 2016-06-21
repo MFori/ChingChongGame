@@ -1,0 +1,266 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2b2b2b"
+    tools:context="cz.martinforejt.chingchong.GameFragment">
+
+    <cz.martinforejt.chingchong.GameView
+        android:id="@+id/gameView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp" />
+
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:id="@+id/animate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="45dp"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textSize="70sp"
+            android:visibility="invisible" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="0dp">
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/left_player_background"
+                    android:paddingBottom="8dp"
+                    android:paddingRight="35dp">
+
+                    <TextView
+                        android:id="@+id/player_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:text="@string/default_name"
+                        android:textColor="#fff"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/player_thumb_1"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/desc_thumb"
+                        android:src="@drawable/thumb" />
+
+
+                    <ImageView
+                        android:id="@+id/player_thumb_2"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/desc_thumb"
+                        android:src="@drawable/thumb" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:background="@drawable/right_player_background"
+                    android:gravity="end"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="35dp">
+
+                    <ImageView
+                        android:id="@+id/rival_thumb_2"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/desc_thumb"
+                        android:src="@drawable/thumb" />
+
+                    <ImageView
+                        android:id="@+id/rival_thumb_1"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/desc_thumb"
+                        android:src="@drawable/thumb" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/rival_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:gravity="end|center_vertical"
+                        android:text="@string/default_name"
+                        android:textColor="#fff"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="2">
+
+                    <ImageButton
+                        android:id="@+id/left"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:adjustViewBounds="true"
+                        android:background="@null"
+                        android:contentDescription="@string/desc_thumb"
+                        android:scaleType="fitStart"
+                        android:src="@drawable/left_fist" />
+
+
+                    <ImageButton
+                        android:id="@+id/right"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:adjustViewBounds="true"
+                        android:background="@null"
+                        android:contentDescription="@string/desc_thumb"
+                        android:scaleType="fitEnd"
+                        android:src="@drawable/right_fist" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/numbers_background"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="15dp">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/click3"
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_margin="6dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/chong_button_active"
+                            android:text="@string/join_key_3"
+                            android:textColor="#000"
+                            android:textSize="45sp" />
+
+                        <Button
+                            android:id="@+id/click4"
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_margin="6dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/chong_button_active"
+                            android:text="@string/join_key_4"
+                            android:textColor="#000"
+                            android:textSize="45sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/click1"
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_margin="6dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/chong_button_active"
+                            android:text="@string/join_key_1"
+                            android:textColor="#000"
+                            android:textSize="45sp" />
+
+
+                        <Button
+                            android:id="@+id/click2"
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_margin="6dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/chong_button_active"
+                            android:text="@string/join_key_2"
+                            android:textColor="#000"
+                            android:textSize="45sp" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/click0"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_margin="6dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/chong_button_active"
+                        android:text="@string/join_key_0"
+                        android:textColor="#000"
+                        android:textSize="45sp" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -189,6 +189,7 @@ public class GameActivity extends AppCompatActivity {
      * @param v Button
      */
     public void playMultiPlayer(View v) {
+        soundManager.play(SoundManager.EFFECT_MENU);
         changeFragment(new MultiPlayerFragment(), MultiPlayerFragment.TAG, SLIDE_RIGHT, false);
     }
 
@@ -198,6 +199,7 @@ public class GameActivity extends AppCompatActivity {
      * @param v Button
      */
     public void playSinglePlayer(View v) {
+        soundManager.play(SoundManager.EFFECT_MENU);
         changeFragment(GameFragment.newInstance(new OfflinePlayer(Config.getName(), Config.RIVAL_OFFLINE_NAME)), GameFragment.TAG, true);
     }
 
@@ -207,10 +209,10 @@ public class GameActivity extends AppCompatActivity {
      * @param v Button
      */
     public void createGame(View v) {
-        if (isInternetConnection())
+        if (isInternetConnection()) {
+            soundManager.play(SoundManager.EFFECT_MENU);
             changeFragment(CreateGameFragment.newInstance(), CreateGameFragment.TAG, SLIDE_RIGHT, false);
-        else
-            Toast.makeText(this, "You must be connected to WiFi.", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(this, "You must be connected to WiFi.", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -219,9 +221,10 @@ public class GameActivity extends AppCompatActivity {
      * @param v Button
      */
     public void joinGame(View v) {
-        if (isInternetConnection())
+        if (isInternetConnection()) {
+            soundManager.play(SoundManager.EFFECT_MENU);
             changeFragment(JoinGameFragment.newInstance(), JoinGameFragment.TAG, SLIDE_RIGHT, false);
-        else
+        } else
             Toast.makeText(this, "You must be connected to WiFi.", Toast.LENGTH_SHORT).show();
     }
 

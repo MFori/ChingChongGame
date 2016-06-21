@@ -1,5 +1,6 @@
 package cz.martinforejt.chingchong;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +32,8 @@ public class JoinGameFragment extends Fragment {
     Thread connThread = null;
 
     private TextView tvIp;
-    private Button keyDot, keyBack, keyCancel, keyOk;
+    private Button keyOk;
+    private ImageButton keyBack, keyCancel, keyDot;
     // number buttons
     private Button[] btns = new Button[10];
 
@@ -57,11 +60,14 @@ public class JoinGameFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_join_game, container, false);
 
         tvIp = (TextView) view.findViewById(R.id.ip_address_text);
-        keyDot = (Button) view.findViewById(R.id.ip_key_dot);
-        keyBack = (Button) view.findViewById(R.id.ip_key_back);
-        keyCancel = (Button) view.findViewById(R.id.ip_key_cancel);
+        keyDot = (ImageButton) view.findViewById(R.id.ip_key_dot);
+        keyBack = (ImageButton) view.findViewById(R.id.ip_key_back);
+        keyCancel = (ImageButton) view.findViewById(R.id.ip_key_cancel);
         keyOk = (Button) view.findViewById(R.id.ip_key_ok);
         initNumKeyboard(view);
+
+        setFontConnect();
+        setFontNumbers();
 
         // Dot key - add dot
         keyDot.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +133,7 @@ public class JoinGameFragment extends Fragment {
      * Send request to server
      */
     private void start() {
-        if(player!=null) player.stopConnect();
+        if (player != null) player.stopConnect();
         player = null;
         player = new ClientPlayer(Config.getName(), "", ipAddress);
         player.connect();
@@ -141,9 +147,9 @@ public class JoinGameFragment extends Fragment {
                 }*/
                 while (player.isAsyncRunning()) {
                     Log.d("IS", "ASYNC");
-                    try{
+                    try {
                         Thread.sleep(200);
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -215,5 +221,23 @@ public class JoinGameFragment extends Fragment {
             numberClick(((Button) v).getText().toString());
         }
     };
+
+    /**
+     * Set chlorinr (assets/fonts/chlorinr.ttf) font to settings buttons
+     */
+    private void setFontConnect() {
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/chlorinr.ttf");
+        keyOk.setTypeface(typeface);
+    }
+
+    /**
+     * Set chlorinr (assets/fonts/chlorinr.ttf) font to settings buttons
+     */
+    private void setFontNumbers() {
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/comic.ttf");
+        for (int i = 0; i < 10; i++) {
+            btns[i].setTypeface(typeface);
+        }
+    }
 
 }
