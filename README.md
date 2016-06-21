@@ -7,7 +7,7 @@ At the beginning of the game you and your opponent have 2 thumbs.
 Your mission is to get rid of both thumbs.
 Every round you can show how many thumbs you want.
 If you're on move, you guess how many thumbs will be show a whole.
-If you guess it, you are hiding on thumb.
+If you guess it, you are hiding one thumb.
 
 ##Play multiplayer!
 If you want to play online with a friend, you must be on the same wifi.
